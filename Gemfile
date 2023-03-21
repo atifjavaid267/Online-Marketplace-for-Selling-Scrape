@@ -56,5 +56,10 @@ end
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
  gem 'devise' 
  gem 'two_factor_authentication'
+gem 'importmap-rails', '~> 1.0'
+gem 'stimulus-rails', '~> 1.0'
+gem 'dotenv-rails'
+gem 'rqrcode', '~> 2.1'
+gem 'rotp'
 
 # gem 'devise-otp'

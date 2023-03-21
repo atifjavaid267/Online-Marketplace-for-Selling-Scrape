@@ -23,6 +23,8 @@
     <%= f.telephone_field :phone_no, autofocus: true, autocomplete: "phone_no" %>
   </div>
 
+ 
+ 
   <div class="relative mb-4" data-te-input-wrapper-init>
     <%= f.radio_button :role, "seller" %>
     <%= label_tag :seller, "Register as Seller" %>
@@ -45,7 +47,9 @@
   </div>
 
   <div class="actions">
+  <%= link_to "Next", otp_create_path %>
     <%= f.submit "Sign up" %>
+
   </div>
 <% end %>
 

@@ -1,0 +1,16 @@
+<h1>Enter your OTP</h1>
+
+<%= form_tag otp_path, method: :post do %>
+  <% if flash[:error] %>
+    <div class="alert alert-danger"><%= flash[:error] %></div>
+  <% end %>
+
+  
+<br>
+  <div class="form-group">
+    <%= label_tag :otp, 'One-time password' %>
+    <%= text_field_tag :otp, nil, class: 'form-control', required: true %>
+  </div>
+<br>
+  <%= submit_tag 'Submit', class: 'btn btn-primary' %>
+<% end %>
