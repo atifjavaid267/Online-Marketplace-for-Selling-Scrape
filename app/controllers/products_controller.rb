@@ -1,5 +1,5 @@
 class ProductsController < ApplicationController
-  has_one_attached :image
+  # has_one_attached :image
 
   def index
     @products = Product.all
@@ -27,7 +27,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def delete_product
+  def destroy
     if current_user.admin?
       @product = Product.find(params[:id])
       @product.destroy

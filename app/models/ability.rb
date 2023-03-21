@@ -1,6 +1,6 @@
 # frozen_string_literal: true
-class Ability
 
+class Ability
   include CanCan::Ability
 
   def initialize(user)
@@ -11,12 +11,16 @@ class Ability
 
     if user.admin?
       can :create, Product
+      can :index, Product
       can :view, Product
+      can :destroy, Product
     end
 
     if user.seller?
+      can :index, Product
       can :view, Product
     end
 
+    can :view, Product
   end
 end

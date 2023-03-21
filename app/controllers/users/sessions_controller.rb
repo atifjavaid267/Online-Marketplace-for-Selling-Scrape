@@ -10,8 +10,14 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
-    if current_user.admin?
-      redirect_to admin_dashboard_path
+    if user_signed_in?
+      if current_user.admin?
+        redirect_to admin_dashboard_path
+      elsif current_user.seller?
+        redirect_to seller_home_path
+      elsif current_user.buyer?
+        redirect_to buyer_home_path
+      end
     else
       super
     end
