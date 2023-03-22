@@ -5,9 +5,8 @@
   <table>
     <thead>
       <tr>
-        <th>Product Title</th>
-        <th>Product URL</th>
-        <th>Product Price</th>
+        <th>Product Name</th>
+        <th>Product Image</th>
         <th>Product Description</th>
         <th colspan="3">Actions</th>
       </tr>
@@ -16,6 +15,7 @@
       <% @products.each do |product|%>
       <tr>
         <td><%= product.name%></td>
+        <td><%= image_tag product.product_image, style: "length: 100px; width: 70px"%></td>
         <td><%= product.description%></td>
         <td><%= link_to "view", product%></td>
         <td><%= link_to "edit", edit_product_path(product)%></td>
@@ -26,15 +26,21 @@
   </table>
   <% end %>
 </div>
-
-<!-- Create a product -->
-<div>
-<button>
-    <%= link_to "Add Product", new_product_path%>
-</button>
-</div>
 <br>
 
-<div>
-    <%= link_to "Back", admin_dashboard_path%>
-</div>
+<%if current_user.admin?%>
+  <div>
+    <button>
+      <%= link_to "Add Product", new_product_path%>
+    </button>
+  </div>
+  <br>
+
+  <div>
+    <%= link_to "Back to Dashboard", admin_dashboard_path%>
+  </div>
+<%elsif current_user.seller?%>
+  <div>
+    <%= link_to "Back to Home", seller_home_path%>
+  </div>
+<%end%>

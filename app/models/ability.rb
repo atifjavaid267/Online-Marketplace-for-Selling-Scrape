@@ -12,15 +12,17 @@ class Ability
     if user.admin?
       can :create, Product
       can :index, Product
-      can :view, Product
+      can :show, Product
       can :destroy, Product
     end
 
     if user.seller?
       can :index, Product
-      can :view, Product
+      can :show, Product
+
     end
 
-    can :view, Product
+    # if user.buyer?
+    # end
   end
 end
