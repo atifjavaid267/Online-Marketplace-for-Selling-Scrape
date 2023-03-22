@@ -213,6 +213,8 @@ GEM
       sprockets (>= 3.0.0)
     stimulus-rails (1.2.1)
       railties (>= 6.0.0)
+    tailwindcss-rails (2.0.25-x86_64-linux)
+      railties (>= 6.0.0)
     thor (1.2.1)
     tilt (2.1.0)
     timeout (0.3.2)
@@ -273,6 +275,7 @@ DEPENDENCIES
   selenium-webdriver (>= 4.0.0.rc1)
   spring
   stimulus-rails (~> 1.0)
+  tailwindcss-rails (~> 2.0)
   turbolinks (~> 5)
   two_factor_authentication
   tzinfo-data

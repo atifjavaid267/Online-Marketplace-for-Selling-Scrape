@@ -63,3 +63,4 @@ gem 'rqrcode', '~> 2.1'
 gem 'rotp'
 
 # gem 'devise-otp'
+gem "tailwindcss-rails", "~> 2.0"
