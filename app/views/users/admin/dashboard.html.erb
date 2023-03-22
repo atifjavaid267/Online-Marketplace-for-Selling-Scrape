@@ -3,10 +3,15 @@
 </div>
 
 <div>
-    <%=link_to "Show Products" %>
-    <%=link_to "Add new Product", "products/new" %>
-    <%=link_to "Delete Product" %>
+    <%=link_to "Show Products", products_path %>
+    <br>
+
+    <%= link_to "Add Product", new_product_path%>
+    <br>
+
+    <%=link_to "Delete Product", products_path  %>
 </div>
+<br>
 
 <div>
     <%= link_to "View Ads"%>

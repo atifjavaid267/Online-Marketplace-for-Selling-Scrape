@@ -1,5 +1,6 @@
 
 
+
 <%= form_with(model: @product, local: true) do |form| %>
   <div class="form-group">
     <%= form.label :name %>
@@ -15,20 +16,24 @@
     <%= form.label :product_image %> <br>
     <%= form.file_field :product_image %>
   </div>
-
   <br>
 
   <div class="actions">
-    <%= form.submit "Create Product", class: "btn btn-primary" %>
+    <%= form.submit "Update Product", class: "btn btn-primary" %>
   </div>
 <% end %>
 
 <br>
 
 <div>
-  <%= link_to "Back to Products", products_path%>
+    <%= link_to "View Product", @product %>
 </div>
 
 <div>
-  <%= link_to "Back to Dashboard", admin_dashboard_path%>
-</div>
+    <%= link_to "Back to all Products", products_path%>
+  </div>
+
+  <div>
+    <%= link_to "Back to Dashboard", admin_dashboard_path%>
+  </div>
+

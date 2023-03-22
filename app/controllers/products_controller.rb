@@ -1,6 +1,4 @@
 class ProductsController < ApplicationController
-  has_one_attached :image
-
   def index
     @products = Product.all
   end
@@ -16,7 +14,7 @@ class ProductsController < ApplicationController
   def create
     if current_user.admin?
       @product = Product.new(product_params)
-      @product.image.attach(params[:product][:image])
+      @product.user_id = current_user.id
       if @product.save
         redirect_to @product, notice: 'Product was successfully created.'
       else
@@ -27,11 +25,29 @@ class ProductsController < ApplicationController
     end
   end
 
-  def delete_product
+  def show
+    @product = Product.find(params[:id])
+  end
+
+  def edit
+    @product = Product.find(params[:id])
+  end
+
+  def update
+    @product = Product.find(params[:id])
+
+    if @product.update(product_params)
+      redirect_to @product
+    else
+      render :edit
+    end
+  end
+
+  def destroy
     if current_user.admin?
       @product = Product.find(params[:id])
       @product.destroy
-      redirect_to root_path, notice: 'Product deleted successfully.'
+      redirect_to products_path, notice: 'Product deleted successfully.'
     else
       redirect_to root_path, alert: 'You are not authorized to access this page.'
     end
@@ -40,6 +56,6 @@ class ProductsController < ApplicationController
   private
 
   def product_params
-    params.require(:product).permit(:user_id, :name, :description)
+    params.require(:product).permit(:name, :description, :product_image)
   end
 end
