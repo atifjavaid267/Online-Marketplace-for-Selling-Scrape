@@ -14,11 +14,14 @@ class Ability
       can :index, Product
       can :show, Product
       can :destroy, Product
+
+      can :index, Ad
     end
 
     if user.seller?
       can :index, Product
       can :show, Product
+
 
     end
 
