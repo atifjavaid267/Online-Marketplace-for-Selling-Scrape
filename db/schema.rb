@@ -10,6 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
+
 ActiveRecord::Schema.define(version: 2023_03_22_114510) do
 
   # These are extensions that must be enabled in order to support this database
@@ -86,7 +87,16 @@ ActiveRecord::Schema.define(version: 2023_03_22_114510) do
     t.string "last_name"
     t.string "phone_no"
     t.string "role"
+    t.integer "second_factor_attempts_count", default: 0
+    t.string "encrypted_otp_secret_key"
+    t.string "encrypted_otp_secret_key_iv"
+    t.string "encrypted_otp_secret_key_salt"
+    t.string "direct_otp"
+    t.datetime "direct_otp_sent_at"
+    t.datetime "totp_timestamp"
+    t.string "otp"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["encrypted_otp_secret_key"], name: "index_users_on_encrypted_otp_secret_key", unique: true
     t.index ["phone_no"], name: "index_users_on_phone_no", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end

@@ -1,27 +1,33 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<%# <h2>Edit <%= resource_name.to_s.humanize %></h2> 
+<main class="mx-auto flex min-h-screen w-full items-center justify-center bg-gray-900 text-white">
+    <section class="flex w-[30rem] flex-col space-y-10">
+        <div class="text-center text-4xl font-medium">Edit </div>
 
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
   <%= render "devise/shared/error_messages", resource: resource %>
 
+  <div class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
 
-  <div class = "field">
     <%= f.label :first_name %><br />
-    <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name" %>
+    <%= f.text_field :first_name, autofocus: true, autocomplete: "first_name", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" %>
   </div>
 
-  <div class = "field">
+  <div class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
+
     <%= f.label :last_name %><br />
-    <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name" %>
+    <%= f.text_field :last_name, autofocus: true, autocomplete: "last_name" , class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"%>
   </div>
 
-  <div class = "field">
+  <div class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
+
     <%= f.label :email %><br />
-    <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+    <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" %>
   </div>
+  
+  <div class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
 
-  <div class = "field">
     <%= f.label :phone_no %><br />
-    <%= f.telephone_field :phone_no, autofocus: true, autocomplete: "phone_no" %>
+    <%= f.telephone_field :phone_no, autofocus: true, autocomplete: "phone_no", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" %>
   </div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
@@ -30,32 +36,41 @@
 
 
 
-  <div class="field">
+  <div class="field w-full transform border--2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
     <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
-    <%= f.password_field :password, autocomplete: "new-password" %>
+    <%= f.password_field :password, autocomplete: "new-password", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" %>
     <% if @minimum_password_length %>
       <br />
       <em><%= @minimum_password_length %> characters minimum</em>
     <% end %>
   </div>
 
-  <div class="field">
+  <div class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
     <%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+    <%= f.password_field :password_confirmation, autocomplete: "new-password" , class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"%>
   </div>
 
-  <div class="field">
+  <div class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500">
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
-    <%= f.password_field :current_password, autocomplete: "current-password" %>
+    <%= f.password_field :current_password, autocomplete: "current-password" , class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none"%>
   </div>
-  <br>
-  <div class="actions">
-    <%= f.submit "Update" %>
+
+  <div class="actions "><br>
+    <button class="w-full rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-400">Update</button>
+    <%# <%= f.submit "Update" %> 
   </div>
 <% end %>
 
-<% unless resource.role == 'admin'%>
-  <h3>Delete my account</h3>
-  <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div>
-<%end%>
-<%= link_to "Back", :back %>
+<%# <h3>Cancel my account</h3> %>
+<div>
+  <%= button_to "Cancel my account",
+                 registration_path(resource_name),
+                 data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" },
+                 method: :delete,
+                 class: "py-2 px-4 font-semibold rounded-lg shadow-md text-white bg-red-500 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-400 focus:ring-opacity-75" %>
+</div>
+<%# <div>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete %></div> 
+<button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="window.history.back();">Back</button>
+
+<%# <%= link_to "Back", :back %> 
+<%# __________________________________________________________________ %>
