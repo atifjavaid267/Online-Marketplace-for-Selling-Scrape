@@ -1,4 +1,7 @@
 Rails.application.routes.draw do
+
+  # root "users/sessions#new"
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # devise_for :users
   devise_scope :user do
@@ -6,6 +9,7 @@ Rails.application.routes.draw do
   end
 
   resources :products
+  resources :ads
 
   devise_for :users, controllers:
   {
