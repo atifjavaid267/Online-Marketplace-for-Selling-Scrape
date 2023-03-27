@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::Base
+
   # before_action :configure_permitted_parameters
 
   private
@@ -16,4 +17,5 @@ class ApplicationController < ActionController::Base
                          :password_confirmation, :current_password)
     end
   end
+
 end

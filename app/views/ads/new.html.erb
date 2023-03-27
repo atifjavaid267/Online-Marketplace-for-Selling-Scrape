@@ -1,0 +1,43 @@
+<div>
+    <h2>New Ad</h2>
+</div>
+
+
+<%= form_with(model: @ad, local: true) do |form| %>
+  <div class="form-group">
+    <%= form.label :name %>
+    <%= form.text_field :name, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :description %>
+    <%= form.text_area :description, class: "form-control" %>
+  </div>
+
+  <div class="form-group">
+    <%= form.label :product_image %> <br>
+    <%= form.file_field :ad_images %>
+  </div>
+
+  <!-- Here we will add address -->
+  <div class="form-group">
+    <%= f.label :address_id %>
+    <%= f.collection_select(:address_id, @user_addresses, :street1, :street2, :city, :state) %>
+  </div>
+
+  <br>
+
+  <div class="actions">
+    <%= form.submit "Publish Ad", class: "btn btn-primary" %>
+  </div>
+<% end %>
+
+<br>
+
+<div>
+  <%= link_to "Back to Products", products_path%>
+</div>
+
+<div>
+  <%= link_to "Back to Home", seller_home_path%>
+</div>

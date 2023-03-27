@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+
   #  provisioning_uri user.generate_totp_secret
   #   user. # This assumes a user model with an email attribute
   # has_secure_password
@@ -13,4 +14,23 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :two_factor_authenticatable, :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :two_factor_authenticatable
+
+  has_many :products
+  has_many :ads
+  has_many :addresses
+
+
+  ROLES = %w[admin seller buyer].freeze
+
+  def admin?
+    role == 'admin'
+  end
+
+  def seller?
+    role == 'seller'
+  end
+
+  def buyer?
+    role == 'buyer'
+  end
 end

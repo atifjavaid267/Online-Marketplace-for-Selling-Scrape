@@ -1,0 +1,23 @@
+<div>
+    <h1>Product Details</h1>
+    <br><br>
+    <%= image_tag @product.product_image, style: "length: 200px; width: 120px;"%>
+    <h4>Product Name: </h4><%= @product.name%>
+    <h4>Product Description: </h4><%= @product.description%>
+</div>
+
+<br><br>
+
+<div>
+    <%= link_to "Back to Products", products_path%>
+</div>
+
+<%if current_user.admin?%>
+    <div>
+        <%= link_to "Back to Dashboard", admin_dashboard_path%>
+    </div>
+<%elsif current_user.seller?%>
+    <div>
+        <%= link_to "Back to Home", seller_home_path%>
+    </div>
+<%end%>
