@@ -1,0 +1,28 @@
+<%if @ads == nil || @ads.empty? %>
+    <h3>created no ad yet</h3>
+<%else%>
+    <%counter = 1%>
+    <%@ads.each do |ad|%>
+    <div>
+        <h4><%"Ad##{counter}"%></h4>
+        <span>Price: </span> <%=ad.price%> <br>
+        <span>Description: </span> <%= ad.description %>
+        <span>Location: </span>
+        <%counter += 1%>
+        <br>
+        <hr>
+        <br>
+    </div>
+    <%end%>
+<%end%>
+<br>
+<%if current_user.seller?%>
+    <%= link_to "Add Address", new_address_path%>
+    <%= link_to "Home", seller_home_path %>
+<%end%>
+
+<br>
+
+<%if current_user.admin?%>
+    <%= link_to "Back to Dashboard", admin_dashboard_path%>
+<%end%>

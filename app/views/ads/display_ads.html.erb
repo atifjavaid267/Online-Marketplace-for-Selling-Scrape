@@ -1,0 +1,15 @@
+<%if @ads == nil || @ads.empty? %>
+    <h3>You created no ad yet</h3>
+<%else%>
+    <h2>Your Ads</h2>
+    <%counter = 1%>
+    <%@ads.each do |ad|%>
+    <div>
+        <h4><%"Ad##{counter}"%></h4>
+        <span>Price: </span> <%=number_to_currency(ad.price, unit="$")%> <br>
+        <span>Description: </span> <%= ad.descriptions %>
+        <span>Location: </span>
+        <%counter += 1%>
+    </div>
+    <%end%>
+<%end%>

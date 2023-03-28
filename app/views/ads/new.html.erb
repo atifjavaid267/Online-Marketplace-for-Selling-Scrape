@@ -3,27 +3,43 @@
 </div>
 
 
-<%= form_with(model: @ad, local: true) do |form| %>
+<%= form_with(model: [@product, @ad], local: true) do |form| %>
+  <!-- <%= form.hidden_field :user_id %> -->
+  <!-- <%= form.hidden_field :product_id %> -->
+
   <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %>
+    <%= form.label :price %> <br>
+    <%= form.number_field :price, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :description %>
+    <%= form.label :description %> <br>
     <%= form.text_area :description, class: "form-control" %>
   </div>
 
   <div class="form-group">
-    <%= form.label :product_image %> <br>
+    <%= form.label :ad_images %> <br>
     <%= form.file_field :ad_images %>
   </div>
 
+  <br>
+
   <!-- Here we will add address -->
-  <div class="form-group">
-    <%= f.label :address_id %>
-    <%= f.collection_select(:address_id, @user_addresses, :street1, :street2, :city, :state) %>
-  </div>
+  <%if @addresses == nil || @addresses.empty? %>
+    <div>
+     <h2>No address available</h2>
+     <h2>First Add your address then add product</h2>
+     <br>
+     <%= link_to "Add Address", new_address_path%>
+    </div>
+  <%else%>
+    <div class="form-group">
+      <%= form.label :address_id, "Select Address" %> <br>
+      <%= form.select :address_id, options_for_select(@addresses.map{ |a| [a.street1, a.street2, a.city, a.zip_code, a.state] }) %>
+      <br>
+      <%= link_to "Add new Address", new_address_path%>
+    </div>
+  <%end%>
 
   <br>
 

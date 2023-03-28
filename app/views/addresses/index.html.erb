@@ -1,0 +1,51 @@
+<div>
+    <%if @addresses.empty?%>
+    <h4 class = "no_product_found"><%= 'No address yet!!!'%></h4>
+    <% else %>
+    <table>
+      <thead>
+        <tr>
+            <th>No.</th>
+            <th>Street 1</th>
+            <th>Street 2</th>
+            <th>City</th>
+            <th>State</th>
+            <th>Zip Code</th>
+            <th>Latitude</th>
+            <th>Longitude</th>
+            <th colspan="2">Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% counter = 1%>
+        <% @addresses.each do |address|%>
+        <tr>
+            <td><%=counter%></td>
+            <td><%= address.street1%></td>
+            <td><%= address.street2%></td>
+            <td><%= address.city%></td>
+            <td><%= address.state%></td>
+            <td><%= address.zip_code%></td>
+            <td><%= address.latitude%></td>
+            <td><%= address.longitude%></td>
+            <td><%= link_to "edit", edit_address_path(address)%></td>
+            <td><%= button_to "delete", address, method: :delete%></td>
+        </tr>
+        <%counter += 1%>
+        <%end%>
+      </tbody>
+    </table>
+    <% end %>
+</div>
+
+<br>
+
+<div>
+    <%= link_to "Add Address", new_address_path%>
+</div>
+<div>
+    <%= link_to "Show Products", products_path%>
+</div>
+<div>
+    <%= link_to "Back to Home", seller_home_path%>
+</div>

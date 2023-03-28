@@ -4,7 +4,13 @@
     <%= image_tag @product.product_image, style: "length: 200px; width: 120px;"%>
     <h4>Product Name: </h4><%= @product.name%>
     <h4>Product Description: </h4><%= @product.description%>
-</div>
+</div>2
+
+<%if current_user.seller?%>
+    <div>
+        <%=link_to "Create Ad", new_product_ad_path(@product)%>
+    </div>
+<%end%>
 
 <br><br>
 
@@ -18,6 +24,6 @@
     </div>
 <%elsif current_user.seller?%>
     <div>
-        <%= link_to "Back to Home", seller_home_path%>
+        <%= link_to "Home Page", seller_home_path%>
     </div>
 <%end%>

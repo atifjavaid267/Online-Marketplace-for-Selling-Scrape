@@ -19,7 +19,6 @@ class User < ApplicationRecord
   has_many :ads
   has_many :addresses
 
-
   ROLES = %w[admin seller buyer].freeze
 
   def admin?
