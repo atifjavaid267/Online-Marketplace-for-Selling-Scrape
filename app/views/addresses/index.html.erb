@@ -20,7 +20,7 @@
         <% counter = 1%>
         <% @addresses.each do |address|%>
         <tr>
-            <td><%=counter%></td>
+            <td><%="#{counter}."%></td>
             <td><%= address.street1%></td>
             <td><%= address.street2%></td>
             <td><%= address.city%></td>

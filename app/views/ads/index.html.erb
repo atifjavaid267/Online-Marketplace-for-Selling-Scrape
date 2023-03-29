@@ -18,7 +18,7 @@
         <span>Description: </span> <%= ad.description %> <br>
 
         <% address = Address.find_by(id: ad.address_id) %>
-        <span>Address: </span> <%= "#{address.street1} #{address.street2}, #{address.city} #{address.zip_code}" %>
+        <span>Address: </span> <%= "#{address.street1} #{address.street2}, #{address.city}, #{address.zip_code}" %>
 
         <%counter += 1%>
         <br>

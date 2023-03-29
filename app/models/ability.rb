@@ -17,6 +17,7 @@ class Ability
 
       can :index, Ad
       can :show, Ad
+      can :destroy, Ad
 
     end
 
@@ -30,6 +31,8 @@ class Ability
 
       can :display_ads, Ad
       can :show, Ad
+      can :edit, Ad
+      can :destroy, Ad
 
     end
 

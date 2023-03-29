@@ -13,7 +13,10 @@
     <span>Address: </span> <%= "#{address.street1} #{address.street2}, #{address.city} #{address.zip_code}" %>
 
 
+
     <br><br>
+    <%= link_to "All Ads", ads_path %>
+    <br>
     <%if current_user.seller?%>
         <%= link_to "edit ad", edit_ad_path(@ad)%>
         <br>
