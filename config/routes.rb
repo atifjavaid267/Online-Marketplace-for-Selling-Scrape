@@ -39,4 +39,9 @@ Rails.application.routes.draw do
 
   resources :addresses
 
+  resources :bids
+  resources :ads do
+    resources :bids, only: [:new, :create]
+  end
+
 end

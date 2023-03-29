@@ -18,6 +18,7 @@ class User < ApplicationRecord
   has_many :products
   has_many :ads
   has_many :addresses
+  has_many :bids
 
   ROLES = %w[admin seller buyer].freeze
 
