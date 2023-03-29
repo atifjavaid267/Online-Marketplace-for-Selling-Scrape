@@ -7,7 +7,7 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
 
-    user ||= User.new
+    # user ||= User.new
 
     if user.admin?
       can :create, Product
@@ -16,16 +16,29 @@ class Ability
       can :destroy, Product
 
       can :index, Ad
+      can :show, Ad
+      can :destroy, Ad
+
     end
 
     if user.seller?
       can :index, Product
       can :show, Product
 
+      can :create, Address
+      can :index, Address
+      can :edit, Address
+
+      can :display_ads, Ad
+      can :show, Ad
+      can :edit, Ad
+      can :destroy, Ad
 
     end
 
-    # if user.buyer?
-    # end
+    if user.buyer?
+      can :index, Ad
+      can :show, Ad
+    end
   end
 end

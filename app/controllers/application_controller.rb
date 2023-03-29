@@ -1,7 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  # before_action :configure_permitted_parameters
-
   private
 
   def configure_permitted_parameters
@@ -17,5 +15,4 @@ class ApplicationController < ActionController::Base
                          :password_confirmation, :current_password)
     end
   end
-
 end

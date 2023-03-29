@@ -1,0 +1,27 @@
+
+<h2 style="text-align: center;">Ad Details</h2>
+<br>
+<div>
+    <% @ad.ad_images.each do |image| %>
+            <%= image_tag image, style: "length: 100px; width: 70px"%>
+            <span> </span>
+    <% end %>
+    <br>
+    <span>Price: </span> <%=@ad.price%> <br>
+    <span>Description: </span> <%= @ad.description %> <br>
+    <% address = Address.find_by(id: @ad.address_id) %>
+    <span>Address: </span> <%= "#{address.street1} #{address.street2}, #{address.city} #{address.zip_code}" %>
+
+
+
+    <br><br>
+    <%= link_to "All Ads", ads_path %>
+    <br>
+    <%if current_user.seller?%>
+        <%= link_to "edit ad", edit_ad_path(@ad)%>
+        <br>
+        <%= button_to "delete ad", @ad, method: :delete%>
+    <%elsif current_user.buyer?%>
+        <%= link_to "Bid" %>
+    <%end%>
+</div>
