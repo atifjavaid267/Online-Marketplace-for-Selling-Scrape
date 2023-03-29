@@ -55,6 +55,10 @@ class AddressesController < ApplicationController
     end
   end
 
+  def to_string
+    "#{street1} #{street2}, #{city}, #{zip_code}, #{state}"
+  end
+
   private
 
   def address_params

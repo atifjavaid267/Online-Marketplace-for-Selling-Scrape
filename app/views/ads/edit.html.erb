@@ -1,12 +1,7 @@
-<div>
-    <h2>New Ad</h2>
-</div>
 
 
-<%= form_with(model: [@product, @ad], local: true) do |form| %>
-  <!-- <%= form.hidden_field :user_id %> -->
-  <!-- <%= form.hidden_field :product_id %> -->
 
+<%= form_with(model: @ad, local: true) do |form| %>
   <div class="form-group">
     <%= form.label :price %> <br>
     <%= form.number_field :price, class: "form-control" %>
@@ -43,19 +38,24 @@
     </div>
   <%end%>
 
+
   <br>
 
   <div class="actions">
-    <%= form.submit "Publish Ad", class: "btn btn-primary" %>
+    <%= form.submit "Update Ad", class: "btn btn-primary" %>
   </div>
 <% end %>
 
 <br>
 
 <div>
-  <%= link_to "Back to Products", products_path%>
+    <%= link_to "View Ad", @ad%>
+</div>
+<div>
+    <%= link_to "Back to Products", products_path%>
 </div>
 
-<div>
-  <%= link_to "Back to Home", seller_home_path%>
-</div>
+  <div>
+    <%= link_to "Back to Home", seller_home_path%>
+  </div>
+

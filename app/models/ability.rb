@@ -34,6 +34,7 @@ class Ability
     end
 
     if user.buyer?
+      can :index, Ad
       can :show, Ad
     end
   end

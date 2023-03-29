@@ -33,7 +33,7 @@ class AdsController < ApplicationController
 
       # byebug
 
-      if @ad.save!
+      if @ad.save
         redirect_to @ad, notice: "Ad was successfully created."
       else
         # render :new
@@ -42,10 +42,29 @@ class AdsController < ApplicationController
     end
   end
 
+  def edit
+    @ad = Ad.find(params[:id])
+  end
+
+  def update
+    @ad = Ad.find(params[:id])
+
+    if @ad.update(ad_params)
+      redirect_to @ad
+    else
+      render :edit
+    end
+  end
+
   def destroy
     @ad = Ad.find(params[:id])
-    @product.destroy
-    redirect_to ads_path, notice: 'Product deleted successfully.'
+    @ad.destroy
+    if current_user.admin?
+      redirect_to ads_path, notice: 'Ad deleted successfully.'
+    else
+      redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
+    end
+
   end
 
   private
