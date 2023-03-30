@@ -1,0 +1,47 @@
+
+<h2 style = "text-align: center;" >All Seller Ads</h2>
+<br><br>
+
+<%if @ads == nil || @ads.empty? %>
+    <h3>created no ad yet</h3>
+<%else%>
+    <%counter = 1%>
+    <%@ads.each do |ad|%>
+    <div>
+        <h4><%="Ad##{counter}."%></h4>
+        <% ad.ad_images.each do |image| %>
+            <%= image_tag image, style: "length: 100px; width: 70px"%>
+        <% end %>
+        <br>
+        <span>User ID: </span> <%= ad.user_id %> <br>
+        <span>Price: </span> <%=ad.price%> <br>
+        <span>Description: </span> <%= ad.description %> <br>
+
+        <% address = Address.find_by(id: ad.address_id) %>
+        <span>Address: </span> <%= "#{address.street1} #{address.street2}, #{address.city}, #{address.zip_code}" %>
+
+        <%counter += 1%>
+        <br>
+        <%if current_user.admin?%>
+            <%= button_to "delete ad", ad, method: :delete%>
+        <%end%>
+        <br>
+        <%if current_user.buyer? %>
+            <%= link_to "View Ad", ad%>
+        <%end%>
+        <hr>
+        <br>
+    </div>
+    <%end%>
+<%end%>
+<br>
+
+<%if current_user.buyer?%>
+    <%= link_to "Home", buyer_home_path %>
+<%end%>
+
+<br>
+
+<%if current_user.admin?%>
+    <%= link_to "Back to Dashboard", admin_dashboard_path%>
+<%end%>

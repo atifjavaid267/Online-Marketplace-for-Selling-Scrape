@@ -1,0 +1,38 @@
+<h2 style = "text-align: center;" >Your Ads</h2>
+<br><br>
+
+<%if @ads == nil || @ads.empty? %>
+    <h3>You created no ad yet</h3>
+<%else%>
+    <h2>Your Ads</h2>
+    <%counter = 1%>
+    <%@ads.each do |ad|%>
+    <div>
+        <h4><%="Ad##{counter}"%></h4>
+
+        <% ad.ad_images.each do |image| %>
+            <%= image_tag image, style: "length: 100px; width: 70px"%>
+        <% end %>
+
+
+        <span>Price: </span> <%= ad.price%> <br>
+        <span>Description: </span> <%= ad.description %> <br>
+
+        <% address = Address.find_by(id: ad.address_id) %>
+        <span>Address: </span> <%= "#{address.street1} #{address.street2}, #{address.city}, #{address.zip_code}" %>
+
+        <%counter += 1%>
+        <br>
+        <br>
+        <%= link_to "edit", edit_ad_path(ad)%>
+        <br>
+        <%= button_to "delete ad", ad, method: :delete%>
+        <br>
+        <hr>
+        <br>
+    </div>
+    <%end%>
+<%end%>
+
+<br><br>
+<%= link_to "Home", seller_home_path %>
