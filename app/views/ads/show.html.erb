@@ -15,17 +15,23 @@
 
 
     <br><br>
-    <%= link_to "All Ads", ads_path %>
-    <br>
-    <%if current_user.seller?%>
+    <%if current_user.admin?%>
+
+        <%= link_to "All Ads", ads_path %>
+    <%elsif current_user.seller?%>
+
         <%= link_to "edit ad", edit_ad_path(@ad)%>
         <br>
         <%= button_to "delete ad", @ad, method: :delete%>
-
+        <br>
+      
+        <%= link_to "View Bids", view_bids_ad_path(@ad)%>
 
     <%elsif current_user.buyer?%>
     <div>
         <%=link_to "Bid", new_ad_bid_path(@ad)%>
+        <br>
+        <%= link_to "All Ads",  ads_path %>
     </div>
 <%end%>
 </div>

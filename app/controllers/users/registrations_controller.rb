@@ -57,9 +57,20 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name phone_no])
   end
 
+  def after_sign_up_path_for(resource)
+    if resource.seller?
+      seller_home_path
+    elsif resource.buyer?
+      buyer_home_path
+    else
+      super(resource)
+    end
+  end
+
   # The path used after sign up.
   # def after_sign_up_path_for(resource)
-  #   super(resource)
+  #  root_path 'devise/sessions#new'
+  #  super(resource)
   # end
 
   # The path used after sign up for inactive accounts.

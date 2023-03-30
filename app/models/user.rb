@@ -1,5 +1,4 @@
 class User < ApplicationRecord
-
   #  provisioning_uri user.generate_totp_secret
   #   user. # This assumes a user model with an email attribute
   # has_secure_password

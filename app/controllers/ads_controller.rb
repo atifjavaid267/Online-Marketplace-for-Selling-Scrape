@@ -23,22 +23,31 @@ class AdsController < ApplicationController
     end
   end
 
+  def view_bids
+    # Retrieve the ad and its bids
+    @ad = Ad.find(params[:id])
+    @bids = @ad.bids
+
+    # Render the view
+    render 'view_bids'
+  end
+
   def create
-    if current_user.seller?
-      # @ad = Ad.new(ad_params)
-      @product = Product.find(params[:product_id])
-      @ad = @product.ads.build(ad_params)
+    return unless current_user.seller?
 
-      @ad.user_id = current_user.id
+    # @ad = Ad.new(ad_params)
+    @product = Product.find(params[:product_id])
+    @ad = @product.ads.build(ad_params)
 
-      # byebug
+    @ad.user_id = current_user.id
 
-      if @ad.save
-        redirect_to @ad, notice: "Ad was successfully created."
-      else
-        # render :new
-        redirect_to new_product_ad_path(@product)
-      end
+    # byebug
+
+    if @ad.save
+      redirect_to @ad, notice: "Ad was successfully created."
+    else
+      # render :new
+      redirect_to new_product_ad_path(@product)
     end
   end
 
@@ -65,7 +74,6 @@ class AdsController < ApplicationController
     else
       redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
     end
-
   end
 
   private
@@ -73,5 +81,4 @@ class AdsController < ApplicationController
   def ad_params
     params.require(:ad).permit(:product_id, :price, :description, :address_id, ad_images: [])
   end
-
 end
