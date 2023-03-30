@@ -1,39 +1,98 @@
 
 
 
-<%= form_with(model: @product, local: true) do |form| %>
-  <div class="form-group">
-    <%= form.label :name %>
-    <%= form.text_field :name, class: "form-control" %>
+<%=render 'users/navbar' %>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+
+  <div class = "pt-5">
+  <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
+    <div class="flex flex-col items-center justify-between space-y-5 "> 
+      <h3>Edit Product</h3>
+      <%= form_with(model: @product, local: true) do |form| %>
+        <div class="field ">
+          <div class="card bg-white p-4 rounded-lg shadow-md">      
+          <div class="form-group mb-4">
+            <%= form.label :name, class: "font-bold mb-2 block" %>
+            <%= form.text_field :name, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
+          </div>
+          <div class="form-group mb-4">
+            <%= form.label :description, class: "font-bold mb-2 block" %>
+            <%= form.text_field :description, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
+          </div>
+          <div class="form-group mb-4">
+            <%= form.label :product_image, class: "font-bold mb-2 block" %>
+            <%= form.file_field :product_image, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
+          </div>
+          <div class="actions">
+            <%= form.submit "Update Product", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+          </div>
+      <% end %><br>
+      <div>
+       <%= link_to "Back to all Products", products_path, class: "py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg" %>
+    </div>
+     <div class="mt-4">
+      <%= link_to "View Product", @product, class: "py-2 px-4 bg-blue-500 hover:bg-blue-600 text-white rounded-lg" %>
+      </div>
+
+    </div>
   </div>
-
-  <div class="form-group">
-    <%= form.label :description %>
-    <%= form.text_area :description, class: "form-control" %>
-  </div>
-
-  <div class="form-group">
-    <%= form.label :product_image %> <br>
-    <%= form.file_field :product_image %>
-  </div>
-  <br>
-
-  <div class="actions">
-    <%= form.submit "Update Product", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<br>
-
-<div>
-    <%= link_to "View Product", @product %>
+</div>
+<div class="flex items-start">
+  <div class="flex items-start">
+    <div class="flex items-center h-500">
+    </div> 
+    </div> 
+  
 </div>
 
-<div>
-    <%= link_to "Back to all Products", products_path%>
-  </div>
 
-  <div>
-    <%= link_to "Back to Dashboard", admin_dashboard_path%>
-  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
