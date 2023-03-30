@@ -21,7 +21,11 @@
         <%= link_to "edit ad", edit_ad_path(@ad)%>
         <br>
         <%= button_to "delete ad", @ad, method: :delete%>
+
+
     <%elsif current_user.buyer?%>
-        <%= link_to "Bid" %>
-    <%end%>
+    <div>
+        <%=link_to "Bid", new_ad_bid_path(@ad)%>
+    </div>
+<%end%>
 </div>

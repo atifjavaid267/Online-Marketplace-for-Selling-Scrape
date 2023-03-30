@@ -5,7 +5,9 @@ class Ad < ApplicationRecord
   # association
   belongs_to :product
   belongs_to :user
+
   has_one :address
+  has_many :bids
 
   # validations
   validates :user_id, presence: true
