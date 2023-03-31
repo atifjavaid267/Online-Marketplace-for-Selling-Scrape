@@ -1,0 +1,14 @@
+<%= render 'users/navbar' %>
+
+<h1 style="text-align: center;">Bids for ad#<%= @ad.id %></h1>
+
+<%if @bids.empty?%>
+  <h3 style="text-align: center;">No bid found!</h3>
+<%else%>
+  <% @bids.each do |bid| %>
+    <div>
+      <p>Buyer: <%= bid.user_id %></p>
+      <p>price: <%= number_to_currency(bid.price) %></p>
+    </div>
+  <% end %>
+<%end%>

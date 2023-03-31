@@ -57,7 +57,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name phone_no])
   end
 
-  # The path used after sign up.
   def after_sign_up_path_for(resource)
     if resource.seller?
       seller_home_path
