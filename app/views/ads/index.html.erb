@@ -1,6 +1,58 @@
+<%=render 'users/navbar' %>
 
-<h2 style = "text-align: center;" >All Seller Ads</h2>
-<br><br>
+
+<div class="grid grid-cols-2 gap-4">
+    <% if @ads == nil || @ads.empty? %>
+      <h3>created no ad yet</h3>
+    <% else %>
+      <% counter = 1 %>
+      <% @ads.each do |ad| %>
+        <div class="border p-4 rounded-lg">
+          <h4 class="font-bold mb-2"><%="Ad-#{counter}."%></h4>
+          <% ad.ad_images.each do |image| %>
+            <%= image_tag image, class: "w-28 h-20 object-cover rounded-lg shadow-md"%>
+          <% end %>
+          <br>
+          <span class="font-bold">User ID:</span> <%= ad.user_id %> <br>
+          <span class="font-bold">Price:</span> <%= ad.price %> <br>
+          <span class="font-bold">Description:</span> <%= ad.description %> <br>
+
+          <% address = Address.find_by(id: ad.address_id) %>
+          <span class="font-bold">Address:</span> <%= "#{address.street1} #{address.street2}, #{address.city}, #{address.zip_code}" %>
+
+          <br><br>
+          <div class="flex space-x-4">
+            <%= link_to "View Ad", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+                <% if current_user.admin? %>
+                    <%= button_to "delete ad", ad, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+                <% end %>
+          </div>
+
+        </div>
+        <% counter += 1 %>
+        <% if counter % 2 == 1 %>
+          </div><div class="grid grid-cols-2 gap-4">
+        <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <% if current_user.buyer? %>
+    <%= link_to "Home", buyer_home_path, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+  <% end %>
+  <br>
+  <% if current_user.admin? %>
+    <%= link_to "Back to Dashboard", admin_dashboard_path, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+  <% end %>
+
+<button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>
+
+
+
+
+
+<!--
+
 
 <%if @ads == nil || @ads.empty? %>
     <h3>created no ad yet</h3>
@@ -22,13 +74,12 @@
 
         <%counter += 1%>
         <br>
+        <%= link_to "View Ad", ad%>
+        <br>
         <%if current_user.admin?%>
             <%= button_to "delete ad", ad, method: :delete%>
         <%end%>
-        <br>
-        <%if current_user.buyer? %>
-            <%= link_to "View Ad", ad%>
-        <%end%>
+
         <hr>
         <br>
     </div>
@@ -44,4 +95,4 @@
 
 <%if current_user.admin?%>
     <%= link_to "Back to Dashboard", admin_dashboard_path%>
-<%end%>
+<%end%> -->

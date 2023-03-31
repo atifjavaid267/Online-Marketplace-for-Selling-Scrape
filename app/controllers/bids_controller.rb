@@ -25,6 +25,15 @@ class BidsController < ApplicationController
     end
   end
 
+
+  def view_bids
+    if current_user.seller?
+      @ad = Ad.find(params[:ad_id])
+      @bids = @ad.bids
+    else
+      redirect_to root_path, alert: 'You are not authorized to perform this action.'
+    end
+  end
   private
 
   def bid_params

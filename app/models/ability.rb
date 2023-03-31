@@ -34,11 +34,15 @@ class Ability
       can :edit, Ad
       can :destroy, Ad
 
+      can :index, Bid
+
     end
 
     if user.buyer?
       can :index, Ad
       can :show, Ad
+
+      can :create, Bid
     end
   end
 end
