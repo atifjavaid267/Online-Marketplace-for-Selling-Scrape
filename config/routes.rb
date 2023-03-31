@@ -8,12 +8,12 @@ Rails.application.routes.draw do
   resource :two_factor_authentication
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
-  # root "users/sessions#new"
 
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   # devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
+    root to: 'devise/sessions#new'
   end
 
   devise_for :users, controllers:
@@ -30,6 +30,8 @@ Rails.application.routes.draw do
   resources :ads
   get 'display_ads' => 'ads#display_ads', as: 'seller_ads'
 
+  resources :bids
+
   resources :products
   resources :products do
     resources :ads, only: [:new, :create]
@@ -39,9 +41,9 @@ Rails.application.routes.draw do
 
   resources :addresses
 
-  resources :bids
+
   resources :ads do
-    resources :bids, only: [:new, :create]
+    resources :bids, only: [:new, :create,:index ]
   end
 
 end
