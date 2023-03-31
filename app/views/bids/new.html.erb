@@ -1,30 +1,24 @@
-<div style="text-align: center;">
-    <h2>Create Bid</h2>
-</div>
 
+<%=render 'users/navbar' %>
 
-<%= form_with(model: [@ad, @bid], local: true) do |form| %>
-  <!-- <%= form.hidden_field :user_id %> -->
-  <!-- <%= form.hidden_field :ad_id %> -->
+<div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
 
-  <div class="form-group">
-    <%= form.label :price %> <br>
-    <%= form.number_field :price, class: "form-control" %>
+  <div class = "pt-5 mx-12" style="display: flex; justify-content: center; align-items: center;">
+  <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
+    <div class="flex flex-col items-center justify-between space-y-5 ">
+      <h3>Creating Bid</h3>
+        <div class="card bg-white p-4 rounded-lg shadow-md">
+          <%= form_with(model: [@ad, @bid], local: true) do |form| %>
+            <div class=form-group mb-4">
+              <%= form.label :price %> <br>
+              <%= form.number_field :price, class: "form-control" %>
+            </div>
+            <br>
+            <div class="actions">
+              <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            </div>
+          <% end %>
+        </div>
+    </div>
   </div>
-
-  <br>
-
-  <div class="actions">
-    <%= form.submit "Submit", class: "btn btn-primary" %>
-  </div>
-<% end %>
-
-<br>
-
-<div>
-  <%= link_to "Back to Products", products_path%>
-</div>
-
-<div>
-  <%= link_to "Back to Home", buyer_home_path%>
 </div>
