@@ -1,40 +1,46 @@
 <%= render 'users/navbar' %>
-<h2 style = "text-align: center;" >Your Ads</h2>
-<br><br>
+<br>
 
-<%if @ads == nil || @ads.empty? %>
-    <h3>You created no ad yet</h3>
-<%else%>
-    <h2>Your Ads</h2>
-    <%counter = 1%>
-    <%@ads.each do |ad|%>
-    <div>
-        <h4><%="Ad##{counter}"%></h4>
+<div class="grid grid-cols-2 gap-4">
+    <% if @ads == nil || @ads.empty? %>
+      <h3 style="text-align: center;">created no ad yet</h3>
+    <% else %>
+      <% counter = 1 %>
+      <% @ads.each do |ad| %>
+        <div class="border p-4 rounded-lg">
+          <h4 class="font-bold mb-2"><%="Ad-#{counter}."%></h4>
+          <% ad.ad_images.each do |image| %>
+            <%= image_tag image, class: "w-28 h-20 object-cover rounded-lg shadow-md"%>
+          <% end %>
+          <br>
+          <span class="font-bold">User ID:</span> <%= ad.user_id %> <br>
+          <span class="font-bold">Price:</span> <%= ad.price %> <br>
+          <span class="font-bold">Description:</span> <%= ad.description %> <br>
 
-        <% ad.ad_images.each do |image| %>
-            <%= image_tag image, style: "length: 100px; width: 70px"%>
+          <% address = Address.find_by(id: ad.address_id) %>
+          <span class="font-bold">Address:</span> <%= "#{address.street1} #{address.street2}, #{address.city}, #{address.zip_code}" %>
+
+          <div class="flex space-x-4">
+            <%= link_to "View Ad", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+
+            <%= button_to "delete ad", ad, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+
+          </div>
+
+        </div>
+        <% counter += 1 %>
+        <% if counter % 2 == 1 %>
+          </div><div class="grid grid-cols-2 gap-4">
         <% end %>
+      <% end %>
+    <% end %>
+  </div>
+
+  <br>
+
+  <% if current_user.seller? %>
+    <%= link_to "Home", seller_home_path, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin-left: 10px;"%>
+  <% end %>
+<button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>
 
 
-        <span>Price: </span> <%= ad.price%> <br>
-        <span>Description: </span> <%= ad.description %> <br>
-
-        <% address = Address.find_by(id: ad.address_id) %>
-        <span>Address: </span> <%= "#{address.street1} #{address.street2}, #{address.city}, #{address.zip_code}" %>
-
-        <%counter += 1%>
-        <br>
-        <br>
-        <%= link_to "edit", edit_ad_path(ad)%>
-        <br>
-        <%= button_to "delete ad", ad, method: :delete%>
-        <br>
-        <%= link_to "view ad", ad %>
-        <hr>
-        <br>
-    </div>
-    <%end%>
-<%end%>
-
-<br><br>
-<%= link_to "Home", seller_home_path %>

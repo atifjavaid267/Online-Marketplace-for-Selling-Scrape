@@ -1,51 +1,48 @@
-<div>
-    <%if @addresses.empty?%>
-    <h4 class = "no_product_found"><%= 'No address yet!!!'%></h4>
-    <% else %>
-    <table>
+<%= render 'users/navbar' %>
+
+
+<div class="py-8">
+  <% if @addresses.empty? %>
+    <h4 class="text-center text-gray-600 mb-4">No address yet!!!</h4>
+  <% else %>
+    <table class="w-full table-auto">
       <thead>
-        <tr>
-            <th>No.</th>
-            <th>Street 1</th>
-            <th>Street 2</th>
-            <th>City</th>
-            <th>State</th>
-            <th>Zip Code</th>
-            <th>Latitude</th>
-            <th>Longitude</th>
-            <th colspan="2">Actions</th>
+        <tr class="bg-gray-200 text-gray-800 text-left font-bold">
+          <th class="px-4 py-2">No.</th>
+          <th class="px-4 py-2">Street 1</th>
+          <th class="px-4 py-2">Street 2</th>
+          <th class="px-4 py-2">City</th>
+          <th class="px-4 py-2">State</th>
+          <th class="px-4 py-2">Zip Code</th>
+          <th class="px-4 py-2">Latitude</th>
+          <th class="px-4 py-2">Longitude</th>
+          <th class="px-4 py-2" colspan="2">Actions</th>
         </tr>
       </thead>
       <tbody>
-        <% counter = 1%>
-        <% @addresses.each do |address|%>
-        <tr>
-            <td><%="#{counter}."%></td>
-            <td><%= address.street1%></td>
-            <td><%= address.street2%></td>
-            <td><%= address.city%></td>
-            <td><%= address.state%></td>
-            <td><%= address.zip_code%></td>
-            <td><%= address.latitude%></td>
-            <td><%= address.longitude%></td>
-            <td><%= link_to "edit", edit_address_path(address)%></td>
-            <td><%= button_to "delete", address, method: :delete%></td>
-        </tr>
-        <%counter += 1%>
-        <%end%>
+        <% counter = 1 %>
+        <% @addresses.each do |address| %>
+          <tr class="<%= cycle('bg-white', 'bg-gray-100') %>">
+            <td class="px-4 py-2"><%="#{counter}."%></td>
+            <td class="px-4 py-2"><%= address.street1 %></td>
+            <td class="px-4 py-2"><%= address.street2 %></td>
+            <td class="px-4 py-2"><%= address.city %></td>
+            <td class="px-4 py-2"><%= address.state %></td>
+            <td class="px-4 py-2"><%= address.zip_code %></td>
+            <td class="px-4 py-2"><%= address.latitude %></td>
+            <td class="px-4 py-2"><%= address.longitude %></td>
+            <td class="px-4 py-2"><%= link_to "edit", edit_address_path(address), class: "bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded" %></td>
+            <td class="px-4 py-2"><%= button_to "delete", address, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
+          </tr>
+          <% counter += 1 %>
+        <% end %>
       </tbody>
     </table>
-    <% end %>
+  <% end %>
 </div>
 
-<br>
+<div class="flex justify-between items-center py-8">
+  <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" %>
+</div>
 
-<div>
-    <%= link_to "Add Address", new_address_path%>
-</div>
-<div>
-    <%= link_to "Show Products", products_path%>
-</div>
-<div>
-    <%= link_to "Back to Home", seller_home_path%>
-</div>
+<button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>

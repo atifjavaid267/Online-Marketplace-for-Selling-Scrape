@@ -23,6 +23,7 @@ Rails.application.routes.draw do
   resources :ads
   get 'display_ads' => 'ads#display_ads', as: 'seller_ads'
   resources :bids
+
   resources :products
   resources :products do
     resources :ads, only: %i[new create]
@@ -30,9 +31,11 @@ Rails.application.routes.draw do
   # get '/products/:product_id/ads/new', to:   'ads#new'
   # post '/products/:product_id/ads', to:      'ads#create'
   resources :addresses
+
   resources :ads do
     resources :bids, only: %i[new create]
     get 'view_bids', on: :member
     # get '/ads/:ad_id/bids/view_bids', to: 'bids#view_bids', as: 'view_bids_ad_bid'
+
   end
 end

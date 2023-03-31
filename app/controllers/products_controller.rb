@@ -18,7 +18,7 @@ class ProductsController < ApplicationController
       if @product.save
         redirect_to @product, notice: 'Product was successfully created.'
       else
-        render :new
+        render :new, notice: 'Failed to create Product.'
       end
     else
       redirect_to root_path, alert: 'You are not authorized to perform this action.'
