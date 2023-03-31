@@ -1,15 +1,57 @@
+<%=render 'users/navbar' %>
 
-<%= render "users/navbar"%>
 
-    <H2>Buyer Dashboard</H2>
-</div>
-<div>
-<%= link_to "View ads", ads_path%>
-</div>
-<div>
-    <%= link_to "View ads", ads_path%>
-</div>
 
-<div>
-    <%=link_to "Sign Out", destroy_user_session_path%>
+<% ads = Ad.all %>
+
+<% if ads == nil || ads.empty? %>
+    <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+        <div class = "pt-5">
+            <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
+                <h1 class="text-center font-bold">Sorry</h1>
+                <h1 class="text-center font-bold">No ad is available to show!</h1>
+            </div>
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>
+        </div>
+    </div>
+<% else %>
+
+<div class="bg-cover bg-no-repeat h-screen " style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+    <div class = "pt-5">
+
+            <div class="grid grid-cols-1 gap-4">
+                <% counter = 1 %>
+
+                <% ads.each do |ad| %>
+                    <div class="p-4 rounded-lg bg-gray-800" style="color: white; margin: 5px 200px; display: flex; opacity: 0.95">
+                        <div class="flex-grow">
+                            <h4 class="font-bold mb-2"><%="Ad - #{sprintf('%02d', counter)}"%></h4>
+                            <br>
+                            <% product = Product.find_by(id: ad.product_id) %>
+                            <% address = Address.find_by(id: ad.address_id) %>
+
+                            <span class="font-bold">Name:</span> <%= product.name %> <br>
+                            <span class="font-bold">Price:</span> <%= ad.price %> <br>
+
+                            <span class="font-bold">Address:</span> <%= "#{address.street1} #{address.street2}, #{address.city}, #{address.zip_code}" %>
+                            <div class="flex space-x-4" style="margin-top: 5px;">
+                                <%= link_to "Bid", new_ad_bid_path(ad), class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: " margin-top: 5px;"%>
+                                <%= link_to "View", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin-top: 5px;" %>
+
+                                <% if current_user.admin? %>
+                                    <%= button_to "delete ad", ad, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+                                <% end %>
+                            </div>
+                        </div>
+                        <% ad.ad_images.each do |image| %>
+                            <div class="flex-none ml-4">
+                                <%= image_tag image, class: "w-25 h-20 object-cover rounded-lg shadow-md", style: "height: 180px; width: 180px;" %>
+                            </div>
+                        <% end %>
+                    </div>
+                    <% counter += 1 %>
+                <% end %>
+            </div>
+        <% end %>
+    </div>
 </div>
