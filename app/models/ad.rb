@@ -15,5 +15,7 @@ class Ad < ApplicationRecord
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true
-
+  validates :price, presence: true
+  validates :description, presence: true
+  validates :ad_images, presence: true
 end
