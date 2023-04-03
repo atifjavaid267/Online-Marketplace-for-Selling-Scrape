@@ -19,8 +19,6 @@ class User < ApplicationRecord
   has_many :addresses
   has_many :bids
 
-  validates :username, presence: true, uniqueness: true
-
   ROLES = %w[admin seller buyer].freeze
 
   def admin?
