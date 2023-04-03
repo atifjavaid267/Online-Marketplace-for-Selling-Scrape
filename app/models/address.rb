@@ -3,5 +3,10 @@ class Address < ApplicationRecord
   belongs_to :user
 
   # validations
-  # validates :user_id, presence: true
+  validates :user_id, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
+  validates :zip_code, presence: true
+  validates :latitude, presence: true
+  validates :longitude, presence: true
 end
