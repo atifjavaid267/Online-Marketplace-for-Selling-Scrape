@@ -5,7 +5,6 @@ require "rails/all"
 require "active_storage/attached"
 require "active_storage/engine"
 
-
 ActiveSupport.on_load(:active_record) do
   include ActiveStorage::Reflection::ActiveRecordExtensions
   ActiveRecord::Reflection.singleton_class.prepend(ActiveStorage::Reflection::ReflectionExtension)
@@ -20,6 +19,8 @@ module OnlineSellingScrape
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.1
+    # config/application.rb
+    # config.middleware.use ActionCable.server
 
     # Configuration for the application, engines, and railties goes here.
     #

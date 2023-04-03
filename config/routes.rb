@@ -36,6 +36,5 @@ Rails.application.routes.draw do
     resources :bids, only: %i[new create]
     get 'view_bids', on: :member
     # get '/ads/:ad_id/bids/view_bids', to: 'bids#view_bids', as: 'view_bids_ad_bid'
-
   end
 end
