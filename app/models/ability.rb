@@ -10,6 +10,7 @@ class Ability
     # user ||= User.new
 
     if user.admin?
+
       can :create, Product
       can :index, Product
       can :show, Product
@@ -22,6 +23,9 @@ class Ability
     end
 
     if user.seller?
+
+      can :home, Seller
+
       can :index, Product
       can :show, Product
 
@@ -34,15 +38,17 @@ class Ability
       can :edit, Ad
       can :destroy, Ad
 
+      cannot :index, Ad
+
       can :index, Bid
 
     end
 
-    if user.buyer?
-      can :index, Ad
-      can :show, Ad
+    return unless user.buyer?
 
-      can :create, Bid
-    end
+    can :index, Ad
+    can :show, Ad
+
+    can :create, Bid
   end
 end

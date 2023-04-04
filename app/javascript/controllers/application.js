@@ -1,3 +1,5 @@
+console.log("Hello, checking console!")
+
 import { Application } from "@hotwired/stimulus"
 
 const application = Application.start()

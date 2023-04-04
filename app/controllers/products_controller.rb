@@ -4,24 +4,18 @@ class ProductsController < ApplicationController
   end
 
   def new
-    if current_user.admin?
-      @product = Product.new
-    else
-      redirect_to root_path, alert: 'You are not authorized to perform this action.'
-    end
+    @product = Product.new
   end
 
   def create
-    if current_user.admin?
-      @product = Product.new(product_params)
-      @product.user_id = current_user.id
-      if @product.save
-        redirect_to @product, notice: 'Product was successfully created.'
-      else
-        render :new, notice: 'Failed to create Product.'
-      end
+    @product = Product.new(product_params)
+    @product.user_id = current_user.id
+
+    if @product.save
+      redirect_to @product, notice: 'Product was successfully created.'
     else
-      redirect_to root_path, alert: 'You are not authorized to perform this action.'
+      # flash[:notice] = 'Failed to create Product.'
+      redirect_to new_product_path, notice: 'Failed to create Product.'
     end
   end
 
@@ -44,12 +38,15 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    if current_user.admin?
-      @product = Product.find(params[:id])
+    @product = Product.find(params[:id])
+
+    @ads = Ad.all
+
+    if Ad.find_by(product_id: @product.id)
+      redirect_to products_path, alert: 'Product cannot be deleted!'
+    else
       @product.destroy
       redirect_to products_path, notice: 'Product deleted successfully.'
-    else
-      redirect_to root_path, alert: 'You are not authorized to access this page.'
     end
   end
 

@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::Base
-  
+  # for flash messages
+  add_flash_types :info, :error, :warning
+
+  # load_and_authorize_resource
+
   private
 
   def configure_permitted_parameters
@@ -15,5 +19,4 @@ class ApplicationController < ActionController::Base
                          :password_confirmation, :current_password)
     end
   end
-
 end

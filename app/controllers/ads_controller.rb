@@ -12,15 +12,11 @@ class AdsController < ApplicationController
   end
 
   def new
-    if current_user.seller?
-      @product = Product.find(params[:product_id])
-      @ad = @product.ads.new
+    @product = Product.find(params[:product_id])
+    @ad = @product.ads.new
 
-      @ad.user_id = current_user.id
-      @addresses = current_user.addresses
-    else
-      redirect_to root_path, alert: 'You are not authorized to perform this action.'
-    end
+    @ad.user_id = current_user.id
+    @addresses = current_user.addresses
   end
 
   def view_bids
@@ -41,12 +37,9 @@ class AdsController < ApplicationController
 
     @ad.user_id = current_user.id
 
-    # byebug
-
     if @ad.save
-      redirect_to @ad, notice: "Ad was successfully created."
+      redirect_to @ad, notice: 'Ad was successfully created.'
     else
-      # render :new
       redirect_to new_product_ad_path(@product)
     end
   end
@@ -68,11 +61,20 @@ class AdsController < ApplicationController
 
   def destroy
     @ad = Ad.find(params[:id])
-    @ad.destroy
-    if current_user.admin?
-      redirect_to ads_path, notice: 'Ad deleted successfully.'
+
+    if Bid.find_by(ad_id: @ad.id)
+      if current_user.admin?
+        redirect_to ads_path, alert: 'Ad cannot be deleted!'
+      else
+        redirect_to seller_ads_path, alert: 'Ad cannot be deleted!'
+      end
     else
-      redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
+      @ad.destroy
+      if current_user.admin?
+        redirect_to ads_path, notice: 'Ad deleted successfully.'
+      else
+        redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
+      end
     end
   end
 
