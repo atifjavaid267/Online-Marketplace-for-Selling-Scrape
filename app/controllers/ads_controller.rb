@@ -76,7 +76,11 @@ class AdsController < ApplicationController
     else
       @ad.destroy
       if current_user.admin?
-        redirect_to ads_path, notice: 'Ad deleted successfully.'
+        if flag
+          redirect_to ads_path, notice: 'Ad deleted successfully.'
+        else
+          redirect_to archives_ads_path, notice: 'Ad deleted successfully.'
+        end
       else
         if flag
           redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
