@@ -78,6 +78,12 @@ class AdsController < ApplicationController
     end
   end
 
+  def toggle_status
+    @ad = Ad.find(params[:id])
+    @ad.update_attribute(:status, !@ad.status)
+    redirect_to seller_ads_path
+  end
+
   private
 
   def ad_params

@@ -50,6 +50,12 @@ class ProductsController < ApplicationController
     end
   end
 
+  def toggle_status
+    @product = Product.find(params[:id])
+    @product.update_attribute(:status, !@product.status)
+    redirect_to products_path
+  end
+
   private
 
   def product_params

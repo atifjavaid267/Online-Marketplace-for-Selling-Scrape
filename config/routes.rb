@@ -27,14 +27,19 @@ Rails.application.routes.draw do
   resources :products
   resources :products do
     resources :ads, only: %i[new create]
+    member do
+      post :toggle_status
+    end
   end
-  # get '/products/:product_id/ads/new', to:   'ads#new'
-  # post '/products/:product_id/ads', to:      'ads#create'
+
   resources :addresses
 
   resources :ads do
     resources :bids, only: %i[new create]
     get 'view_bids', on: :member
     # get '/ads/:ad_id/bids/view_bids', to: 'bids#view_bids', as: 'view_bids_ad_bid'
+    member do
+      post :toggle_status
+    end
   end
 end
