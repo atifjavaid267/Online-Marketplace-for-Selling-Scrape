@@ -1,8 +1,5 @@
 
-
 <%=render 'users/navbar' %>
-
-<br>
 
 <div class="flex flex-row items-center justify-center">
     <div class="flex flex-row items-start justify-start my-20 w-full max-w-2xl">
@@ -29,7 +26,11 @@
           <% if current_user.admin? %>
             <div class="flex justify-between">
               <%= link_to "View Bids", view_bids_ad_path, class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
-              <%= link_to "Back to Ads", ads_path, class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+              <% if @ad.status %>
+                <%= link_to "Back to Ads", ads_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+              <%else%>
+                <%= link_to "Back to Archive Ads", archives_ads_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+              <%end%>
             </div>
           <% elsif current_user.seller? %>
             <div class="flex justify-between">
@@ -48,7 +49,7 @@
     <div>
       <% if @ad.ad_images.attached? %>
         <% @ad.ad_images.each do |image| %>
-            <%= image_tag image, style: "length: 100px; width: 70px"%>
+            <%= image_tag image, style: "length: 200px; width: 200px"%>
             <span> </span>
         <% end %>
     <% end %>

@@ -22,6 +22,7 @@ class Ability
       can :index, Ad
       can :show, Ad
       can :destroy, Ad
+      can :archives, Ad
 
     end
 

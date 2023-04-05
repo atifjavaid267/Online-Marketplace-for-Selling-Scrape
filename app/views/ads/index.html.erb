@@ -24,7 +24,6 @@
     <div class="grid grid-cols-2 gap-4">
       <% counter = 1 %>
       <% @ads.each do |ad| %>
-        <%next if !ad.status && current_user.buyer? %>
         <div class="border p-4 rounded-lg">
           <h4 class="font-bold mb-2"><%="Ad-#{counter}."%></h4>
           <% ad.ad_images.each do |image| %>

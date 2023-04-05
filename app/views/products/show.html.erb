@@ -13,7 +13,11 @@
         <%= link_to "Create Ad", new_product_ad_path(@product), class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out"%>
       <% end %>
       <div>
-        <%= link_to "Back to Products", products_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
+        <%if @product.status %>
+          <%= link_to "Back to Products", products_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
+        <%else%>
+          <%= link_to "Back to Archive Products",  archives_products_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
+        <%end%>
       </div>
     </div>
     <div class="w-72 h-40 ml-8">

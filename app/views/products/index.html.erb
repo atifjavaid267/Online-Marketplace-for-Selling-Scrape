@@ -36,7 +36,6 @@
       </thead>
       <tbody class="text-gray-600 text-sm font-light">
         <% @products.each do |product|%>
-          <%next if !product.status %>
           <tr class="border-b border-gray-200 hover:bg-gray-100">
             <td class="py-3 px-6 text-left whitespace-nowrap font-bold"><%= product.name%></td>
             <% if product.product_image.attached? %>

@@ -1,6 +1,6 @@
 class AdsController < ApplicationController
   def index
-    @ads = Ad.all
+    @ads = Ad.all.where(status: true)
   end
 
   def display_ads
@@ -61,19 +61,28 @@ class AdsController < ApplicationController
 
   def destroy
     @ad = Ad.find(params[:id])
+    flag = @ad.status
 
     if Bid.find_by(ad_id: @ad.id)
       if current_user.admin?
         redirect_to ads_path, alert: 'Ad cannot be deleted!'
       else
-        redirect_to seller_ads_path, alert: 'Ad cannot be deleted!'
+        if flag
+          redirect_to seller_ads_path, alert: 'Ad cannot be deleted!'
+        else
+          redirect_to archives_ads_path, alert: 'Ad cannot be deleted!'
+        end
       end
     else
       @ad.destroy
       if current_user.admin?
         redirect_to ads_path, notice: 'Ad deleted successfully.'
       else
-        redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
+        if flag
+          redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
+        else
+          redirect_to archives_ads_path, notice: 'Ad deleted successfully.'
+        end
       end
     end
   end
@@ -91,7 +100,11 @@ class AdsController < ApplicationController
   end
 
   def archives
-    @archive_ads = current_user.ads.where(status: false)
+    if current_user.admin?
+      @archive_ads = Ad.where(status: false)
+    elsif current_user.seller?
+      @archive_ads = current_user.ads.where(status: false)
+    end
   end
 
   private
