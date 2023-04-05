@@ -15,6 +15,9 @@ class Ability
       can :index, Product
       can :show, Product
       can :destroy, Product
+      can :publish, Product
+      can :unpublish, Product
+      can :archives, Product
 
       can :index, Ad
       can :show, Ad
@@ -29,6 +32,7 @@ class Ability
       can :index, Product
       can :show, Product
 
+
       can :create, Address
       can :index, Address
       can :edit, Address
@@ -37,6 +41,9 @@ class Ability
       can :show, Ad
       can :edit, Ad
       can :destroy, Ad
+      can :publish, Ad
+      can :unpublish, Ad
+      can :archives, Ad
 
       cannot :index, Ad
 

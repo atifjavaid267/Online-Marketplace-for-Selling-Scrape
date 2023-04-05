@@ -50,10 +50,20 @@ class ProductsController < ApplicationController
     end
   end
 
-  def toggle_status
+  def publish
+    @product = Product.find(params[:id])
+    @product.update_attribute(:status, !@product.status)
+    redirect_to archives_products_path
+  end
+
+  def unpublish
     @product = Product.find(params[:id])
     @product.update_attribute(:status, !@product.status)
     redirect_to products_path
+  end
+
+  def archives
+    @archive_products = Product.where(status: false)
   end
 
   private

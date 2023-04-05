@@ -4,7 +4,7 @@ class AdsController < ApplicationController
   end
 
   def display_ads
-    @ads = current_user.ads
+    @ads = current_user.ads.where(status: true)
   end
 
   def show
@@ -78,10 +78,20 @@ class AdsController < ApplicationController
     end
   end
 
-  def toggle_status
+  def publish
+    @ad = Ad.find(params[:id])
+    @ad.update_attribute(:status, !@ad.status)
+    redirect_to archives_ads_path
+  end
+
+  def unpublish
     @ad = Ad.find(params[:id])
     @ad.update_attribute(:status, !@ad.status)
     redirect_to seller_ads_path
+  end
+
+  def archives
+    @archive_ads = current_user.ads.where(status: false)
   end
 
   private

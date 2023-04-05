@@ -1,19 +1,10 @@
 <%= render 'users/navbar'%>
 
-<% flag = true %>
-<% if @products.empty? %>
-  <% flag = false %>
-<% elsif current_user.seller? %>
-  <% unless @products.find_by(status: true) %>
-    <% flag = false%>
-  <%end%>
-<% end %>
-
-<%if !flag %>
+<%if @archive_products.empty? %>
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
     <div class = "pt-5">
       <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
-        <h1 class="text-center font-bold">No Product Available!</h1>
+        <h1 class="text-center font-bold">No Product is Archived!</h1>
       </div>
       <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 100px;" onclick="window.history.back();">Back</button>
     </div>
@@ -27,32 +18,22 @@
 
           <th class="py-3 px-6 text-left"> Image</th>
           <th class="py-3 px-6 text-left"> Description</th>
-          <%if current_user.admin?%>
-            <th class="py-3 px-6 text-center" colspan="4">Actions</th>
-          <%elsif current_user.seller?%>
-            <th class="py-3 px-6 text-center">View Product Details</th>
-          <%end%>
+          <th class="py-3 px-6 text-center" colspan="4">Actions</th>
         </tr>
       </thead>
       <tbody class="text-gray-600 text-sm font-light">
-        <% @products.each do |product|%>
-          <%next if !product.status %>
+        <% @archive_products.each do |product|%>
           <tr class="border-b border-gray-200 hover:bg-gray-100">
             <td class="py-3 px-6 text-left whitespace-nowrap font-bold"><%= product.name%></td>
             <% if product.product_image.attached? %>
               <td class="py-3 px-6 text-left"><%= image_tag product.product_image, style: "length: 100px; width: 70px"%></td>
             <%end%>
             <td class="py-3 px-6 text-left"><%= product.description%></td>
-            <td class="py-3 px-6 text-center">
-               <%= link_to "view", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%>
-            </td>
-            <%if current_user.admin? %>
-              <td class="py-3 px-6 text-center"><%= link_to "edit", edit_product_path(product), class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-              <td class="py-3 px-6 text-center"><%= button_to "Unpublish", unpublish_product_path(product), method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-              <td class="py-3 px-6 text-center"><%= button_to "delete", product, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <%end%>
+            <td class="py-3 px-6 text-center"> <%= link_to "view", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <td class="py-3 px-6 text-center"><%= link_to "edit", edit_product_path(product), class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <td class="py-3 px-6 text-center"><%= button_to "publish", publish_product_path(product), method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <td class="py-3 px-6 text-center"><%= button_to "delete", product, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
           </tr>
-
         <%end%>
       </tbody>
     </table>
@@ -60,12 +41,6 @@
 <% end %>
 
 
-
-<%if current_user.admin?%>
-  <div class="my-6 flex justify-center">
-    <%= link_to "Add Product", new_product_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"%>
-  </div>
-<%end%>
 
 <!-- <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px; margin-bottom: 10px;" onclick="window.history.back();">Back</button> -->
 
