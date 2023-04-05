@@ -1,31 +1,20 @@
 class AddressesController < ApplicationController
-
   def index
     @addresses = current_user.addresses
   end
 
   def new
-    if current_user.seller?
-      @address = Address.new
-      # @address.user_id = current_user.id
-    else
-      redirect_to root_path, alert: 'You are not authorized to perform this action.'
-    end
+    @address = Address.new
+    # @address.user_id = current_user.id
   end
 
   def create
-    if current_user.seller?
-      @address = current_user.addresses.build(address_params)
-      # @address.user_id = current_user.id
-      # byebug
-      if @address.save
+    @address = current_user.addresses.build(address_params)
 
-        redirect_to addresses_path, notice: "Address was successfully created."
-      else
-        render :new
-      end
+    if @address.save
+      redirect_to addresses_path, notice: 'Address was successfully created.'
     else
-      redirect_to root_path, alert: 'You are not authorized to perform this action.'
+      redirect_to new_address_path, notice: 'Address was not found'
     end
   end
 
@@ -39,24 +28,21 @@ class AddressesController < ApplicationController
     @address.user_id = current_user.id
 
     if @address.update(address_params)
-      redirect_to addresses_path
+      redirect_to addresses_path, notice: 'Address was successfully updated'
     else
-      render :edit
+      redirect_to edit_address_path, notice: 'address was not updated'
     end
   end
 
   def destroy
-    if current_user.seller?
-      @address = Address.find(params[:id])
+    @address = Address.find(params[:id])
+
+    if Ad.find_by(address_id: @address.id)
+      redirect_to addresses_path, alert: 'Address cannot be deleted!'
+    else
       @address.destroy
       redirect_to addresses_path, notice: 'Address deleted successfully.'
-    else
-      redirect_to root_path, alert: 'You are not authorized to access this page.'
     end
-  end
-
-  def to_string
-    "#{street1} #{street2}, #{city}, #{zip_code}, #{state}"
   end
 
   private

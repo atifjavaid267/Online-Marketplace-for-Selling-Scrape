@@ -34,13 +34,13 @@
           <% elsif current_user.seller? %>
             <div class="flex justify-between">
               <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin: 2px;" onclick="window.history.back();">Back</button>
-              <%= link_to "Edit Ad", edit_ad_path(@ad), class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+              <%= link_to "Edit Ad", edit_ad_path(@ad), class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
               <%= link_to "View Bids", view_bids_ad_path, class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
             </div>
 
           <% elsif current_user.buyer? %>
               <%= link_to "Bid", new_ad_bid_path(@ad), class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
-              <%= link_to "Back", buyer_home_path, class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+              <%= link_to "Back", buyer_home_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
           <% end %>
 
           </div>
