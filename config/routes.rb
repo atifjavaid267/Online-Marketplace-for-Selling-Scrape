@@ -20,21 +20,37 @@ Rails.application.routes.draw do
   get '/users/admin/dashboard' => 'users/admin#dashboard', as: 'admin_dashboard'
   get '/users/seller/home' => 'users/seller#home', as: 'seller_home'
   get '/users/buyer/home' => 'users/buyer#home', as: 'buyer_home'
-  resources :ads
+  # resources :ads
   get 'display_ads' => 'ads#display_ads', as: 'seller_ads'
   resources :bids
 
-  resources :products
+  # resources :products
   resources :products do
     resources :ads, only: %i[new create]
+    member do
+      post :publish
+      post :unpublish
+    end
+    collection do
+      get 'archives' => 'products#archives'
+    end
   end
-  # get '/products/:product_id/ads/new', to:   'ads#new'
-  # post '/products/:product_id/ads', to:      'ads#create'
+
+
+
   resources :addresses
 
   resources :ads do
     resources :bids, only: %i[new create]
     get 'view_bids', on: :member
-    # get '/ads/:ad_id/bids/view_bids', to: 'bids#view_bids', as: 'view_bids_ad_bid'
+    member do
+      post :publish
+      post :unpublish
+    end
+    collection do
+      get 'archives' => 'ads#archives'
+    end
+
   end
+
 end

@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all
+    @products = Product.all.where(status: true)
   end
 
   def new
@@ -39,15 +39,35 @@ class ProductsController < ApplicationController
 
   def destroy
     @product = Product.find(params[:id])
-
     @ads = Ad.all
 
     if Ad.find_by(product_id: @product.id)
       redirect_to products_path, alert: 'Product cannot be deleted!'
     else
+      flag = @product.status
       @product.destroy
-      redirect_to products_path, notice: 'Product deleted successfully.'
+      if flag
+        redirect_to products_path, notice: 'Product deleted successfully.'
+      else
+        redirect_to archives_products_path, notice: 'Product deleted successfully.'
+      end
     end
+  end
+
+  def publish
+    @product = Product.find(params[:id])
+    @product.update_attribute(:status, !@product.status)
+    redirect_to archives_products_path
+  end
+
+  def unpublish
+    @product = Product.find(params[:id])
+    @product.update_attribute(:status, !@product.status)
+    redirect_to products_path
+  end
+
+  def archives
+    @archive_products = Product.where(status: false)
   end
 
   private
