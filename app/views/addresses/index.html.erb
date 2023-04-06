@@ -14,12 +14,10 @@
   </div>
 </div>
 <% else %>
-
 <div class="py-8">
     <table class="w-full table-auto">
       <thead>
         <tr class="bg-gray-200 text-gray-800 text-left font-bold">
-          <th class="px-4 py-2">No.</th>
           <th class="px-4 py-2">Street 1</th>
           <th class="px-4 py-2">Street 2</th>
           <th class="px-4 py-2">City</th>
@@ -31,10 +29,8 @@
         </tr>
       </thead>
       <tbody>
-        <% counter = 1 %>
         <% @addresses.each do |address| %>
           <tr class="<%= cycle('bg-white', 'bg-gray-100') %>">
-            <td class="px-4 py-2"><%="#{counter}."%></td>
             <td class="px-4 py-2"><%= address.street1 %></td>
             <td class="px-4 py-2"><%= address.street2 %></td>
             <td class="px-4 py-2"><%= address.city %></td>
@@ -45,14 +41,18 @@
             <td class="px-4 py-2"><%= link_to "edit", edit_address_path(address), class: "bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded" %></td>
             <td class="px-4 py-2"><%= button_to "delete", address, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
           </tr>
-          <% counter += 1 %>
         <% end %>
       </tbody>
     </table>
   </div>
-  <div class="flex justify-between items-center py-8">
+
+  <div class="flex justify-center mt-6">
+    <%= will_paginate @addresses%>
+  </div>
+
+  <div class="flex items-center py-8">
+    <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>
     <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline", style: "margin-left: 10px;" %>
   </div>
-  <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>
 <% end %>
 

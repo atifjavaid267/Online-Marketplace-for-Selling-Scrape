@@ -5,6 +5,8 @@ require "rails/all"
 require "active_storage/attached"
 require "active_storage/engine"
 
+require 'will_paginate/array'
+
 ActiveSupport.on_load(:active_record) do
   include ActiveStorage::Reflection::ActiveRecordExtensions
   ActiveRecord::Reflection.singleton_class.prepend(ActiveStorage::Reflection::ReflectionExtension)

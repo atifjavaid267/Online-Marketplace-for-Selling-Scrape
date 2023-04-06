@@ -1,10 +1,10 @@
 class AdsController < ApplicationController
   def index
-    @ads = Ad.all.where(status: true)
+    @ads = Ad.all.where(status: true).paginate(page: params[:page], per_page: 10)
   end
 
   def display_ads
-    @ads = current_user.ads.where(status: true)
+    @ads = current_user.ads.where(status: true).paginate(page: params[:page], per_page: 10)
   end
 
   def show
@@ -21,7 +21,7 @@ class AdsController < ApplicationController
 
   def view_bids
     # Retrieve the ad and its bids
-    @ad = Ad.find(params[:id])
+    @ad = Ad.find(params[:id]).paginate(page: params[:page], per_page: 10)
     @bids = @ad.bids
 
     # Render the view
@@ -105,9 +105,9 @@ class AdsController < ApplicationController
 
   def archives
     if current_user.admin?
-      @archive_ads = Ad.where(status: false)
+      @archive_ads = Ad.where(status: false).paginate(page: params[:page], per_page: 10)
     elsif current_user.seller?
-      @archive_ads = current_user.ads.where(status: false)
+      @archive_ads = current_user.ads.where(status: false).paginate(page: params[:page], per_page: 10)
     end
   end
 
