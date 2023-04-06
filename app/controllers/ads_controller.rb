@@ -21,8 +21,8 @@ class AdsController < ApplicationController
 
   def view_bids
     # Retrieve the ad and its bids
-    @ad = Ad.find(params[:id]).paginate(page: params[:page], per_page: 10)
-    @bids = @ad.bids
+    @ad = Ad.find(params[:id])
+    @bids = @ad.bids.paginate(page: params[:page], per_page: 10)
 
     # Render the view
     render 'view_bids'

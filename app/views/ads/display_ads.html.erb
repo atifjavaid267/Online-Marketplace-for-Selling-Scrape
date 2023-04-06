@@ -55,11 +55,12 @@
     </div>
 
     <br>
-<div class="flex justify-center mt-6">
-  <%= will_paginate @ads%>
-</div>
 
-    <br>
+  <div class = "pb-20 flex flex-row items-center justify-center">
+    <div class="bg-gray-300 rounded py-3 px-5">
+      <%= will_paginate @ads%>
+    </div>
+  </div>
 
     <% if current_user.seller? %>
       <%= link_to "Back to Home", seller_home_path, class: "mt-2 bg-gray-300 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out", style: "margin: 10px;" %>
