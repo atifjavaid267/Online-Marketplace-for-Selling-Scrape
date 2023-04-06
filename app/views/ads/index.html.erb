@@ -53,6 +53,12 @@
       <% end %>
     </div>
 
+    <br>
+    <div class="flex justify-center mt-6">
+      <%= will_paginate @ads%>
+    </div>
+
+
 
     <div class="flex justify">
       <% if current_user.buyer? %>
@@ -68,5 +74,4 @@
     </div>
 
   <% end %>
-
 

@@ -2,7 +2,7 @@
 
 
 
-<% ads = Ad.all %>
+<% ads = Ad.where(status: true).paginate(page: params[:page], per_page: 5) %>
 
 <% flag = true %>
 
@@ -62,6 +62,10 @@
                     <% counter += 1 %>
                 <% end %>
             </div>
-        <% end %>
+
+        </div>
+        <%=will_paginate ads%>
+        <br><hr>
     </div>
-</div>
+
+<% end %>

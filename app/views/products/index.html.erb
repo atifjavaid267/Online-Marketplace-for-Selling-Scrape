@@ -58,6 +58,11 @@
   </div>
 <% end %>
 
+<br>
+
+<div class="flex justify-center mt-6">
+  <%= will_paginate @products%>
+</div>
 
 
 <%if current_user.admin?%>

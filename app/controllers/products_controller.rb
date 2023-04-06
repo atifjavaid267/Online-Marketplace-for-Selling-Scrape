@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def index
-    @products = Product.all.where(status: true)
+    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 5)
   end
 
   def new
@@ -67,7 +67,7 @@ class ProductsController < ApplicationController
   end
 
   def archives
-    @archive_products = Product.where(status: false)
+    @archive_products = Product.where(status: false).paginate(page: params[:page], per_page: 5)
   end
 
   private

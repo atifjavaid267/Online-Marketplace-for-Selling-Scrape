@@ -63,7 +63,12 @@ gem 'dotenv-rails'
 gem 'rqrcode', '~> 2.1'
 gem 'rotp'
 gem "tailwindcss-rails", "~> 2.0"
+
+# for authorization purposes
 gem 'cancancan', '~> 3.1'
 
+# for google maps use
 gem 'geocoder', '~> 1.8', '>= 1.8.1'
 
+# for pagination use
+gem 'will_paginate', '~> 3.3.0'

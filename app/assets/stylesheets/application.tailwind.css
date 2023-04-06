@@ -11,3 +11,16 @@
 }
 
 */
+
+/* Center the pagination links */
+.pagination .page-item.active .page-link {
+  background-color: #4B5563;
+  color: #FFFFFF;
+  border-color: #4B5563;
+}
+
+.pagination .page-item.active .page-link:hover {
+  background-color: #4B5563;
+  color: #FFFFFF;
+  border-color: #4B5563;
+}

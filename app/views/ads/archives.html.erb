@@ -46,6 +46,11 @@
         <% end %>
       <% end %>
     </div>
+    <br>
+
+    <div class="flex justify-center mt-6">
+      <%= will_paginate @archive_ads%>
+    </div>
 
     <br>
     <% if current_user.admin? %>
@@ -55,8 +60,8 @@
     <% end %>
   <!-- <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button> -->
 
-
 <% end %>
+
 
 
 

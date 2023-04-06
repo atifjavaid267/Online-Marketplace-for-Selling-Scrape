@@ -1,7 +1,5 @@
 
-
 <%if @bids.empty?%>
-
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
     <%= render 'users/navbar' %>
     <div class = "pt-5">
@@ -30,10 +28,14 @@
           <button class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50">Message</button>
         </div>
       </div>
-
     <% end %>
   </div>
   <br>
+
+  <div class="flex justify-center mt-6">
+    <%= will_paginate @bids%>
+  </div>
+
+  <br>
   <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>
 <%end%>
-

@@ -1,6 +1,6 @@
 class AddressesController < ApplicationController
   def index
-    @addresses = current_user.addresses
+    @addresses = current_user.addresses.paginate(page: params[:page], per_page: 5)
   end
 
   def new
