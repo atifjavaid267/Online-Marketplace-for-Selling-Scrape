@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_03_31_095905) do
+ActiveRecord::Schema.define(version: 2023_04_06_111546) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 2023_03_31_095905) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
+    t.boolean "status", default: true
   end
 
   create_table "bids", force: :cascade do |t|
@@ -74,12 +75,21 @@ ActiveRecord::Schema.define(version: 2023_03_31_095905) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  create_table "orders", force: :cascade do |t|
+    t.integer "bid_id", null: false
+    t.datetime "pickup_time"
+    t.string "status", default: "pending"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "products", force: :cascade do |t|
     t.integer "user_id", null: false
     t.string "name"
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "status", default: true
   end
 
   create_table "users", force: :cascade do |t|
@@ -94,7 +104,6 @@ ActiveRecord::Schema.define(version: 2023_03_31_095905) do
     t.string "last_name"
     t.string "phone_no"
     t.string "role"
-
     t.integer "second_factor_attempts_count", default: 0
     t.string "encrypted_otp_secret_key"
     t.string "encrypted_otp_secret_key_iv"
@@ -103,7 +112,6 @@ ActiveRecord::Schema.define(version: 2023_03_31_095905) do
     t.datetime "direct_otp_sent_at"
     t.datetime "totp_timestamp"
     t.string "otp"
-
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["encrypted_otp_secret_key"], name: "index_users_on_encrypted_otp_secret_key", unique: true
     t.index ["phone_no"], name: "index_users_on_phone_no", unique: true
