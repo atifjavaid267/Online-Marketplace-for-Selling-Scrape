@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  #root to: 'messages#new'
+
+  resources :messages, only: %i[create index show]
+  mount ActionCable.server => '/cable'
+
   get 'otp/create'
   get '/otp', to: 'sessions#otp'
   # define the route to submit the OTP form
@@ -35,8 +40,6 @@ Rails.application.routes.draw do
     end
   end
 
-
-
   resources :addresses
 
   resources :ads do
@@ -49,7 +52,6 @@ Rails.application.routes.draw do
     collection do
       get 'archives' => 'ads#archives'
     end
-  end
 
   resources :orders do
     collection do
@@ -67,5 +69,4 @@ Rails.application.routes.draw do
   resources :bids do
     resources :orders, only: [:new, :create]
   end
-
 end
