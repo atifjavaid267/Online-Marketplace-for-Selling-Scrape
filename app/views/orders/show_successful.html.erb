@@ -1,0 +1,20 @@
+
+<%if @orders.nil? || @orders.empty? %>
+    <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+    <%= render 'users/navbar'%>
+    <div class = "pt-5">
+      <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
+        <h1 class="text-center font-bold">No Product Available!</h1>
+      </div>
+      <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 100px;" onclick="window.history.back();">Back</button>
+    </div>
+  </div>
+<% else %>
+    <%= render 'users/navbar'%>
+    <% @orders.each do |order| %>
+        <span> Product Name: </span><%= order.bid.ad.product.name %>
+        <br>
+        <span> Price </span> <%= order.bid.price %>
+        <br>
+    <% end %>
+<% end %>

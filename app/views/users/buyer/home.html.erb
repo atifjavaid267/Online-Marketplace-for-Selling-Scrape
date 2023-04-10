@@ -1,8 +1,6 @@
 <%=render 'users/navbar' %>
 
-
-
-<% ads = Ad.where(status: true).paginate(page: params[:page], per_page: 5) %>
+<% ads = Ad.where(status: true).paginate(page: params[:page], per_page: 3) %>
 
 <% flag = true %>
 
@@ -36,7 +34,7 @@
                     <div class="p-4 rounded-lg bg-gray-800" style="color: white; margin: 5px 200px; display: flex; opacity: 0.95">
                         <div class="flex-grow">
                             <h4 class="font-bold mb-2"><%="Ad - #{sprintf('%02d', counter)}"%></h4>
-                            <br>
+
                             <% product = Product.find_by(id: ad.product_id) %>
                             <% address = Address.find_by(id: ad.address_id) %>
 
@@ -55,17 +53,21 @@
                         </div>
                         <% ad.ad_images.each do |image| %>
                             <div class="flex-none ml-4">
-                                <%= image_tag image, class: "w-25 h-20 object-cover rounded-lg shadow-md", style: "height: 180px; width: 180px;" %>
+                                <%= image_tag image, class: "w-25 h-20 object-cover rounded-lg shadow-md", style: "height: 150px; width: 180px;" %>
                             </div>
                         <% end %>
                     </div>
                     <% counter += 1 %>
                 <% end %>
             </div>
-
         </div>
-        <%=will_paginate ads%>
-        <br><hr>
     </div>
 
+<% end %>
+<% if flag%>
+<div class = "pb-20 flex flex-row items-center justify-center">
+    <div class="bg-gray-300 rounded py-3 px-5">
+      <%= will_paginate ads%>
+    </div>
+</div>
 <% end %>

@@ -1,7 +1,6 @@
+
 class Ad < ApplicationRecord
-
-
-    # active stporage
+  # active stporage
   has_many_attached :ad_images
 
   # association
@@ -18,4 +17,12 @@ class Ad < ApplicationRecord
   validates :price, presence: true
   validates :description, presence: true
   validates :ad_images, presence: true
+
+  def published!
+    update_attribute(:status, true)
+  end
+
+  def unpublished!
+    update_attribute(:status, false)
+  end
 end
