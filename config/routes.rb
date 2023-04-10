@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'messages#new'
+  #root to: 'messages#new'
 
   resources :messages, only: %i[create index show]
   mount ActionCable.server => '/cable'
@@ -15,7 +15,7 @@ Rails.application.routes.draw do
   # devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
-    # root to: 'devise/sessions#new'
+    root to: 'devise/sessions#new'
   end
   devise_for :users, controllers:
   {
@@ -25,11 +25,10 @@ Rails.application.routes.draw do
   get '/users/admin/dashboard' => 'users/admin#dashboard', as: 'admin_dashboard'
   get '/users/seller/home' => 'users/seller#home', as: 'seller_home'
   get '/users/buyer/home' => 'users/buyer#home', as: 'buyer_home'
-  # resources :ads
+
   get 'display_ads' => 'ads#display_ads', as: 'seller_ads'
   resources :bids
 
-  # resources :products
   resources :products do
     resources :ads, only: %i[new create]
     member do
@@ -53,5 +52,21 @@ Rails.application.routes.draw do
     collection do
       get 'archives' => 'ads#archives'
     end
+
+  resources :orders do
+    collection do
+      get :pending_orders
+      get :successful_orders
+      get :cancelled_orders
+    end
+
+    member do
+      post :confirm
+      post :cancel
+    end
+  end
+
+  resources :bids do
+    resources :orders, only: [:new, :create]
   end
 end

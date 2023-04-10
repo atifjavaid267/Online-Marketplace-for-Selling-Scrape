@@ -19,15 +19,6 @@ class AdsController < ApplicationController
     @addresses = current_user.addresses
   end
 
-  def view_bids
-    # Retrieve the ad and its bids
-    @ad = Ad.find(params[:id])
-    @bids = @ad.bids.paginate(page: params[:page], per_page: 10)
-
-    # Render the view
-    render 'view_bids'
-  end
-
   def create
     return unless current_user.seller?
 
@@ -38,10 +29,19 @@ class AdsController < ApplicationController
     @ad.user_id = current_user.id
 
     if @ad.save
-      redirect_to @ad, notice: 'Ad was successfully created.'
+      redirect_to @ad, notice: 'Ad was created successfully.'
     else
-      redirect_to new_product_ad_path(@product)
+      redirect_to new_product_ad_path(@product), notice: 'Ad was not created'
     end
+  end
+
+  def view_bids
+    # Retrieve the ad and its bids
+    @ad = Ad.find(params[:id])
+    @bids = @ad.bids.order(price: :desc).paginate(page: params[:page], per_page: 10)
+
+    # Render the view
+    render 'view_bids'
   end
 
   def edit
