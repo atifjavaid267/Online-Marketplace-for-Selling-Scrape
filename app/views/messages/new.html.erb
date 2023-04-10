@@ -1,0 +1,95 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<% messages = Message.all %>
+
+<div class="latest-message-container">
+  <h2>Latest Message:</h2>
+  <div class="latest-message mt-20">
+    <% if messages.length.zero? %>
+      <%= "No Messages" %>
+    <% else %>
+      <% latest_message = messages.last %>
+      <span class="sender-id"><%= latest_message.sender_id %></span>
+      <span class="receiver-id"><%= latest_message.receiver_id %></span>
+      <span class="content"><%= latest_message.content %></span>
+    <% end %>
+  </div>
+</div>
+
+
+<div id="chat-room">
+  <div id="messages">
+  <% messages = Message.all%>
+  <% if messages.length.zero? %>
+    <%= "No Messages" %>
+  <% else %>
+  <div class= "mt-20">
+  <% messages.each do |message| %>
+      <div class="message">
+        <span class="sender-id"><%= message.sender_id %></span>
+        <span class="receiver-id"><%= message.receiver_id %></span>
+        <span class="content"><%= message.content %></span>
+      </div>
+    <% end %>
+  <% end %>
+  </div>
+  <%= form_for Message.new, remote: true do |f| %>
+    <%= f.text_field :content, required: true %>
+    <%= f.text_field :sender_id, required: true %>
+    <%= f.text_field :receiver_id, required: true %>
+
+   
+    <%= f.submit %>
+
+  <% end %>
+</div>
+</div>

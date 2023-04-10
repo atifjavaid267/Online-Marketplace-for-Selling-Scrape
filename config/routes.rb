@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  root to: 'messages#new'
+
+  resources :messages, only: %i[create index show]
+  mount ActionCable.server => '/cable'
+
   get 'otp/create'
   get '/otp', to: 'sessions#otp'
   # define the route to submit the OTP form
@@ -10,7 +15,7 @@ Rails.application.routes.draw do
   # devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
-    root to: 'devise/sessions#new'
+    # root to: 'devise/sessions#new'
   end
   devise_for :users, controllers:
   {
@@ -36,8 +41,6 @@ Rails.application.routes.draw do
     end
   end
 
-
-
   resources :addresses
 
   resources :ads do
@@ -50,7 +53,5 @@ Rails.application.routes.draw do
     collection do
       get 'archives' => 'ads#archives'
     end
-
   end
-
 end
