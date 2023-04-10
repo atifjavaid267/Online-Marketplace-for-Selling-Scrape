@@ -6,19 +6,21 @@
     <div class="flex flex-col items-start justify-center space-y-8 flex-1">
 
       <div>
+        <br><br><br>
         <%if @order.pending? %>
-            <h3 class="font-bold">Order is pending</h3> <br>
+            <h3 class="font-bold text-blue-600">Order is pending</h3> <br>
             <% if current_user.seller?%>
                 <%= button_to "Mark Order Complete", confirm_order_path(@order),  class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
                 <br>
                 <%= button_to "Cancel Order", cancel_order_path(@order),  class: "bg-red-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"%>
             <%end%>
         <% elsif @order.successful? %>
-            <h3 class="font-bold">Order has been Completed!</h3>
+            <h3 class="font-bold text-green-600">Order has been Completed!</h3>
         <%elsif @order.cancelled?%>
-            <h3 class="font-bold">Order has been Cancelled!</h3>
+            <h3 class="font-bold text-red-600">Order has been Cancelled!</h3>
         <%end%>
       </div>
+      <br>
       <% if current_user.seller? && @order.pending? %>
         <%= link_to "Message buyer", class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out"%>
       <% end %>

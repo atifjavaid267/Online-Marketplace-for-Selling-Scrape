@@ -38,7 +38,7 @@ class AdsController < ApplicationController
   def view_bids
     # Retrieve the ad and its bids
     @ad = Ad.find(params[:id])
-    @bids = @ad.bids.order(price: :desc).paginate(page: params[:page], per_page: 10)
+    @bids = @ad.bids.where(status: 'pending').order(price: :desc).paginate(page: params[:page], per_page: 10)
 
     # Render the view
     render 'view_bids'
@@ -63,7 +63,7 @@ class AdsController < ApplicationController
     @ad = Ad.find(params[:id])
     flag = @ad.status
 
-    if Bid.find_by(ad_id: @ad.id)
+    if Bid.where(status: 'pending').find_by(ad_id: @ad.id)
       if current_user.admin?
         redirect_to ads_path, alert: 'Ad cannot be deleted!'
       else
