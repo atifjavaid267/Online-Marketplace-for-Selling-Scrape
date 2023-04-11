@@ -5,6 +5,27 @@ class MessagesController < ApplicationController
 
   def show; end
 
+  # def create
+  #   @message = Message.new(message_params)
+
+  #   if @message.save
+  #     sender = @message.sender_id
+  #     receiver = @message.receiver_id
+  #     message_content = @message.content
+  #     time = Time.now.strftime("%B %d, %Y %I:%M %p")
+  #     room_id = rand(1..2_147_483_647) # generate random room_id
+
+  #     ActionCable.server.broadcast("room_channel_#{room_id}", {
+  #                                    sender_id: sender,
+  #                                    receiver_id: receiver,
+  #                                    message: message_content,
+  #                                    timestamp: time
+  #                                  })
+  #   else
+  #     puts @message.errors.full_messages
+  #   end
+  # end
+
   def create
     @message = Message.new(message_params)
     # @messages = Message.all.length

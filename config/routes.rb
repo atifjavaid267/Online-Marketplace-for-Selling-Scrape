@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  #root to: 'messages#new'
+  # root to: 'messages#new'
 
   resources :messages, only: %i[create index show]
   mount ActionCable.server => '/cable'
@@ -53,6 +53,7 @@ Rails.application.routes.draw do
       get 'archives' => 'ads#archives'
     end
 
+
   resources :orders do
     collection do
       get :show_pending
@@ -60,13 +61,14 @@ Rails.application.routes.draw do
       get :show_cancelled
     end
 
-    member do
-      post :confirm
-      post :cancel
+      member do
+        post :confirm
+        post :cancel
+      end
     end
-  end
 
-  resources :bids do
-    resources :orders, only: [:new, :create]
+    resources :bids do
+      resources :orders, only: %i[new create]
+    end
   end
 end

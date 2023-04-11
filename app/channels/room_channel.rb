@@ -1,7 +1,7 @@
 class RoomChannel < ApplicationCable::Channel
   def subscribed
      stream_from "room_channel_#{params[:room_id]}"
-     load_messages
+    #  load_messages
   end
 
   def unsubscribed
@@ -23,15 +23,15 @@ class RoomChannel < ApplicationCable::Channel
 
   private
 
-  def load_messages
-    messages = Message.where(room_id: params[:room_id])
-    html = ''
+  # def load_messages
+  #   messages = Message.where(room_id: params[:room_id])
+  #   html = ''
 
-    messages.each do |message|
-      html += render_to_string(partial: 'messages/message', locals: { message: })
-    end
-    ActionCable.server.broadcast "room_channel_#{params[:room_id]}", html:
-  end
+  #   messages.each do |message|
+  #     html += render_to_string(partial: 'messages/message', locals: { message: })
+  #   end
+  #   ActionCable.server.broadcast "room_channel_#{params[:room_id]}", html:
+  # end
 
   def render_message(message)
     ApplicationController.render.render(partial: 'messages/message', locals: { message: })
