@@ -12,7 +12,10 @@ class OrdersController < ApplicationController
 
     @order.bid_id = @bid.id
 
+
     if @order.save
+      @order.bid.successful!
+      @order.bid.ad.unpublished!
       redirect_to @order, notice: 'New Order Opened.'
     else
       redirect_to new_bid_order_path(@bid), notice: 'Please select date and time.'
@@ -31,10 +34,16 @@ class OrdersController < ApplicationController
   end
 
   def index
-    @order = Order.find(params[:id])
+    if current_user.admin?
+      @orders = Order.all.paginate(page: params[:page], per_page: 5)
+    elsif current_user.seller?
+      @orders = Order.all.paginate(page: params[:page], per_page: 5)#.joins(:bids, :ads).where(ads: {user_id: current_user.id})
+    elsif current_user.buyer?
+      @orders = Order.all.paginate(page: params[:page], per_page: 5)#joins(:bids).where(bids: {user_id: current_user.id})
+    end
   end
 
-  def pending_orders
+  def show_pending
     if current_user.admin?
       @orders = Order.where(status: 'pending')
     elsif current_user.seller?
@@ -42,7 +51,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def successful_orders
+  def show_successful
     if current_user.admin?
       @orders = Order.where(status: 'successful')
     elsif current_user.seller?
@@ -50,7 +59,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def cancelled_orders
+  def show_cancelled
     if current_user.admin?
       @orders = Order.where(status: 'cancelled')
     elsif current_user.seller?
@@ -61,20 +70,20 @@ class OrdersController < ApplicationController
   def confirm
     @order = Order.find(params[:id])
     @order.update_attribute(:status, 'successful')
-
-    # @ad = @order.bid.ad
-    # @bids = Bid.where(ad_id: @ad.id)
-    # @bids.each do |bid|
-    #   next if bid_id == @order.bid_id
-    #   bid.status = "failed"
-    # end
-
+    ad = @order.bid.ad
+    ad.bids.each do |bid|
+      bid.failed!
+    end
+    @order.bid.successful!
     redirect_to @order
   end
 
   def cancel
     @order = Order.find(params[:id])
     @order.update_attribute(:status, 'cancelled')
+    @order.bid.failed!
+    @order.bid.ad.published!
+
     redirect_to @order
   end
 

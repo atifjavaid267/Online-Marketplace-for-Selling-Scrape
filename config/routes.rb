@@ -53,12 +53,13 @@ Rails.application.routes.draw do
       get 'archives' => 'ads#archives'
     end
 
-    resources :orders do
-      collection do
-        get :pending_orders
-        get :successful_orders
-        get :cancelled_orders
-      end
+
+  resources :orders do
+    collection do
+      get :show_pending
+      get :show_successful
+      get :show_cancelled
+    end
 
       member do
         post :confirm
