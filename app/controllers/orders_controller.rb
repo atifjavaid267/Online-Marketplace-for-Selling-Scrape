@@ -72,9 +72,9 @@ class OrdersController < ApplicationController
     @order.update_attribute(:status, 'successful')
     ad = @order.bid.ad
     ad.bids.each do |bid|
+      next if bid.id == @order.bid.id
       bid.failed!
     end
-    @order.bid.successful!
     redirect_to @order
   end
 
