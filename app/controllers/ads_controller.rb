@@ -63,7 +63,7 @@ class AdsController < ApplicationController
     @ad = Ad.find(params[:id])
     flag = @ad.status
 
-    if Bid.where(status: 'pending').find_by(ad_id: @ad.id)
+    if Bid.find_by(ad_id: @ad.id)
       if current_user.admin?
         redirect_to ads_path, alert: 'Ad cannot be deleted!'
       else
