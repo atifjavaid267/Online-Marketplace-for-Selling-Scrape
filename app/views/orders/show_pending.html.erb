@@ -4,18 +4,46 @@
     <%= render 'users/navbar'%>
     <div class = "pt-5">
       <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
-        <h1 class="text-center font-bold">No Product Available!</h1>
+        <h1 class="text-center font-bold">No Order is Pending!</h1>
       </div>
       <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 100px;" onclick="window.history.back();">Back</button>
     </div>
   </div>
-<% else %>
-    <%= render 'users/navbar'%>
+  <% else %>
+  <%= render 'users/navbar' %>
+  <div class="grid gap-4 md:grid-cols-1 xl:grid-cols-1" style="margin-left: 10px; margin-right: 10px;">
+    <br>
     <% @orders.each do |order| %>
-        <span> Product Name: </span><%= order.bid.ad.product.name %>
-        <br>
-        <span> Price </span> <%= order.bid.price %>
-        <br>
-    <% end %>
 
-<% end %>
+      <div class="flex justify-between items-center p-4 border rounded-md shadow-md">
+        <div>
+            <%unless current_user.buyer?%>
+                <p class="text-lg font-bold">Buyer Name: <span class="text-gray-600"><%= "#{order.bid.user.first_name } #{order.bid.user.last_name }" %> </span></p>
+            <%end%>
+            <%unless current_user.seller?%>
+                <p class="text-lg font-bold">Seller Name: <span class="text-gray-600"><%= "#{order.bid.ad.user.first_name} #{order.bid.ad.user.last_name}" %> </span></p>
+            <%end%>
+            <p class="text-lg font-bold">Order Price: <span class="text-gray-600"><%= "Rs. #{order.bid.price}" %></span> </p>
+        </div>
+        <div class="flex justify-between flex-row items-center">
+            <%if order.status=="pending"%>
+                <h3 class="font-bold px-10 py-6 mx-10 text-blue-600"> Order Pending</h3>
+            <%elsif order.status=="successful"%>
+                <h3 class="font-bold px-10 py-6 mx-10 text-green-600"> Order Successful</h3>
+            <%elsif order.status=="cancelled"%>
+                <h3 class="font-bold px-10 py-6 mx-10 text-red-600"> Order Cancelled</h3>
+            <%end%>
+            <%= link_to "View", order_path(order), class: " px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 ml-30" %>
+          </div>
+
+      </div>
+    <% end %>
+  </div>
+  <br>
+  <div class = "pb-20 flex flex-row items-center justify-center">
+    <div class="rounded py-3 px-5">
+      <%= will_paginate @orders%>
+    </div>
+  </div>
+  <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>
+<%end%>

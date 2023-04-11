@@ -12,7 +12,6 @@ class OrdersController < ApplicationController
 
     @order.bid_id = @bid.id
 
-
     if @order.save
       @order.bid.successful!
       @order.bid.ad.unpublished!
@@ -25,9 +24,6 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @address = Address.find(@order.bid.ad.address_id)
-    # @seller_id = @order.bid.ad.user_id
-    # @buyer_id = @order.bid.user_id
-
     @buyer = User.find(@order.bid.user_id)
     @seller = User.find(@order.bid.ad.user_id)
     @amount = @order.bid.price
@@ -37,44 +33,46 @@ class OrdersController < ApplicationController
     if current_user.admin?
       @orders = Order.all.paginate(page: params[:page], per_page: 5)
     elsif current_user.seller?
-      @orders = Order.all.paginate(page: params[:page], per_page: 5)#.joins(:bids, :ads).where(ads: {user_id: current_user.id})
+      @orders = Order.joins(bid: :ad).where(ad: {user_id: current_user.id}).paginate(page: params[:page], per_page: 5)
     elsif current_user.buyer?
-      @orders = Order.all.paginate(page: params[:page], per_page: 5)#joins(:bids).where(bids: {user_id: current_user.id})
+      @orders = Order.joins(:bid).where(bids: {user_id: current_user.id}).paginate(page: params[:page], per_page: 5)
     end
   end
 
   def show_pending
     if current_user.admin?
-      @orders = Order.where(status: 'pending')
+      @orders = Order.where(status: 'pending').paginate(page: params[:page], per_page: 5)
     elsif current_user.seller?
-      @orders = Order.where(status: 'pending')
+      @orders = Order.joins(bid: :ad).where(ad: {user_id: current_user.id}, status: 'pending').paginate(page: params[:page], per_page: 5)
     end
   end
 
   def show_successful
     if current_user.admin?
-      @orders = Order.where(status: 'successful')
+      @orders = Order.where(status: 'successful').paginate(page: params[:page], per_page: 5)
     elsif current_user.seller?
-      @orders = Order.where(status: 'successful')
+      @orders = Order.joins(bid: :ad).where(ad: {user_id: current_user.id}, status: 'successful').paginate(page: params[:page], per_page: 5)
     end
   end
 
   def show_cancelled
     if current_user.admin?
-      @orders = Order.where(status: 'cancelled')
+      @orders = Order.where(status: 'cancelled').paginate(page: params[:page], per_page: 5)
     elsif current_user.seller?
-      @orders = Order.where(status: 'cancelled')
+      @orders = Order.joins(bid: :ad).where(ad: {user_id: current_user.id}, status: 'cancelled').paginate(page: params[:page], per_page: 5)
     end
   end
 
   def confirm
     @order = Order.find(params[:id])
     @order.update_attribute(:status, 'successful')
+
     ad = @order.bid.ad
     ad.bids.each do |bid|
       next if bid.id == @order.bid.id
       bid.failed!
     end
+
     redirect_to @order
   end
 
