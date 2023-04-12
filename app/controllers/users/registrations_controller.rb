@@ -67,6 +67,18 @@ class Users::RegistrationsController < Devise::RegistrationsController
     end
   end
 
+  def after_update_path_for(resource)
+    if resource.admin?
+      admin_dashboard_path
+    elsif resource.seller?
+      seller_home_path
+    elsif resource.buyer?
+      buyer_home_path
+    else
+      super(resource)
+    end
+  end
+
   # The path used after sign up for inactive accounts.
   # def after_inactive_sign_up_path_for(resource)
   #   super(resource)

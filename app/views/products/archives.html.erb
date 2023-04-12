@@ -33,7 +33,7 @@
             <td class="py-3 px-6 text-center"> <%= link_to "view", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
             <td class="py-3 px-6 text-center"><%= link_to "edit", edit_product_path(product), class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
             <td class="py-3 px-6 text-center"><%= button_to "publish", publish_product_path(product), method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <td class="py-3 px-6 text-center"><%= button_to "delete", product, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <td class="py-3 px-6 text-center"><%= button_to "delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
           </tr>
         <%end%>
       </tbody>

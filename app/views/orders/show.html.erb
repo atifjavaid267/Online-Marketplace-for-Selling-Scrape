@@ -10,9 +10,9 @@
         <%if @order.pending? %>
             <h3 class="font-bold text-blue-600">Order is pending</h3> <br>
             <% if current_user.seller?%>
-                <%= button_to "Mark Order Complete", confirm_order_path(@order),  class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
+                <%= button_to "Mark Order Complete", confirm_order_path(@order),data: { confirm: "Are you sure to complete order?", turbo_confirm: "Are you sure to complete order?" },  class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
                 <br>
-                <%= button_to "Cancel Order", cancel_order_path(@order),  class: "bg-red-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"%>
+                <%= button_to "Cancel Order", cancel_order_path(@order),data: { confirm: "Are you sure to cancel order?", turbo_confirm: "Are you sure to cancel order?" },  class: "bg-red-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"%>
             <%end%>
         <% elsif @order.successful? %>
             <h3 class="font-bold text-green-600">Order has been Completed!</h3>

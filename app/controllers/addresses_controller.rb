@@ -5,7 +5,7 @@ class AddressesController < ApplicationController
 
   def new
     @address = Address.new
-    # @address.user_id = current_user.id
+    @address.user_id = current_user.id
   end
 
   def create
