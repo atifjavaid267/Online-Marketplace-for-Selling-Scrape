@@ -21,8 +21,10 @@
         <%end%>
       </div>
       <br>
-      <% if current_user.seller? && @order.pending? %>
-        <%= link_to "Message buyer", class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out"%>
+      <% if current_user.seller? %>
+        <%= link_to "Message Buyer", new_message_path(order_id: @order.id), class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
+      <% elsif current_user.buyer? %>
+        <%= link_to "Message Seller", new_message_path(order_id: @order.id), class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
       <% end %>
       <div class="my-4">
         <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="window.history.back();">Back</button>

@@ -6,6 +6,10 @@ document.addEventListener("turbolinks:load", () => {
 
   consumer.subscriptions.create(
     { channel: "RoomChannel", room_id: 1 },
+    // {
+    //   channel: "RoomChannel",
+    //   room_id: order_id,
+    // },
     {
       connected() {
         // Called when the subscription is ready for use on the server"
@@ -44,18 +48,18 @@ document.addEventListener("turbolinks:load", () => {
         //   "<div>" + msg + "</div>"
         // );
         const inputField = document.getElementById("message_content");
-        const senderField = document.getElementById("message_sender_id");
-        const receiverField = document.getElementById("message_receiver_id");
+        // const senderField = document.getElementById("message_sender_id");
+        // const receiverField = document.getElementById("message_receiver_id");
         inputField.value = "";
-        senderField.value = "";
-        receiverField.value = "";
+        // senderField.value = "";
+        // receiverField.value = "";
       },
 
       send(data) {
         const messageInput = document.getElementById("message_content");
         const messageContent = messageInput.value;
-        const senderId = 1; // Replace with the ID of the sender
-        const receiverId = 2; // Replace with the ID of the receiver
+        // const senderId = 1; // Replace with the ID of the sender
+        // const receiverId = 2; // Replace with the ID of the receiver
 
         const messageData = {
           content: messageContent,
