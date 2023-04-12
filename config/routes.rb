@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-   #  root to: 'messages#new'
 
    resources :messages, only: %i[create index show new]
    mount ActionCable.server => '/cable'
