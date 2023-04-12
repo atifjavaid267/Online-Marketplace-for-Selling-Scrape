@@ -41,7 +41,7 @@
           <div class="flex space-x-4">
             <%= link_to "View Ad", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
                 <% if current_user.admin? %>
-                    <%= button_to "delete ad", ad, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+                    <%= button_to "delete ad", ad, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
                 <% end %>
           </div>
 

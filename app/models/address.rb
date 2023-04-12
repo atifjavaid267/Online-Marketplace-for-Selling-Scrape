@@ -12,6 +12,6 @@ class Address < ApplicationRecord
 
 
   # for deocoder
-  after_validation :geocode
+  # after_validation :geocode
 
 end
