@@ -1,0 +1,56 @@
+
+<% sender_id = current_user.id %>
+<% if current_user.buyer? %>
+  <% receiver_id = @order.bid.ad.user_id%>
+<%else%>
+  <% receiver_id = @order.bid.user_id%>
+<%end%>
+
+<% messages = Message.all.where(sender_id: sender_id, receiver_id: receiver_id) %>
+
+<% unless messages.length.zero? %>
+  <% latest_message = messages.last %>
+<% end %>
+
+<div id="chat-room">
+  <div id="messages">
+  <% messages = Message.all%>
+  <% if messages.length.zero? %>
+    <%= "No Messages" %>
+  <% else %>
+    <div class= "mt-20">
+      <% messages.each do |message| %>
+
+        <%if current_user.id == message.sender_id %>
+          <div class="message text-green-600">
+            <span class="content text-right"><%= message.content %></span>
+            <span class="time"><%= latest_message.created_at.strftime("%B %d, %Y %I:%M %p") %></span>
+          </div>
+        <% else %>
+          <div class="message text-blue-600">
+            <span class="content"><%= message.content %></span>
+            <span class="time"><%= latest_message.created_at.strftime("%B %d, %Y %I:%M %p") %></span>
+          </div>
+        <% end %>
+
+
+      <% end %>
+
+
+
+
+    </div> 
+
+    <%= form_for Message.new, remote: true do |f| %>
+      <%= f.text_field :content, required: true %>
+      <%= f.hidden_field :sender_id, value: current_user.id %>
+      <% if current_user.seller? %>
+        <%= f.hidden_field :receiver_id, value: @order.bid.user_id %>
+      <%else%>
+        <%= f.hidden_field :receiver_id, value: @order.bid.ad.user_id %>
+      <%end%>   
+        <%= f.submit %>
+      <% end %>
+    <%end%>  
+  </div>
+</div>
