@@ -41,18 +41,10 @@ document.addEventListener("turbolinks:load", () => {
           <div class="message-content">${messageContent}</div>
         </div>
       `;
-
-        messagesContainer.insertAdjacentHTML("beforeend", messageHtml);
-        //  messagesContainer.insertAdjacentHTML(
-        //   "beforeend",
-        //   "<div>" + msg + "</div>"
-        // );
+        window.location.reload();
+        // messagesContainer.insertAdjacentHTML("beforeend", messageHtml);
         const inputField = document.getElementById("message_content");
-        // const senderField = document.getElementById("message_sender_id");
-        // const receiverField = document.getElementById("message_receiver_id");
         inputField.value = "";
-        // senderField.value = "";
-        // receiverField.value = "";
       },
 
       send(data) {

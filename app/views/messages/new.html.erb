@@ -6,7 +6,6 @@
 <%else%>
   <% second_id = @order.bid.user_id%>
 <%end%>
-
 <% messages = Message.where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", first_id, second_id, second_id, first_id) %>
 
 <div id="chat-room">
@@ -16,20 +15,20 @@
   <% end %>
     <div class= "mt-20">
       <% messages.each do |message| %>
-
         <%if current_user.id == message.sender_id %>
           <div class="message text-green-600">
             <span class="content text-right"><%= message.content %></span>
-            <span class="time"><%= message.created_at.strftime("%B %d, %Y %I:%M %p") %></span>
+            <span class="time"><%= (message.created_at + 5.hours).strftime("%B %d, %Y %I:%M %p") %></span>
+
           </div>
         <% else %>
           <div class="message text-blue-600">
             <span class="content"><%= message.content %></span>
-            <span class="time"><%= message.created_at.strftime("%B %d, %Y %I:%M %p") %></span>
+
+            <span class="time"><%= (message.created_at + 5.hours).strftime("%B %d, %Y %I:%M %p") %></span>
+
           </div>
         <% end %>
-
-
       <% end %>
     </div>
 
