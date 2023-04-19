@@ -1,11 +1,13 @@
 <%= render 'users/navbar'%>
 <% first_id = current_user.id %>
+
 <% if current_user.buyer? %>
   <% second_id = @order.bid.ad.user_id%>
 <%else%>
   <% second_id = @order.bid.user_id%>
 <%end%>
 <% messages = Message.where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", first_id, second_id, second_id, first_id) %>
+
 <div id="chat-room">
   <div id="messages">
   <% if messages.length.zero? %>
@@ -17,15 +19,19 @@
           <div class="message text-green-600">
             <span class="content text-right"><%= message.content %></span>
             <span class="time"><%= (message.created_at + 5.hours).strftime("%B %d, %Y %I:%M %p") %></span>
+
           </div>
         <% else %>
           <div class="message text-blue-600">
             <span class="content"><%= message.content %></span>
+
             <span class="time"><%= (message.created_at + 5.hours).strftime("%B %d, %Y %I:%M %p") %></span>
+
           </div>
         <% end %>
       <% end %>
     </div>
+
     <%= form_for Message.new, remote: true do |f| %>
       <%= f.text_field :content, required: true %>
       <%= f.hidden_field :sender_id, value: current_user.id %>

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   add_flash_types :info, :error, :warning
 
   # load_and_authorize_resource
+  before_action :authenticate_user!
 
   private
 
