@@ -1,4 +1,7 @@
 class MessagesController < ApplicationController
+
+  load_and_authorize_resource
+
   def index
     @messages = Message.all
   end

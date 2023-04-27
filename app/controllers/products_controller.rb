@@ -1,4 +1,10 @@
 class ProductsController < ApplicationController
+
+  before_action :authenticate_user!, except: %i[show_root]
+  # before_action :load_and_authorize_resource, except: %i[index show_root]
+  # before_action :load_and_authorize_resource
+  load_and_authorize_resource
+
   def index
     @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 5)
   end
@@ -68,6 +74,10 @@ class ProductsController < ApplicationController
 
   def archives
     @archive_products = Product.where(status: false).paginate(page: params[:page], per_page: 5)
+  end
+
+  def show_root
+    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 5)
   end
 
   private

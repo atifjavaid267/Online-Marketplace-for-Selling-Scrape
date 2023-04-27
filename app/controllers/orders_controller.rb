@@ -1,4 +1,7 @@
 class OrdersController < ApplicationController
+
+  load_and_authorize_resource
+
   def new
     @bid = Bid.find(params[:bid_id])
     @order = @bid.build_order

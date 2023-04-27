@@ -72,3 +72,5 @@ gem 'geocoder', '~> 1.8', '>= 1.8.1'
 
 # for pagination use
 gem 'will_paginate', '~> 3.3.0'
+
+gem 'devise-two-factor'
