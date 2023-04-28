@@ -5,6 +5,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_account_update_params, only: [:update]
 
   before_action :configure_permitted_parameters, if: :devise_controller?
+  # before_action :authenticate_2fa!, only: [:create]
 
   # GET /resource/sign_up
   # def new
@@ -12,9 +13,58 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
+  def create
+    # authenticate_2fa!
+    super do |resource|
+      if resource.valid? && resource.persisted?
+
+        resource.update(
+          otp_required_for_login: true,
+          encrypted_otp_secret: User.generate_otp_secret
+          # encrypted_otp_secret: encrypted_otp_secret_val,
+          # encrypted_otp_secret_salt: salt,
+          # encrypted_otp_secret_iv: iv
+        )
+      end
+    end
+  end
+
+  # #### for gem 'devise-two-factor' #####
+  # def authenticate_2fa!
+  #   user = find_user
+  #   self.resource = user
+
+  #   return unless user
+
+  #   if user_params[:otp_attempt].present?
+  #     auth_with_2fa(user)
+  #   elsif user.valid_password?(user_params[:password]) && user.otp_required_for_login
+  #     session[:user_id] = user.id
+  #     CodeMailer.send_code(user).deliver_now
+  #     render 'users_otp/two_fa'
+  #   end
   # end
+
+  # def auth_with_2fa(user)
+  #   return unless user.validate_and_consume_otp!(user_params[:otp_attempt])
+
+  #   user.save!
+  #   sign_in(user)
+  # end
+
+  # def find_user
+  #   if session[:user_id]
+  #     User.find(session[:user_id])
+  #   elsif user_params[:email]
+  #     User.find_by(email: user_params[:email])
+  #   end
+  # end
+
+  # def user_params
+  #   params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
+  # end
+
+  # #####################
 
   # GET /resource/edit
   # def edit

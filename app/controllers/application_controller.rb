@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!, except: %i[show_root]
 
+  # for gem 'devise-two-factor'
+  before_action :configure_permitted_parameters, if: :devise_controller?
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, alert: exception.message
   end
@@ -22,6 +25,11 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
+
+  # for gem 'devise-two-factor'
+    devise_parameter_sanitizer.permit(:sign_in, keys: [:otp_attempt])
+
+
     devise_parameter_sanitizer.permit(:sign_in) do |user_params|
       user_params.permit(:email, :password)
     end
@@ -34,4 +42,6 @@ class ApplicationController < ActionController::Base
                          :password_confirmation, :current_password)
     end
   end
+
+
 end

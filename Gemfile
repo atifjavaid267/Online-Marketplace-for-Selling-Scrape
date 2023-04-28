@@ -74,3 +74,5 @@ gem 'geocoder', '~> 1.8', '>= 1.8.1'
 gem 'will_paginate', '~> 3.3.0'
 
 gem 'devise-two-factor'
+
+gem "letter_opener", :group => :development
