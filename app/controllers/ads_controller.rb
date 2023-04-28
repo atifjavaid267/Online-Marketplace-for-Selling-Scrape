@@ -1,4 +1,7 @@
 class AdsController < ApplicationController
+
+load_and_authorize_resource
+
   def index
     @ads = Ad.all.where(status: true).paginate(page: params[:page], per_page: 10)
   end

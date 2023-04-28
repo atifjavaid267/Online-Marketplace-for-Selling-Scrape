@@ -1,4 +1,7 @@
 class BidsController < ApplicationController
+
+  load_and_authorize_resource
+
   def new
     @ad = Ad.find(params[:ad_id])
     @bid = @ad.bids.new
@@ -6,6 +9,7 @@ class BidsController < ApplicationController
   end
 
   def create
+    # byebug
     @ad = Ad.find(params[:ad_id])
     @bid = @ad.bids.build(bid_params)
     @bid.user_id = current_user.id

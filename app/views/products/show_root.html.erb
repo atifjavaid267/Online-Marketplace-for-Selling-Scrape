@@ -1,0 +1,44 @@
+<%=render 'users/navbar' %>
+
+<% flag = true %>
+
+<% if @products == nil || @products.empty? %>
+  <% flag = false %>
+<% end %>
+
+<% if !flag %>
+    <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+        <div class = "pt-5">
+            <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
+                <h1 class="text-center font-bold">Sorry</h1>
+                <h1 class="text-center font-bold">No Product is available to show!</h1>
+            </div>
+        </div>
+    </div>
+<% else %>
+
+<div class="bg-cover bg-no-repeat h-screen " style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+    <div class = "pt-5">
+            <div class="grid grid-cols-1 gap-4">
+                <% @products.each do |product| %>
+                    <div class="p-4 rounded-lg bg-gray-800" style="color: white; margin: 5px 200px; display: flex; opacity: 0.95">
+                        <div class="flex-grow">
+                            <span class="font-bold">Product Name:</span> <br> <%= product.name %> <br>
+                        </div>
+                        <div class="flex-none ml-4">
+                            <%= image_tag product.product_image, class: "w-25 h-20 object-cover rounded-lg shadow-md", style: "height: 150px; width: 180px;" %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+        </div>
+    </div>
+    <% if flag%>
+        <div class = "pb-20 flex flex-row items-center justify-center">
+            <div class= "rounded py-3 px-5">
+                <%= will_paginate @products%>
+            </div>
+        </div>
+    <% end %>
+<% end %>
+

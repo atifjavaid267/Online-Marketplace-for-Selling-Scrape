@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 class Users::SessionsController < Devise::SessionsController
+  # GET /resource/sign_in
   # before_action :configure_sign_in_params, only: [:create]
 
-  # GET /resource/sign_in
+  before_action :authenticate_user!, except: %i[new create destroy]
+  before_action :load_and_authorize_resource, except: %i[new create destroy]
+
   def new
-    unless user_signed_in?
-      super
-    end
+    return if user_signed_in?
+
+    super
   end
 
   # POST /resource/sign_in

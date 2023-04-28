@@ -7,56 +7,51 @@ class Ability
     # See the wiki for details:
     # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
 
-    # user ||= User.new
+    user ||= User.new
+
+    can [:show_root], Product
+
+    # cannot [:index], Product
+
+    ####### ADMIN ########
 
     if user.admin?
+      can [:new, :create, :index, :show, :destroy, :publish, :unpublish, :archives], Product
 
-      can :create, Product
-      can :index, Product
-      can :show, Product
-      can :destroy, Product
-      can :publish, Product
-      can :unpublish, Product
-      can :archives, Product
-
-      can :index, Ad
-      can :show, Ad
-      can :destroy, Ad
-      can :archives, Ad
-
-    end
-
-    if user.seller?
-
-      can :home, Seller
-
-      can :index, Product
-      can :show, Product
+      can [:index, :show, :destroy, :archives, :view_bids], Ad
+      can [:index, :show, :show_pending, :show_successful, :show_cancelled, :cancel], Order
 
 
-      can :create, Address
-      can :index, Address
-      can :edit, Address
 
-      can :display_ads, Ad
-      can :show, Ad
-      can :edit, Ad
-      can :destroy, Ad
-      can :publish, Ad
-      can :unpublish, Ad
-      can :archives, Ad
+    ####### SELLER ########
 
-      cannot :index, Ad
+    elsif user.seller?
+
+
+      can [:index, :show], Product
+
+      can [:new, :create, :index, :edit], Address
+
+      can [:display_ads, :show, :edit, :destroy, :publish, :unpublish, :archives, :view_bids], Ad
+
 
       can :index, Bid
 
+      can [:index, :show, :show_pending, :show_successful, :show_cancelled, :confirm, :cancel], Order
+
+      can [:inde, :show, :new, :create], Message
+
+
+    ####### BUYER ########
+
+    elsif user.buyer?
+
+      can [:index, :show], Ad
+      can [:new, :create], Bid
+      can [:index, :show], Order
+
+      can [:inde, :show, :new, :create], Message
+
     end
-
-    return unless user.buyer?
-
-    can :index, Ad
-    can :show, Ad
-
-    can :create, Bid
   end
 end

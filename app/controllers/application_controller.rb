@@ -2,10 +2,24 @@ class ApplicationController < ActionController::Base
   # for flash messages
   add_flash_types :info, :error, :warning
 
-  # load_and_authorize_resource
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: %i[show_root]
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to main_app.root_url, alert: exception.message
+  end
+
+  # for gem 'active_model_otp'
+  # def authenticate_current_user_with_otp!
+  #   return if devise_controller? || current_user.otp_authenticated?
+
+  #   redirect_to(admin_otp_page_path)
+  # end
 
   private
+
+  def load_and_authorize_resource
+    authorize! params[:action].to_sym, current_user
+  end
 
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_in) do |user_params|
