@@ -1,17 +1,18 @@
 class User < ApplicationRecord
+  # attr_reader :iv, :salt, :otp_secret
+
   # gem 'devise-two-factor'
   devise :two_factor_authenticatable,
          otp_secret_encryption_key: ENV['encryption_key_env']
 
-  # def self.generate_otp_secret
-  #   ROTP::Base32.random_base32
-  # end
+  def self.generate_otp_secret
+    ROTP::Base32.random_base32
+  end
 
   def self.generate_otp(encrypted_otp_secret)
     totp = ROTP::TOTP.new(encrypted_otp_secret)
     totp.now
   end
-
   #  provisioning_uri user.generate_totp_secret
   #   user. # This assumes a user model with an email attribute
   # has_secure_password

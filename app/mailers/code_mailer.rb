@@ -7,7 +7,7 @@ class CodeMailer < ApplicationMailer
   def send_code(user)
     # @greeting = 'Hi'
 
-    @code = User.generate_otp(user.encrypted_otp_secret)
+    @code = User.generate_otp(user.otp_secret)
 
     mail to: 'to@example.org'
   end

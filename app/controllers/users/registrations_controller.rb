@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'securerandom'
+require 'rotp/base32'
+require 'openssl'
+
 class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_sign_up_params, only: [:create]
   before_action :configure_account_update_params, only: [:update]
@@ -15,15 +19,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     # authenticate_2fa!
+
     super do |resource|
       if resource.valid? && resource.persisted?
 
         resource.update(
           otp_required_for_login: true,
-          encrypted_otp_secret: User.generate_otp_secret
-          # encrypted_otp_secret: encrypted_otp_secret_val,
-          # encrypted_otp_secret_salt: salt,
-          # encrypted_otp_secret_iv: iv
+          otp_secret: User.generate_otp_secret
         )
       end
     end

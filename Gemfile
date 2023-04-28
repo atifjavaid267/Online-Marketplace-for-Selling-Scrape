@@ -76,3 +76,5 @@ gem 'will_paginate', '~> 3.3.0'
 gem 'devise-two-factor'
 
 gem "letter_opener", :group => :development
+
+ gem "attr_encrypted"
