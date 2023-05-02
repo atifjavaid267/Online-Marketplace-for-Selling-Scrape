@@ -13,7 +13,9 @@ class BidsController < ApplicationController
     respond_to do |format|
       if @bid.save
 
-        ActionCable.server.broadcast('bids_channel', { ad_id: @ad.id, price: @bid.price })
+        ActionCable.server.broadcast('bids_channel',
+                                     { ad_id: @ad.id, price: @bid.price, buyer_id: @bid.user_id,
+                                       buyer_name: @bid.user.first_name  })
         format.json { render :show, status: :created, location: @bid }
         format.html { redirect_to ads_path, notice: 'Bid was successfully created.' }
 
