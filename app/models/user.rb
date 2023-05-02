@@ -9,8 +9,8 @@ class User < ApplicationRecord
     ROTP::Base32.random_base32
   end
 
-  def self.generate_otp(encrypted_otp_secret)
-    totp = ROTP::TOTP.new(encrypted_otp_secret)
+  def self.generate_otp(otp_secret)
+    totp = ROTP::TOTP.new(otp_secret)
     totp.now
   end
   #  provisioning_uri user.generate_totp_secret

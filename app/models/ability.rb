@@ -16,7 +16,7 @@ class Ability
     ####### ADMIN ########
 
     if user.admin?
-      can [:new, :create, :index, :show, :destroy, :publish, :unpublish, :archives], Product
+      can [:new, :create, :index, :show, :edit, :update, :destroy, :publish, :unpublish, :archives], Product
 
       can [:index, :show, :destroy, :archives, :view_bids], Ad
       can [:index, :show, :show_pending, :show_successful, :show_cancelled, :cancel], Order
@@ -32,14 +32,13 @@ class Ability
 
       can [:new, :create, :index, :edit], Address
 
-      can [:display_ads, :show, :edit, :destroy, :publish, :unpublish, :archives, :view_bids], Ad
-
+      can [:display_ads, :new, :create, :show, :edit, :update, :destroy, :publish, :unpublish, :archives, :view_bids], Ad
 
       can :index, Bid
 
-      can [:index, :show, :show_pending, :show_successful, :show_cancelled, :confirm, :cancel], Order
+      can [:index, :new, :create, :show, :show_pending, :show_successful, :show_cancelled, :confirm, :cancel], Order
 
-      can [:inde, :show, :new, :create], Message
+      can [:index, :show, :new, :create], Message
 
 
     ####### BUYER ########
