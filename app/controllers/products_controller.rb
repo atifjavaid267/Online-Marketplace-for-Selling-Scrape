@@ -1,7 +1,6 @@
 class ProductsController < ApplicationController
+
   before_action :authenticate_user!, except: %i[show_root]
-  # before_action :load_and_authorize_resource, except: %i[index show_root]
-  # before_action :load_and_authorize_resource
   load_and_authorize_resource
 
   def index
@@ -19,7 +18,6 @@ class ProductsController < ApplicationController
     if @product.save
       redirect_to @product, notice: 'Product was successfully created.'
     else
-      # flash[:notice] = 'Failed to create Product.'
       redirect_to new_product_path, notice: 'Failed to create Product.'
     end
   end

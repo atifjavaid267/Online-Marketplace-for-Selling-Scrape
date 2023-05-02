@@ -9,9 +9,4 @@ class Address < ApplicationRecord
   validates :zip_code, presence: true
   validates :latitude, presence: true
   validates :longitude, presence: true
-
-
-  # for deocoder
-  # after_validation :geocode
-
 end

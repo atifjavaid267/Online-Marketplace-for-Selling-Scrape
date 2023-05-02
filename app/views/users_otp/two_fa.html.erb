@@ -7,7 +7,6 @@
           <div class="card bg-white p-4 rounded-lg shadow-md">
             <%= form_for(resource, as: resource_name, url: session_path(resource_name), method: :post) do |f| %>
               <div class=form-group mb-4">
-                <!-- <%= f.label :otp_attempt, "Two-factor-code" %> <br> -->
                 <%= f.text_field :otp_attempt, class: "form-control" %>
               </div>
               <br>
