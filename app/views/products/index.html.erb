@@ -15,6 +15,11 @@
       <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
         <h1 class="text-center font-bold">No Product Available!</h1>
       </div>
+      <%if current_user.admin?%>
+        <div class="my-6 flex justify-center">
+          <%= link_to "Add Product", new_product_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"%>
+        </div>
+      <%end%>
       <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 100px;" onclick="window.history.back();">Back</button>
     </div>
   </div>
@@ -61,20 +66,17 @@
   <br>
 
 <div class = "pb-20 flex flex-row items-center justify-center">
-  <div class="bg-gray-300 rounded py-3 px-5">
-    <%= will_paginate @products%>
-  </div>
+    <%= will_paginate @products, class:"bg-gray-300 rounded py-3 px-4"%>
 </div>
-
-<% end %>
-
-
 
 <%if current_user.admin?%>
   <div class="my-6 flex justify-center">
     <%= link_to "Add Product", new_product_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"%>
   </div>
 <%end%>
+<% end %>
+
+
 
 <!-- <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px; margin-bottom: 10px;" onclick="window.history.back();">Back</button> -->
 

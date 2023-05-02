@@ -4,7 +4,7 @@
     <%= render 'users/navbar'%>
     <div class = "pt-5">
       <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
-        <h1 class="text-center font-bold">No Product Available!</h1>
+        <h1 class="text-center font-bold">No Order Found!</h1>
       </div>
       <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 100px;" onclick="window.history.back();">Back</button>
     </div>
@@ -41,9 +41,7 @@
   </div>
   <br>
   <div class = "pb-20 flex flex-row items-center justify-center">
-    <div class="rounded py-3 px-5">
-      <%= will_paginate @orders%>
-    </div>
+    <%= will_paginate @orders,  class:"bg-gray-300 rounded py-3 px-5"%>
   </div>
   <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px;" onclick="window.history.back();">Back</button>
 <%end%>

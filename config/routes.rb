@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+
+  # for gem 'devise-two-factor'
+  patch 'users_otp/enable'
+  get 'users_otp/disable'
   # root
   root 'products#show_root'
 

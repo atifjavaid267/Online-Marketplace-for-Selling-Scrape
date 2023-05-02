@@ -1,12 +1,11 @@
 class ProductsController < ApplicationController
-
   before_action :authenticate_user!, except: %i[show_root]
   # before_action :load_and_authorize_resource, except: %i[index show_root]
   # before_action :load_and_authorize_resource
   load_and_authorize_resource
 
   def index
-    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 5)
+    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 6)
   end
 
   def new
@@ -77,7 +76,7 @@ class ProductsController < ApplicationController
   end
 
   def show_root
-    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 5)
+    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 4)
   end
 
   private

@@ -39,17 +39,11 @@
       </tbody>
     </table>
   </div>
-<% end %>
-
-<br>
-<div class = "pb-20 flex flex-row items-center justify-center">
-  <div class="bg-gray-300 rounded py-3 px-5">
-    <%= will_paginate @archive_products%>
+  <br>
+  <div class = "pb-20 flex flex-row items-center justify-center">
+    <%= will_paginate @archive_products, class:"bg-gray-300 rounded py-3 px-5"%>
   </div>
-</div>
-
-
-
+<% end %>
 
 <!-- <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px; margin-bottom: 10px;" onclick="window.history.back();">Back</button> -->
 
