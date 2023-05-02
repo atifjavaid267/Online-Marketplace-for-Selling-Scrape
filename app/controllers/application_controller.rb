@@ -11,13 +11,6 @@ class ApplicationController < ActionController::Base
     redirect_to main_app.root_url, alert: exception.message
   end
 
-  # for gem 'active_model_otp'
-  # def authenticate_current_user_with_otp!
-  #   return if devise_controller? || current_user.otp_authenticated?
-
-  #   redirect_to(admin_otp_page_path)
-  # end
-
   private
 
   def load_and_authorize_resource
@@ -42,6 +35,4 @@ class ApplicationController < ActionController::Base
                          :password_confirmation, :current_password)
     end
   end
-
-
 end

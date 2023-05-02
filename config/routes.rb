@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-
   # for gem 'devise-two-factor'
   patch 'users_otp/enable'
   get 'users_otp/disable'
@@ -14,25 +13,16 @@ Rails.application.routes.draw do
   # define the route to submit the OTP form
   post '/otp', to: 'sessions#submit_otp', as: :otp_create_path
   resource :two_factor_authentication
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 
   # devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
-
-    # # for Two-Factor Authentication(2FA) using gem 'active_model_otp'
-    # get '/admin/otp', to: 'users/sessions/otp_authentications#new', as: :admin_otp_page
-    # post '/admin/otp', to: 'users/sessions/otp_authentications#create', as: :admin_verify_otp
   end
 
   devise_for :users, controllers:
   {
     sessions: 'users/sessions',
     registrations: 'users/registrations'
-    # for two factor authentication
-    # confirmations: 'users/confirmations',
-    # passwords: 'users/passwords'
   }
 
   get '/users/admin/dashboard' => 'users/admin#dashboard', as: 'admin_dashboard'

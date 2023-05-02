@@ -58,8 +58,6 @@
         <%= will_paginate @ads, class:"bg-gray-300 rounded py-3 px-5"%>
     </div>
 
-
-
     <div class="flex justify">
       <% if current_user.buyer? %>
         <%= link_to "Home", buyer_home_path, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 10px;"%>
@@ -68,10 +66,6 @@
       <% if current_user.admin? %>
         <%= link_to "Back to Dashboard", admin_dashboard_path, class: "mt-2 bg-gray-300 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out", style: "margin: 10px;" %>
       <% end %>
-
-      <!-- <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin: 10px;" onclick="window.history.back();">Back</button> -->
-
     </div>
-
   <% end %>
 
