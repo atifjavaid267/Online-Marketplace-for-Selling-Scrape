@@ -49,7 +49,7 @@ class Ability
       can [:new, :create], Bid
       can [:index, :show], Order
 
-      can [:inde, :show, :new, :create], Message
+      can [:index, :show, :new, :create], Message
 
     end
   end
