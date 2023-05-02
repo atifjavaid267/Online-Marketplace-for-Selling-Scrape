@@ -20,7 +20,7 @@ class OrdersController < ApplicationController
       @order.bid.ad.unpublished!
       redirect_to @order, notice: 'New Order Opened.'
     else
-      redirect_to new_bid_order_path(@bid), notice: 'Please select date and time.'
+      redirect_to new_bid_order_path(@bid), notice: 'Please select valid date and time.'
     end
   end
 
