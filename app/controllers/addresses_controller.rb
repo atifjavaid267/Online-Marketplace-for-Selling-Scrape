@@ -8,13 +8,14 @@ class AddressesController < ApplicationController
     @address.user_id = current_user.id
   end
 
+  
   def create
     @address = current_user.addresses.build(address_params)
 
-    if @address.save
-      redirect_to addresses_path, notice: 'Address was successfully created.'
-    else
+    if !@address.save
       redirect_to new_address_path, notice: 'Address was not found'
+    else
+      redirect_to addresses_path, notice: 'Address was successfully created.'
     end
   end
 
@@ -48,6 +49,6 @@ class AddressesController < ApplicationController
   private
 
   def address_params
-    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code, :latitude, :longitude)
+    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code)
   end
 end
