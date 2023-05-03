@@ -1,5 +1,4 @@
 class OrdersController < ApplicationController
-
   load_and_authorize_resource
 
   def new
@@ -36,9 +35,9 @@ class OrdersController < ApplicationController
     if current_user.admin?
       @orders = Order.all.paginate(page: params[:page], per_page: 5)
     elsif current_user.seller?
-      @orders = Order.joins(bid: :ad).where(ad: {user_id: current_user.id}).paginate(page: params[:page], per_page: 5)
+      @orders = Order.joins(bid: :ad).where(ad: { user_id: current_user.id }).paginate(page: params[:page], per_page: 5)
     elsif current_user.buyer?
-      @orders = Order.joins(:bid).where(bids: {user_id: current_user.id}).paginate(page: params[:page], per_page: 5)
+      @orders = Order.joins(:bid).where(bids: { user_id: current_user.id }).paginate(page: params[:page], per_page: 5)
     end
   end
 
@@ -46,7 +45,9 @@ class OrdersController < ApplicationController
     if current_user.admin?
       @orders = Order.where(status: 'pending').paginate(page: params[:page], per_page: 5)
     elsif current_user.seller?
-      @orders = Order.joins(bid: :ad).where(ad: {user_id: current_user.id}, status: 'pending').paginate(page: params[:page], per_page: 5)
+      @orders = Order.joins(bid: :ad).where(ad: { user_id: current_user.id }, status: 'pending').paginate(
+        page: params[:page], per_page: 5
+      )
     end
   end
 
@@ -54,7 +55,9 @@ class OrdersController < ApplicationController
     if current_user.admin?
       @orders = Order.where(status: 'successful').paginate(page: params[:page], per_page: 5)
     elsif current_user.seller?
-      @orders = Order.joins(bid: :ad).where(ad: {user_id: current_user.id}, status: 'successful').paginate(page: params[:page], per_page: 5)
+      @orders = Order.joins(bid: :ad).where(ad: { user_id: current_user.id }, status: 'successful').paginate(
+        page: params[:page], per_page: 5
+      )
     end
   end
 
@@ -62,7 +65,9 @@ class OrdersController < ApplicationController
     if current_user.admin?
       @orders = Order.where(status: 'cancelled').paginate(page: params[:page], per_page: 5)
     elsif current_user.seller?
-      @orders = Order.joins(bid: :ad).where(ad: {user_id: current_user.id}, status: 'cancelled').paginate(page: params[:page], per_page: 5)
+      @orders = Order.joins(bid: :ad).where(ad: { user_id: current_user.id }, status: 'cancelled').paginate(
+        page: params[:page], per_page: 5
+      )
     end
   end
 
@@ -73,6 +78,7 @@ class OrdersController < ApplicationController
     ad = @order.bid.ad
     ad.bids.each do |bid|
       next if bid.id == @order.bid.id
+
       bid.failed!
     end
 
