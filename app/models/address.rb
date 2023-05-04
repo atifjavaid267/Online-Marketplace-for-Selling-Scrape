@@ -19,10 +19,16 @@ class Address < ApplicationRecord
   validates :city, presence: true
   validates :state, presence: true
   validates :zip_code, presence: true
+  validates :latitude, presence: true
 
   # for deocoder
   # after_validation :geocode
   def full_address
     [street1, street2, city, state, zip_code].compact.join(',')
   end
+
+  # def validate_address
+  #   # Check if the address is valid
+  #   errors.add(:full_address, 'is invalid') unless Geocoder.search(full_address).first
+  # end
 end

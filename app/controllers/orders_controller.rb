@@ -24,6 +24,8 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @address = Address.find(@order.bid.ad.address_id)
+    @lati = @address.latitude
+    @longi = @address.longitude
     @buyer = User.find(@order.bid.user_id)
     @seller = User.find(@order.bid.ad.user_id)
     @amount = @order.bid.price
