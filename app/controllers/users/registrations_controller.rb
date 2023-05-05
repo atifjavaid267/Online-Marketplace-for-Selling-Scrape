@@ -19,14 +19,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # POST /resource
   def create
     # authenticate_2fa!
+    existing_user = User.find_by_email(sign_up_params[:email])
+    if existing_user
+      flash[:notice] = "This email is already registered as #{existing_user.role}"
+      redirect_to new_user_registration_path
+    else
+      super do |resource|
+        if resource.valid? && resource.persisted?
 
-    super do |resource|
-      if resource.valid? && resource.persisted?
-
-        resource.update(
-          otp_required_for_login: true,
-          otp_secret: User.generate_otp_secret
-        )
+          resource.update(
+            otp_required_for_login: true,
+            otp_secret: User.generate_otp_secret
+          )
+        end
       end
     end
   end

@@ -1,6 +1,4 @@
 class Users::SellerController < ApplicationController
-
-
   def home
     if current_user.buyer?
       redirect_to buyer_home_path
@@ -8,5 +6,4 @@ class Users::SellerController < ApplicationController
       redirect_to admin_dashboard_path
     end
   end
-
 end

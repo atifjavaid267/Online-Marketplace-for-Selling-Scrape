@@ -1,4 +1,3 @@
-
 class Ad < ApplicationRecord
   # active stporage
   has_many_attached :ad_images
@@ -14,7 +13,7 @@ class Ad < ApplicationRecord
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true
-  validates :price, presence: true
+  validates :price, presence: true, numericality: { greater_than_or_equal_to: 1 }
   validates :description, presence: true
   validates :ad_images, presence: true
 

@@ -1,7 +1,8 @@
 class ProductsController < ApplicationController
-
   before_action :authenticate_user!, except: %i[show_root]
   load_and_authorize_resource
+
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   def index
     @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 6)
@@ -22,9 +23,7 @@ class ProductsController < ApplicationController
     end
   end
 
-  def show
-    @product = Product.find(params[:id])
-  end
+  def show; end
 
   def edit
     @product = Product.find(params[:id])
@@ -81,5 +80,9 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :product_image)
+  end
+
+  def render_404
+    render file: "#{Rails.root}/public/404.html", status: :not_found
   end
 end

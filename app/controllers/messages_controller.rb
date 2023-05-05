@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
-
   load_and_authorize_resource
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   def index
     @messages = Message.all
@@ -21,7 +21,7 @@ class MessagesController < ApplicationController
       receiver = @message.receiver_id
       message_content = @message.content
 
-      time = Time.now.strftime("%B %d, %Y %I:%M %p")
+      time = Time.now.strftime('%B %d, %Y %I:%M %p')
 
       ActionCable.server.broadcast('room_channel_1', {
                                      sender_id: sender,
@@ -39,5 +39,9 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:sender_id, :receiver_id, :content)
+  end
+
+  def render_404
+    render file: "#{Rails.root}/public/404.html", status: :not_found
   end
 end
