@@ -26,27 +26,23 @@
 
           <% if @addresses == nil || @addresses.empty? %>
             <div class="text-center mt-4">
-              <h2 class="text-lg font-medium mb-2">No address available</h2>
-              <p class="text-sm text-gray-600">First Add your address then add product</p>
+              <p class="text-sm text-gray-600 m-5">First Add your address then add product</p>
               <%= link_to "Add Address", new_address_path, class: "inline-block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
             </div>
           <% else %>
-            <div class="form-group mb-4">
-              <%= form.label :address_id, "Select Address", class: "block font-medium text-gray-700 mb-2" %> <br>
+            <div class="form-group mb-2">
+              <%= form.label :address_id, "Select Address", class: "block font-medium text-gray-700" %> <br>
               <% address_hash = Hash.new %>
               <% @addresses.each { |a| address_hash["#{a.street1} #{a.street2}, #{a.city},#{a.zip_code}, #{a.state}"] = a.id } %>
-              <%= form.select :address_id, options_for_select(address_hash), {}, class: "block w-full mt-1 rounded-md shadow-sm form-select sm:text-sm sm:leading-5" %>
-              <br>
-              <%= link_to "Add new Address", new_address_path, class:"inline-block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+              <%= form.select :address_id, options_for_select(address_hash), {}, class: "block w-full rounded-md shadow-sm form-select sm:text-sm sm:leading-5" %>
+            </div>
+
+            <div>
+              <%= link_to "Add Address", new_address_path, class:"inline-block bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+              <%= form.submit "Create Ad", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
             </div>
           <% end %>
-          <div class="actions">
-            <%= form.submit "Create Ad", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-          </div>
       <% end %>
-      <div class="my-4">
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="window.history.back();">Back</button>
-      </div>
     </div>
   </div>
 </div>

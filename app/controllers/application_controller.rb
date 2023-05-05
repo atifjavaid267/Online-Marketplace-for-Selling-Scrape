@@ -18,10 +18,8 @@ class ApplicationController < ActionController::Base
   end
 
   def configure_permitted_parameters
-
-  # for gem 'devise-two-factor'
+    # for gem 'devise-two-factor'
     devise_parameter_sanitizer.permit(:sign_in, keys: [:otp_attempt])
-
 
     devise_parameter_sanitizer.permit(:sign_in) do |user_params|
       user_params.permit(:email, :password)

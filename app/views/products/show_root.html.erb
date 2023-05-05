@@ -1,61 +1,60 @@
 <body onload="typeWriter()">
 
-<%= render 'users/navbar'%>
-<div class="bg-gray-800 h-screen">
-  <div class="bg-gray-800">
-    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-      <div class="lg:text-center">
-        <!-- <h2 class="text-base text-white font-semibold tracking-wide uppercase">Welcome to</h2> -->
-        <!-- <h1 class="text-3xl font-bold text-white sm:text-4xl">Online Marketplace for Selling Scrape</h1> -->
-        <!-- <p class="mt-2 text-white">Our online marketplace provides a platform for selling scraped websites, allowing users to monetize their web scraping efforts and reach a wider audience.</p> -->
-      </div>
-    </div>
-  </div>
-
-  <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
-    <div class="px-4 py-6 sm:px-0">
-
-      <div class="mx-32 rounded-lg h-96 flex items-center bg-black bg-opacity-20 backdrop-blur-lg drop-shadow-lg flex-col justify-center">
-        <div class="ml-10">
-          <h1 class="text-3xl font-bold text-black sm:text-4xl">Online Marketplace for Selling Scrape</h1>
-        </div>
-        <div class="mx-auto rounded-sm ml-10 pt-10 px-32">
-          <p id="home_description" class="mx-10">
-          </p>
+  <%= render 'users/navbar'%>
+  <div class="bg-gray-800 h-screen">
+    <div class="bg-gray-800">
+      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <div class="lg:text-center">
+          <!-- <h2 class="text-base text-white font-semibold tracking-wide uppercase">Welcome to</h2> -->
+          <!-- <h1 class="text-3xl font-bold text-white sm:text-4xl">Online Marketplace for Selling Scrape</h1> -->
+          <!-- <p class="mt-2 text-white">Our online marketplace provides a platform for selling scraped websites, allowing users to monetize their web scraping efforts and reach a wider audience.</p> -->
         </div>
       </div>
     </div>
-  </div>
-</div>
 
-<% flag = true %>
+    <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80'); background-size: cover; background-repeat: no-repeat; background-position: center center;">
+      <div class="px-4 py-6 sm:px-0">
 
-<% if @products == nil || @products.empty? %>
-  <% flag = false %>
-<% end %>
-
-<% if flag %>
-<hr>
-<div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
-    <div class="pt-5">
-      <div class="grid grid-cols-2 gap-4">
-        <% @products.each do |product| %>
-          <div class="p-4 rounded-lg bg-gray-800 text-white mx-5 opacity-95 flex items-center ml-28 mr-28 mt-10">
-            <div class="flex-grow">
-              <span class="font-bold">Product Name:</span> <br> <span> <%= product.name %> </span><br>
-            </div>
-            <div class="flex-none ml-4">
-              <%= image_tag product.product_image, class: "w-25 h-20 object-cover rounded-lg shadow-md", style: "height: 150px; width: 180px;" %>
-            </div>
+        <div class="mx-32 rounded-lg h-96 flex items-center bg-black bg-opacity-20 backdrop-blur-lg drop-shadow-lg flex-col justify-center">
+          <div class="ml-10">
+            <h1 class="text-3xl font-bold text-black sm:text-4xl">Online Marketplace for Selling Scrape</h1>
           </div>
-        <% end %>
+          <div class="mx-auto rounded-sm ml-10 pt-10 px-32">
+            <p id="home_description" class="mx-10">
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-    <div class = "pb-20 flex flex-row items-center justify-center mt-14">
-        <%= will_paginate @products, class:"bg-gray-500 rounded py-3 px-4"%>
-    </div>
   </div>
-<% end %>
 
+  <% flag = true %>
+
+  <% if @products == nil || @products.empty? %>
+    <% flag = false %>
+  <% end %>
+
+  <% if flag %>
+    <hr>
+    <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+      <div class="pt-5">
+        <div class="grid grid-cols-2 gap-4">
+          <% @products.each do |product| %>
+            <div class="p-4 rounded-lg bg-gray-800 text-white opacity-95 flex items-center mx-16 mt-10">
+              <div class="flex-grow">
+                <span class="font-bold">Product Name:</span> <br> <span> <%= product.name %> </span><br>
+              </div>
+              <div class="flex-none ml-4">
+                <%= image_tag product.product_image, class: "w-25 h-20 object-cover rounded-lg shadow-md", style: "height: 150px; width: 180px;" %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+      <div class = "pb-20 flex flex-row items-center justify-center mt-14">
+        <%= will_paginate @products, class:"bg-gray-500 rounded py-3 px-4"%>
+      </div>
+    </div>
+  <% end %>
 </body>
 

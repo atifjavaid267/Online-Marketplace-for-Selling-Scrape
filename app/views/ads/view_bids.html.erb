@@ -22,7 +22,7 @@
             <span class="font-bold"> Bid Amount: </span><%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %>
           </p>
           <p class="text-lg">Buyer ID: <%= bid.user_id %></p>
-          <p class="text-lg">Buyer Name: <%= user.first_name %></p>
+          <p class="text-lg">Buyer Name: <%= "#{user.first_name}" " #{user.last_name}"%></p>
         </div>
         <div>
           <% if current_user.seller? %>

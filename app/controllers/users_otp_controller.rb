@@ -1,6 +1,4 @@
 class UsersOtpController < ApplicationController
-
-
   before_action :authenticate_user!
 
   def enable
@@ -10,6 +8,5 @@ class UsersOtpController < ApplicationController
     redirect_back(fallback_location: root_path)
   end
 
-  def disable
-  end
+  def disable; end
 end

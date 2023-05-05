@@ -37,16 +37,14 @@
               <% @addresses.each { |a| address_hash["#{a.street1} #{a.street2}, #{a.city},#{a.zip_code}, #{a.state}"] = a.id } %>
               <%= form.select :address_id, options_for_select(address_hash), {}, class: "block w-full mt-1 rounded-md shadow-sm form-select sm:text-sm sm:leading-5" %>
               <br>
-              <%= link_to "Add new Address", new_address_path, class:"inline-block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+              <%= link_to "Add new Address", new_address_path, class:"inline-block bg-green-500 hover:bg-green-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
             </div>
           <% end %>
           <div class="actions">
+            <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="window.history.back();">Back</button>
             <%= form.submit "Update Ad", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
           </div>
       <% end %>
-      <div class="my-4">
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" onclick="window.history.back();">Back</button>
-      </div>
     </div>
   </div>
 </div>

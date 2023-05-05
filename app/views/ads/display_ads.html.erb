@@ -31,20 +31,19 @@
           <% end %>
           <br>
           <% product = Product.find_by(id: ad.product_id) %>
-          <% address = Address.find_by(id: ad.address_id) %>
 
           <span class="font-bold">Name:</span>:</span> <%= product.name %> <br>
           <span class="font-bold">Price:</span> <%= ad.price %> <br>
-
-          <span class="font-bold">Address:</span> <%= "#{address.street1} #{address.street2}, #{address.city}, #{address.zip_code}" %>
-
           <div class="flex space-x-4">
-            <%= link_to "View Ad", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
-
-            <%= button_to "Unpublish", unpublish_ad_path(ad), method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
-
-            <%= button_to "delete ad", ad, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" },method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
-
+            <% if can? :show, ad %>
+              <%= link_to "View", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+            <% end %>
+            <% if can? :unpublish, ad %>
+              <%= button_to "Unpublish", unpublish_ad_path(ad), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
+            <% end %>
+            <% if can? :destroy, ad %>
+              <%= button_to "Delete", ad, data: { confirm: "Are you sure to delete ad?"}, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+            <% end %>
           </div>
 
         </div>
@@ -54,16 +53,10 @@
         <% end %>
       <% end %>
     </div>
-
     <br>
-
   <div class = "pb-20 flex flex-row items-center justify-center">
       <%= will_paginate @ads, class:"bg-gray-300 rounded py-3 px-5"%>
   </div>
-
-  <% if current_user.seller? %>
-    <%= link_to "Back to Home", seller_home_path, class: "mt-2 bg-gray-300 text-white px-4 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out", style: "margin: 10px;" %>
-  <% end %>
 <% end %>
 
 

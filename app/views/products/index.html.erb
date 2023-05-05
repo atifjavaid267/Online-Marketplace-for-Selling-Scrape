@@ -25,16 +25,14 @@
   </div>
 <% else %>
 <%= render 'users/navbar'%>
-  <div class="bg-white shadow-md rounded my-6"></div>
+  <div class="bg-white "></div>
     <table class="w-full">
       <thead>
         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
         <th class="py-3 px-6 text-left font-bold"> Name</th>
-
           <th class="py-3 px-6 text-left"> Image</th>
-          <th class="py-3 px-6 text-left"> Description</th>
           <%if current_user.admin?%>
-            <th class="py-3 px-6 text-center" colspan="4">Actions</th>
+            <th class="py-3 px-6 text-center" colspan="3">Actions</th>
           <%elsif current_user.seller?%>
             <th class="py-3 px-6 text-center">View Product Details</th>
           <%end%>
@@ -42,37 +40,33 @@
       </thead>
       <tbody class="text-gray-600 text-sm font-light">
         <% @products.each do |product|%>
-          <tr class="border-b border-gray-200 hover:bg-gray-100">
+          <tr class="border-b border-gray-200 hover:bg-gray-100 shadow-md rounded border">
             <td class="py-3 px-6 text-left whitespace-nowrap font-bold"><%= product.name%></td>
             <% if product.product_image.attached? %>
-              <td class="py-3 px-6 text-left"><%= image_tag product.product_image, style: "length: 100px; width: 70px"%></td>
+              <td class="py-3 px-3 text-left"><%= image_tag product.product_image, style: "length: 100px; width: 70px"%></td>
             <%end%>
-            <td class="py-3 px-6 text-left"><%= product.description%></td>
+            <!-- <td class="py-3 px-6 text-left"><%= product.description%></td> -->
             <td class="py-3 px-6 text-center">
-               <%= link_to "view", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%>
+               <%= link_to "View", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%>
             </td>
             <%if current_user.admin? %>
-              <td class="py-3 px-6 text-center"><%= link_to "edit", edit_product_path(product), class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-              <td class="py-3 px-6 text-center"><%= button_to "Unpublish", unpublish_product_path(product), method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-              <td class="py-3 px-6 text-center"><%= button_to "delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
+              <td class="py-3 px-6 text-center"><%= button_to "Unpublish", unpublish_product_path(product),data: { confirm: "Are you sure to unpublish product?", turbo_confirm: "Are you sure to unpublish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+              <td class="py-3 px-6 text-center"><%= button_to "Delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
             <%end%>
           </tr>
-
         <%end%>
       </tbody>
     </table>
   </div>
 
-  <br>
-
-<div class = "pb-20 flex flex-row items-center justify-center">
+  <div class = "pb-20 flex flex-row items-center justify-center">
     <%= will_paginate @products, class:"bg-gray-300 rounded py-3 px-4"%>
-</div>
-
-<%if current_user.admin?%>
-  <div class="my-6 flex justify-center">
-    <%= link_to "Add Product", new_product_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"%>
   </div>
-<%end%>
+
+  <%if current_user.admin?%>
+    <div class="flex justify-center">
+      <%= link_to "Add Product", new_product_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"%>
+    </div>
+  <%end%>
 <% end %>
 
