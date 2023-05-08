@@ -13,13 +13,36 @@ class AddressesController < ApplicationController
 
   def create
     @address = current_user.addresses.build(address_params)
-
-    if @address.save
-      redirect_to addresses_path, notice: 'Address was successfully created.'
+    @address.geocode
+    # byebug
+    # @address.zip_code = Geocoder.search(@address.geocode).first.postal_code
+    if @address.latitude.zero? || @address.longitude.zero?
+      redirect_to new_address_path, notice: 'Address was not found' and return
     else
-      redirect_to new_address_path, notice: 'Address was not found'
+      @address.save
+      redirect_to addresses_path, notice: 'Address was successfully created.'
     end
   end
+
+  # def create
+  #   @address = current_user.addresses.build(address_params)
+  #   if @address.save
+  #     redirect_to addresses_path, notice: 'Address was successfully created.'
+  #   else
+  #     redirect_to new_address_path, notice: 'Address was not found'
+  #   end
+  # end
+  # def create
+  #   @address = current_user.addresses.build(address_params)
+  #   # debugger
+  #   if @address.latitude.zero? || @address.longitude.zero?
+  #     redirect_to new_address_path, notice: 'Address was not found'
+  #   elsif !@address.save!
+  #     redirect_to new_address_path, notice: 'Address was not found'
+  #   else
+  #     redirect_to addresses_path, notice: 'Address was successfully created.'
+  #   end
+  # end
 
   def edit
     @address = Address.find(params[:id])
@@ -51,7 +74,7 @@ class AddressesController < ApplicationController
   private
 
   def address_params
-    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code, :latitude, :longitude)
+    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code)
   end
 
   def render_404

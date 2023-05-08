@@ -11,12 +11,15 @@
   </div>
 <%else%>
   <%= render 'users/navbar' %>
-  <div class="grid gap-4 md:grid-cols-1 xl:grid-cols-1" style="margin-left: 10px; margin-right: 10px;">
+  <%# <div class = "text-red-500 text-xl">
+  <%= "bids-container-" + @ad.id.to_s%>
+<%# </div> %> 
+  <div id = <%= "bids-container-" + @ad.id.to_s%> class="grid gap-4 md:grid-cols-1 xl:grid-cols-1" style="margin-left: 10px; margin-right: 10px;">
     <br>
     <% @bids.each do |bid| %>
 
       <% user = User.find_by(id: bid.user_id) %>
-      <div class="flex justify-between items-center p-4 border rounded-md shadow-md">
+      <div  class="flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
           <p class="text-gray-600 font-bold">
             <span class="font-bold"> Bid Amount: </span><%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %>
