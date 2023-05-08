@@ -18,7 +18,7 @@ class Address < ApplicationRecord
   validates :user_id, presence: true
   validates :city, presence: true
   validates :state, presence: true
-  validates :zip_code, presence: true
+  # validates :zip_code, presence: true
   validates :latitude, presence: true
 
   # for deocoder

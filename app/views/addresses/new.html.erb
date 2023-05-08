@@ -43,6 +43,205 @@
             <%= form.text_field :zip_code, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
           </div>
          
+<div>
+  <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+  <button onclick="searchLocation()">Search</button>
+</div>
+
+<div id="map" class="w-80 h-80"></div> 
+
+<script> 
+
+var geocoder;
+var map;
+var marker;
+var input = document.getElementById('pac-input');
+
+function initMap() {
+  map = new google.maps.Map(document.getElementById('map'), {
+    zoom: 6,
+    center: {lat: 30.3753, lng: 69.3451}, // set center to Pakistan's lat and lng
+    zoomControl: true
+  });
+
+  marker = new google.maps.Marker({
+    position: {lat: 30.3753, lng: 69.3451},
+    map: map,
+    draggable: true 
+  });
+
+  google.maps.event.addListener(map, "click", function (event) {
+    marker.setPosition(event.latLng);
+    map.panTo(event.latLng);
+  });
+
+  google.maps.event.addListener(marker, "dragend", function (event) {
+    map.panTo(event.latLng);
+  });
+
+  geocoder = new google.maps.Geocoder();
+  
+  // Add the Place Autocomplete search box
+  var autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.bindTo('bounds', map);
+
+  // Update the map and marker position when a place is selected
+  autocomplete.addListener('place_changed', function() {
+    var place = autocomplete.getPlace();
+    if (!place.geometry) {
+      alert("No details available for input: '" + place.name + "'");
+      return;
+    }
+
+    // Update the map and marker position
+    map.setCenter(place.geometry.location);
+    marker.setPosition(place.geometry.location);
+    map.setZoom(18);
+
+    // Update the address fields
+    var address_components = place.address_components;
+    var street_number = "";
+    var route = "";
+    var city = "";
+    var state = "";
+    var zip_code = "";
+    for (var i = 0; i < address_components.length; i++) {
+      var component = address_components[i];
+      if (component.types.includes("street_number")) {
+        street_number = component.long_name;
+      } else if (component.types.includes("route")) {
+        route = component.long_name;
+      } else if (component.types.includes("locality")) {
+        city = component.long_name;
+      } else if (component.types.includes("administrative_area_level_1")) {
+        state = component.long_name;
+      } else if (component.types.includes("postal_code")) {
+        zip_code = component.long_name;
+      }
+    }
+    document.getElementById("address_street1").value = street_number + " " + route;
+    document.getElementById("address_city").value = city;
+    document.getElementById("address_state").value = state;
+    document.getElementById("address_zip_code").value = zip_code;
+
+    // Save the address
+    var address = {
+      street1: street_number + " " + route,
+      city: city,
+      state: state,
+      zip_code: zip_code
+    };
+
+    document.getElementById("address_street2").value = ""; // clear street2 field
+    document.getElementById("map").focus(); // focus on the first field
+    console.log(address); // log the address to the console for testing
+  });
+}
+function searchLocation() {
+  var address = document.getElementById('pac-input').value;
+  geocoder.geocode({'address': address}, function(results, status) {
+    if (status === 'OK') {
+      var location = results[0].geometry.location;
+      map.setCenter(location);
+      marker.setPosition(location);
+      map.setZoom(18);
+
+      // update the address fields
+      var address_components = results[0].address_components;
+      var street_number = "";
+      var route = "";
+      var city = "";
+      var state = "";
+      var zip_code = "";
+      for (var i = 0; i < address_components.length; i++) {
+        var component = address_components[i];
+        if (component.types.includes("street_number")) {
+          street_number = component.long_name;
+        } else if (component.types.includes("route")) {
+          route = component.long_name;
+        } else if (component.types.includes("locality")) {
+          city = component.long_name;
+        } else if (component.types.includes("administrative_area_level_1")) {
+          state = component.long_name;
+        } else if (component.types.includes("postal_code")) {
+          zip_code = component.long_name;
+        }
+      }
+      document.getElementById("address_street1").value = street_number + " " + route;
+      document.getElementById("address_city").value = city;
+      document.getElementById("address_state").value = state;
+      document.getElementById("address_zip_code").value = zip_code;
+
+      // save the address
+      var address = {
+        street1: street_number + " " + route,
+        city: city,
+        state: state,
+        zip_code: zip_code
+      };
+
+    } else {
+      alert('Geocode was not successful for the following reason: ' + status);
+    }
+  });
+}
+
+// function searchLocation() {
+//   var address = document.getElementById('pac-input').value;
+//   geocoder.geocode({'address': address}, function(results, status) {
+//     if (status === 'OK') {
+//       var location = results[0].geometry.location;
+//       map.setCenter(location);
+//       marker.setPosition(location);
+//       map.setZoom(18);
+
+//       // update the address fields
+//       var address_components = results[0].address_components;
+//       var street_number = "";
+//       var route = "";
+//       var city = "";
+//       var state = "";
+//       var zip_code = "";
+//       for (var i = 0; i < address_components.length; i++) {
+//         var component = address_components[i];
+//         if (component.types.includes("street_number")) {
+//           street_number = component.long_name;
+//         } else if (component.types.includes("route")) {
+//           route = component.long_name;
+//         } else if (component.types.includes("locality")) {
+//           city = component.long_name;
+//         } else if (component.types.includes("administrative_area_level_1")) {
+//           state = component.long_name;
+//         } else if (component.types.includes("zip_code")) {
+//           zip_code = component.long_name;
+//         }
+//       }
+//       document.getElementById("address_street1").value = street_number + " " + route;
+//       document.getElementById("address_city").value = city;
+//       document.getElementById("address_state").value = state;
+//       document.getElementById("address_zip_code").value = zip_code;
+
+//       // save the address
+//       var address = {
+//         street1: street_number + " " + route,
+//         city: city,
+//         state: state,
+//         zip_code: zip_code
+//       };
+
+//     } else {
+//       alert('Geocode was not successful for the following reason: ' + status);
+//     }
+//   });
+// }
+
+
+
+
+        </script>
+
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap"></script> 
+
           
           <div class="actions">
             <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
