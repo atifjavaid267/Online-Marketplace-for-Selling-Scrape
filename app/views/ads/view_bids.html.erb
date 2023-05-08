@@ -21,14 +21,12 @@
       <% user = User.find_by(id: bid.user_id) %>
       <div  class="flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
-          <p class="text-gray-600 font-bold">
-            <span class="font-bold"> Bid Amount: </span><%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %>
-          </p>
+          <p class="text-gray-600 font-bold"> Bid Amount: <%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %></p>
           <p class="text-lg">Buyer ID: <%= bid.user_id %></p>
           <p class="text-lg">Buyer Name: <%= "#{user.first_name}" " #{user.last_name}"%></p>
         </div>
         <div>
-          <% if current_user.seller? %>
+          <% if can? :new, Order %>
             <%= link_to "Make Order", new_bid_order_path(bid), class: "px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50" %>
           <%end%>
         </div>

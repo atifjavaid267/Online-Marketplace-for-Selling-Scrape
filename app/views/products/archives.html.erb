@@ -27,9 +27,15 @@
             <% if product.product_image.attached? %>
               <td class="py-3 px-6 text-left"><%= image_tag product.product_image, style: "length: 100px; width: 70px"%></td>
             <%end%>
-            <td class="py-3 px-6 text-center"> <%= link_to "View", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <td class="py-3 px-6 text-center"><%= button_to "Publish", publish_product_path(product),data: { confirm: "Are you sure to publish product?", turbo_confirm: "Are you sure to publish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <td class="py-3 px-6 text-center"><%= button_to "Delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <% if can? :show, Product %>
+              <td class="py-3 px-6 text-center"> <%= link_to "View", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <%end%>
+            <% if can? :publish, Product %>
+              <td class="py-3 px-6 text-center"><%= button_to "Publish", publish_product_path(product),data: { confirm: "Are you sure to publish product?", turbo_confirm: "Are you sure to publish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <%end%>
+            <% if can? :destroy, Product %>
+              <td class="py-3 px-6 text-center"><%= button_to "Delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <%end%>
           </tr>
         <%end%>
       </tbody>

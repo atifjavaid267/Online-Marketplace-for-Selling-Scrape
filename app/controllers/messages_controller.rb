@@ -2,10 +2,6 @@ class MessagesController < ApplicationController
   load_and_authorize_resource
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
-  def index
-    @messages = Message.all
-  end
-
   def show; end
 
   def new
@@ -39,9 +35,5 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:sender_id, :receiver_id, :content)
-  end
-
-  def render_404
-    render file: "#{Rails.root}/public/404.html", status: :not_found
   end
 end

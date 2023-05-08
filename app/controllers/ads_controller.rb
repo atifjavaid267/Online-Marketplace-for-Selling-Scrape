@@ -115,8 +115,4 @@ class AdsController < ApplicationController
   def ad_params
     params.require(:ad).permit(:product_id, :price, :description, :address_id, ad_images: [])
   end
-
-  def render_404
-    render file: "#{Rails.root}/public/404.html", status: :not_found
-  end
 end

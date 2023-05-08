@@ -10,11 +10,11 @@ class Ability
 
     if user.admin?
       can %i[new create show index edit update destroy publish unpublish archives], Product
-      can %i[index show destroy archives view_bids], Ad
-      can %i[index show show_pending show_successful show_cancelled cancel], Order
+      can %i[index show destroy archives view_bids publish unpublish], Ad
+      can %i[index show show_pending show_successful show_cancelled], Order
 
       cannot %i[new create], Bid
-      cannot %i[index show new create], Message
+      cannot %i[show new create], Message
 
     elsif user.seller?
       can %i[index], Product
@@ -27,7 +27,7 @@ class Ability
       can %i[index], Bid
       can %i[index new create show_pending show_successful show_cancelled confirm cancel], Order
       can %i[show], Order, bid: { ad: { user_id: user.id } }
-      can %i[index show new create], Message
+      can %i[show new create], Message
 
       cannot %i[new create], Bid
 
@@ -36,7 +36,7 @@ class Ability
       can %i[show], Ad, status: true
       can %i[new create index], Bid
       can %i[index show], Order, bid: { user_id: user.id }
-      can %i[index show new create], Message
+      can %i[show new create], Message
 
       cannot %i[new create show edit update destroy publish unpublish archives], Product
       cannot %i[display_ads new create edit update destroy publish unpublish archves view_bids], Ad

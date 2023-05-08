@@ -111,8 +111,4 @@ class OrdersController < ApplicationController
   def order_params
     params.require(:order).permit(:bid_id, :pickup_time, :status)
   end
-
-  def render_404
-    render file: "#{Rails.root}/public/404.html", status: :not_found
-  end
 end

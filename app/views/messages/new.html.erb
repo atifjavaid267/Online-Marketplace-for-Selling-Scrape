@@ -30,13 +30,13 @@
 
         <%if current_user.id == message.sender_id %>
           <div class="message text-right mr-5 mt-5">
-            <span class="time text-xs"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
-            <span class="content bg-blue-600 rounded-md p-2 m-1 text-white text-lg"><%= message.content %></span>
+            <span class="time text-xs text-gray-500"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
+            <span class="content bg-blue-600 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
           </div>
         <% else %>
           <div class="message  text-left ml-5 mt-5">
-            <span class="content bg-gray-500 rounded-md p-2 m-1 text-white text-lg"><%= message.content %></span>
-            <span class="time text-xs"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
+            <span class="content bg-gray-500 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
+            <span class="time text-xs text-gray-500"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
           </div>
         <% end %>
       <% end %>

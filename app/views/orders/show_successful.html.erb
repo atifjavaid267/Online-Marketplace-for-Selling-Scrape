@@ -31,15 +31,16 @@
           <%elsif order.status=="cancelled"%>
             <h3 class="font-bold px-10 py-6 mx-2 text-red-600"> Order Cancelled</h3>
           <%end%>
-          <%= link_to "View", order_path(order), class: "px-4 py-2 font-bold bg-blue-500 text-white rounded-lg hover:bg-blue-600" %>
+          <% if can? :show, Order %>
+            <%= link_to "View", order_path(order), class: "px-4 py-2 font-bold bg-blue-500 text-white rounded-lg hover:bg-blue-600" %>
+          <% end %>
         </div>
       </div>
     <% end %>
   </div>
-
   <br>
   <div class = "pb-20 flex flex-row items-center justify-center">
-    <div >
+    <div>
       <%= will_paginate @orders, class:"bg-gray-300 rounded py-3 px-5"%>
     </div>
   </div>

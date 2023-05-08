@@ -26,14 +26,26 @@
       <% @ads.each do |ad| %>
         <div class="border p-4 rounded-lg">
           <h4 class="font-bold mb-2"><%="Ad-#{counter}."%></h4>
+
+          <div class=" flex flex-row" >
+
+            <div class="pl-7 py-6">
+              <% product = Product.find_by(id: ad.product_id) %>
+
+              <span class="font-bold">Name:</span>:</span> <%= product.name %> <br>
+              <span class="font-bold">Price:</span> <%= ad.price %> <br>
+              </div>
+            <div class="pl-10">
           <% ad.ad_images.each do |image| %>
             <%= image_tag image, class: "w-28 h-20 object-cover rounded-lg shadow-md"%>
           <% end %>
           <br>
-          <% product = Product.find_by(id: ad.product_id) %>
+            </div>
 
-          <span class="font-bold">Name:</span>:</span> <%= product.name %> <br>
-          <span class="font-bold">Price:</span> <%= ad.price %> <br>
+
+
+          </div>
+
           <div class="flex space-x-4">
             <% if can? :show, ad %>
               <%= link_to "View", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
@@ -41,11 +53,10 @@
             <% if can? :unpublish, ad %>
               <%= button_to "Unpublish", unpublish_ad_path(ad), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
             <% end %>
-            <% if can? :destroy, ad %>
+            <% if can? :destroy, Ad %>
               <%= button_to "Delete", ad, data: { confirm: "Are you sure to delete ad?"}, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
             <% end %>
           </div>
-
         </div>
         <% counter += 1 %>
         <% if counter % 2 == 1 %>

@@ -9,10 +9,12 @@
         <%if @order.pending? %>
           <h3 class="font-bold text-blue-600 ml-2">Order is Pending!</h3> <br>
           <div class="flex flex-row items-center justify-center mt-10">
-            <% if current_user.seller?%>
+            <% if can? :confirm, Order%>
               <div class="mx-1">
                 <%= button_to "Complete", confirm_order_path(@order),data: { confirm: "Are you sure to complete order?", turbo_confirm: "Are you sure to complete order?" },  class: "bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
               </div>
+            <% end %>
+            <% if can? :cancel, Order%>
               <div>
                 <%= button_to "Cancel", cancel_order_path(@order),data: { confirm: "Are you sure to cancel order?", turbo_confirm: "Are you sure to cancel order?" },  class: "bg-red-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"%>
               </div>
@@ -26,9 +28,7 @@
       </div>
       <div>
         <button class="bg-gray-300 text-gray-800 ml-1 pl-8 pr-9 py-2 mb-2 rounded-lg shadow-md hover:bg-gray-400 transition duration-300 ease-in-out" onclick="window.history.back();">Back</button>
-        <% if current_user.seller? %>
-        <%= link_to "Message", new_message_path(order_id: @order.id),   class: "bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
-        <% elsif current_user.buyer? %>
+        <% if can? :new, Message %>
           <%= link_to "Message", new_message_path(order_id: @order.id), class: "bg-green-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
         <% end %>
       </div>
@@ -38,12 +38,12 @@
   <div class="flex flex-col items-start justify-center space-y-8 flex-1">
       <h4 class="font-semibold text-lg">Order Amount:</h4>
       <p class="text-gray-700 mb-6"><%= "Rs. #{@amount}" %></p>
-      <% if current_user.seller? || current_user.admin? %>
+      <% unless current_user.buyer? %>
         <h4 class="font-semibold text-lg">Buyer Name:</h4>
         <p class="text-gray-700 mb-6"><%= "#{@buyer.first_name} #{@buyer.last_name}" %></p>
       <%end%>
 
-      <% if current_user.buyer? || current_user.admin? %>
+      <% unless current_user.seller? %>
         <h4 class="font-semibold text-lg">Seller Name:</h4>
         <p class="text-gray-700 mb-6"><%= "#{@seller.first_name} #{@seller.last_name}"%></p>
       <%end%>

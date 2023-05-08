@@ -11,6 +11,10 @@ class ApplicationController < ActionController::Base
     redirect_to main_app.root_url, alert: exception.message
   end
 
+  def render_404
+    render file: "#{Rails.root}/public/404.html", status: :not_found
+  end
+
   private
 
   def load_and_authorize_resource
