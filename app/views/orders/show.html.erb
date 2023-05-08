@@ -1,5 +1,5 @@
-
 <%= render 'users/navbar'%>
+
 <div class="m-10">
   <%if @order.pending? %>
     <div class="flex flex-row items-center justify-center mt-10">
@@ -65,11 +65,11 @@
 
 
 <script>
+
   function initMap() {
     const mapDiv = document.getElementById('data')
     const lat = mapDiv.getAttribute('data-lat')
     const lon = mapDiv.getAttribute('data-lon')
-
   // var center = {lat: lat, lng: lon};
     const center = new google.maps.LatLng(lat, lon);
 
