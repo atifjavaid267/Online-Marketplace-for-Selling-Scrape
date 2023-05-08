@@ -30,6 +30,8 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @address = Address.find(@order.bid.ad.address_id)
+    @lati = @address.latitude
+    @longi = @address.longitude
     @buyer = User.find(@order.bid.user_id)
     @seller = User.find(@order.bid.ad.user_id)
     @amount = @order.bid.price
@@ -39,10 +41,12 @@ class OrdersController < ApplicationController
     if current_user.admin?
       @orders = Order.all.paginate(page: params[:page], per_page: 10)
     elsif current_user.seller?
+
       @orders = Order.joins(bid: :ad).where(ad: { user_id: current_user.id }).paginate(page: params[:page],
                                                                                        per_page: 10)
     elsif current_user.buyer?
       @orders = Order.joins(:bid).where(bids: { user_id: current_user.id }).paginate(page: params[:page], per_page: 10)
+
     end
   end
 
@@ -54,6 +58,7 @@ class OrdersController < ApplicationController
         page: params[:page], per_page: 10
       )
     end
+    @order = Order.new # Set @order to a new instance of Order to avoid "undefined method `bid'" error in the view
   end
 
   def show_successful
@@ -61,6 +66,7 @@ class OrdersController < ApplicationController
       @orders = Order.where(status: 'successful').paginate(page: params[:page], per_page: 10)
     elsif current_user.seller?
       @orders = Order.joins(bid: :ad).where(ad: { user_id: current_user.id }, status: 'successful').paginate(
+
         page: params[:page], per_page: 10
       )
     end
@@ -71,6 +77,7 @@ class OrdersController < ApplicationController
       @orders = Order.where(status: 'cancelled').paginate(page: params[:page], per_page: 10)
     elsif current_user.seller?
       @orders = Order.joins(bid: :ad).where(ad: { user_id: current_user.id }, status: 'cancelled').paginate(
+
         page: params[:page], per_page: 10
       )
     end
