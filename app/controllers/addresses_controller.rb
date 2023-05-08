@@ -24,26 +24,6 @@ class AddressesController < ApplicationController
     end
   end
 
-  # def create
-  #   @address = current_user.addresses.build(address_params)
-  #   if @address.save
-  #     redirect_to addresses_path, notice: 'Address was successfully created.'
-  #   else
-  #     redirect_to new_address_path, notice: 'Address was not found'
-  #   end
-  # end
-  # def create
-  #   @address = current_user.addresses.build(address_params)
-  #   # debugger
-  #   if @address.latitude.zero? || @address.longitude.zero?
-  #     redirect_to new_address_path, notice: 'Address was not found'
-  #   elsif !@address.save!
-  #     redirect_to new_address_path, notice: 'Address was not found'
-  #   else
-  #     redirect_to addresses_path, notice: 'Address was successfully created.'
-  #   end
-  # end
-
   def edit
     @address = Address.find(params[:id])
     @address.user_id = current_user.id

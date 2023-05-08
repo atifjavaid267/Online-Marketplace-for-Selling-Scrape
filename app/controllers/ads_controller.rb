@@ -29,7 +29,7 @@ class AdsController < ApplicationController
 
     @ad.user_id = current_user.id
 
-    if @ad.price.negative || @ad.price.zero?
+    if @ad.price.negative? || @ad.price.zero?
       redirect_to new_product_ad_path(@product), notice: 'Ad price cannot be negative or zero'
     elsif @ad.save
       redirect_to @ad, notice: 'Ad was created successfully.'
