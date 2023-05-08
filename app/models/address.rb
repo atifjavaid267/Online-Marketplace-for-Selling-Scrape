@@ -4,7 +4,7 @@ class Address < ApplicationRecord
   # geocoded_by :city
   geocoded_by :full_address
   after_validation :geocode, if: lambda { |obj|
- obj.street1.present? || obj.street2.present? || obj.city.present? || obj.state.present? || obj.zip_code.present?
+                                   obj.street1.present? || obj.street2.present? || obj.city.present? || obj.state.present? || obj.zip_code.present?
                                  }
 
   def latitude

@@ -20,7 +20,7 @@ class Ability
       can %i[index], Product
       can %i[show], Product, status: true
 
-      can %i[new create index edit destroy], Address
+      can %i[new create index edit update destroy], Address
       can %i[display_ads new create edit update destroy publish unpublish archives view_bids], Ad
       can %i[show], Ad, user_id: user.id
 
