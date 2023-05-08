@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   # root
   root 'products#show_root'
 
-  resources :messages, only: %i[create index show new]
+  resources :messages, only: %i[create show new]
   mount ActionCable.server => '/cable'
 
   get 'otp/create'

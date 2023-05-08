@@ -53,8 +53,4 @@ class AddressesController < ApplicationController
   def address_params
     params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code, :latitude, :longitude)
   end
-
-  def render_404
-    render file: "#{Rails.root}/public/404.html", status: :not_found
-  end
 end

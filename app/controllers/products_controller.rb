@@ -69,7 +69,7 @@ class ProductsController < ApplicationController
   end
 
   def archives
-    @archive_products = Product.where(status: false).paginate(page: params[:page], per_page: 5)
+    @archive_products = Product.where(status: false).paginate(page: params[:page], per_page: 6)
   end
 
   def show_root
@@ -80,9 +80,5 @@ class ProductsController < ApplicationController
 
   def product_params
     params.require(:product).permit(:name, :description, :product_image)
-  end
-
-  def render_404
-    render file: "#{Rails.root}/public/404.html", status: :not_found
   end
 end
