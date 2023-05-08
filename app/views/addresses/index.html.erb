@@ -38,9 +38,13 @@
             <td class="px-4 py-2"><%= address.zip_code %></td>
             <td class="px-4 py-2"><%= address.latitude %></td>
             <td class="px-4 py-2"><%= address.longitude %></td>
-            <td class="px-4 py-2"><%= link_to "edit", edit_address_path(address), class: "bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded" %></td>
-            <td class="px-4 py-2"><%= button_to "delete", address, data: { confirm: "Are you sure to delete address?", turbo_confirm: "Are you sure to delete address?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
-          </tr>
+            <% if can? :edit, Address%>
+              <td class="px-4 py-2"><%= link_to "Edit", edit_address_path(address), class: "bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded" %></td>
+            <% end %>
+            <% if can? :destroy, Address%>
+              <td class="px-4 py-2"><%= button_to "Delete", address, data: { confirm: "Are you sure to delete address?", turbo_confirm: "Are you sure to delete address?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
+            <% end %>
+            </tr>
         <% end %>
       </tbody>
     </table>
@@ -48,9 +52,7 @@
 
 
   <div class = "pb-20 flex flex-row items-center justify-center">
-    <div class=" rounded py-3 px-5">
-      <%= will_paginate @adresses%>
-    </div>
+      <%= will_paginate @adresses, class:"bg-gray-300 rounded py-3 px-5" %>
   </div>
 
   <div class="flex items-center py-8">

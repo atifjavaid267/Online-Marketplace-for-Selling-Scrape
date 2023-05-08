@@ -1,4 +1,7 @@
 class AdsController < ApplicationController
+  load_and_authorize_resource
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
   def index
     @ads = Ad.all.where(status: true).paginate(page: params[:page], per_page: 10)
   end
@@ -7,9 +10,7 @@ class AdsController < ApplicationController
     @ads = current_user.ads.where(status: true).paginate(page: params[:page], per_page: 10)
   end
 
-  def show
-    @ad = Ad.find(params[:id])
-  end
+  def show; end
 
   def new
     @product = Product.find(params[:product_id])
@@ -28,7 +29,9 @@ class AdsController < ApplicationController
 
     @ad.user_id = current_user.id
 
-    if @ad.save
+    if @ad.price.negative || @ad.price.zero?
+      redirect_to new_product_ad_path(@product), notice: 'Ad price cannot be negative or zero'
+    elsif @ad.save
       redirect_to @ad, notice: 'Ad was created successfully.'
     else
       redirect_to new_product_ad_path(@product), notice: 'Ad was not created'
@@ -66,12 +69,10 @@ class AdsController < ApplicationController
     if Bid.find_by(ad_id: @ad.id)
       if current_user.admin?
         redirect_to ads_path, alert: 'Ad cannot be deleted!'
+      elsif flag
+        redirect_to seller_ads_path, alert: 'Ad cannot be deleted!'
       else
-        if flag
-          redirect_to seller_ads_path, alert: 'Ad cannot be deleted!'
-        else
-          redirect_to archives_ads_path, alert: 'Ad cannot be deleted!'
-        end
+        redirect_to archives_ads_path, alert: 'Ad cannot be deleted!'
       end
     else
       @ad.destroy
@@ -81,12 +82,10 @@ class AdsController < ApplicationController
         else
           redirect_to archives_ads_path, notice: 'Ad deleted successfully.'
         end
+      elsif flag
+        redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
       else
-        if flag
-          redirect_to seller_ads_path, notice: 'Ad deleted successfully.'
-        else
-          redirect_to archives_ads_path, notice: 'Ad deleted successfully.'
-        end
+        redirect_to archives_ads_path, notice: 'Ad deleted successfully.'
       end
     end
   end
@@ -115,5 +114,9 @@ class AdsController < ApplicationController
 
   def ad_params
     params.require(:ad).permit(:product_id, :price, :description, :address_id, ad_images: [])
+  end
+
+  def render_404
+    render file: "#{Rails.root}/public/404.html", status: :not_found
   end
 end

@@ -1,4 +1,6 @@
 class BidsController < ApplicationController
+  load_and_authorize_resource
+
   def new
     @ad = Ad.find(params[:ad_id])
     @bid = @ad.bids.new
@@ -6,12 +8,17 @@ class BidsController < ApplicationController
   end
 
   def create
+    # byebug
     @ad = Ad.find(params[:ad_id])
     @bid = @ad.bids.build(bid_params)
     @bid.user_id = current_user.id
 
     respond_to do |format|
-      if @bid.save
+      if @bid.price.nil?
+        redirect_to new_ad_bid_path(@ad), notice: 'Bid amount should be positive number!'
+      elsif @bid.price.negative? || @bid.price.zero?
+        redirect_to new_ad_bid_path(@ad), notice: 'Bid amount should be a positive integer!'
+      elsif @bid.save
 
         ActionCable.server.broadcast('bids_channel',
                                      { ad_id: @ad.id, price: @bid.price, buyer_id: @bid.user_id,
@@ -26,18 +33,9 @@ class BidsController < ApplicationController
     end
   end
 
-  # def create
-  #   @ad = Ad.find(params[:ad_id])
-  #   @bid = @ad.bids.build(bid_params)
-  #   @bid.user_id = current_user.id
-
-  #   if @bid.save
-  #     redirect_to ads_path, notice: 'Ad was successfully created.'
-  #   else
-  #     # render :new
-  #     redirect_to new_ad_bid_path(@ad)
-  #   end
-  # end
+  def index
+    @bids = Bid.all.where(user_id: current_user.id).paginate(page: params[:page], per_page: 10)
+  end
 
   def view_bids
     @ad = Ad.find(params[:ad_id])

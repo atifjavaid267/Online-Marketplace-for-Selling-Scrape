@@ -72,3 +72,12 @@ gem 'geocoder', '~> 1.8', '>= 1.8.1'
 
 # for pagination use
 gem 'will_paginate', '~> 3.3.0'
+
+gem 'devise-two-factor'
+
+gem "letter_opener", :group => :development
+
+ gem "attr_encrypted"
+
+
+gem "twilio-ruby", "~> 5.76"

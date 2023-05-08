@@ -1,4 +1,7 @@
 class AddressesController < ApplicationController
+  load_and_authorize_resource
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
   def index
     @addresses = current_user.addresses.paginate(page: params[:page], per_page: 5)
   end
@@ -72,5 +75,9 @@ class AddressesController < ApplicationController
 
   def address_params
     params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code)
+  end
+
+  def render_404
+    render file: "#{Rails.root}/public/404.html", status: :not_found
   end
 end
