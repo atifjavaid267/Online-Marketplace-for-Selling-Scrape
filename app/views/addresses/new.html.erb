@@ -42,15 +42,15 @@
             <%= form.label :zip_code, class: "font-bold mb-2 block" %>
             <%= form.text_field :zip_code, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
           </div>
-         
+
 <div>
   <input id="pac-input" class="controls" type="text" placeholder="Search Box">
   <button onclick="searchLocation()">Search</button>
 </div>
 
-<div id="map" class="w-80 h-80"></div> 
+<div id="map" class="w-80 h-80"></div>
 
-<script> 
+<script>
 
 var geocoder;
 var map;
@@ -67,7 +67,7 @@ function initMap() {
   marker = new google.maps.Marker({
     position: {lat: 30.3753, lng: 69.3451},
     map: map,
-    draggable: true 
+    draggable: true
   });
 
   google.maps.event.addListener(map, "click", function (event) {
@@ -80,7 +80,7 @@ function initMap() {
   });
 
   geocoder = new google.maps.Geocoder();
-  
+
   // Add the Place Autocomplete search box
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
@@ -240,7 +240,7 @@ function searchLocation() {
 
         </script>
 
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap"></script> 
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap"></script>
 
           <div class="actions flex items-center flex-row justify-center">
             <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
