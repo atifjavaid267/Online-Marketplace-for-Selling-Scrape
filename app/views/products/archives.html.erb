@@ -15,11 +15,9 @@
     <table class="w-full">
       <thead>
         <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-        <th class="py-3 px-6 text-left font-bold"> Name</th>
-
+          <th class="py-3 px-6 text-left font-bold"> Name</th>
           <th class="py-3 px-6 text-left"> Image</th>
-          <th class="py-3 px-6 text-left"> Description</th>
-          <th class="py-3 px-6 text-center" colspan="4">Actions</th>
+          <th class="py-3 px-6 text-center" colspan="3">Actions</th>
         </tr>
       </thead>
       <tbody class="text-gray-600 text-sm font-light">
@@ -29,27 +27,21 @@
             <% if product.product_image.attached? %>
               <td class="py-3 px-6 text-left"><%= image_tag product.product_image, style: "length: 100px; width: 70px"%></td>
             <%end%>
-            <td class="py-3 px-6 text-left"><%= product.description%></td>
-            <td class="py-3 px-6 text-center"> <%= link_to "view", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <td class="py-3 px-6 text-center"><%= link_to "edit", edit_product_path(product), class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <td class="py-3 px-6 text-center"><%= button_to "publish", publish_product_path(product), method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <td class="py-3 px-6 text-center"><%= button_to "delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <% if can? :show, Product %>
+              <td class="py-3 px-6 text-center"> <%= link_to "View", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <%end%>
+            <% if can? :publish, Product %>
+              <td class="py-3 px-6 text-center"><%= button_to "Publish", publish_product_path(product),data: { confirm: "Are you sure to publish product?", turbo_confirm: "Are you sure to publish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <%end%>
+            <% if can? :destroy, Product %>
+              <td class="py-3 px-6 text-center"><%= button_to "Delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <%end%>
           </tr>
         <%end%>
       </tbody>
     </table>
+    <div class = "pb-20 flex flex-row items-center justify-center">
+      <%= will_paginate @archive_products, class:"bg-gray-300 rounded py-3 px-5"%>
+    </div>
   </div>
 <% end %>
-
-<br>
-<div class = "pb-20 flex flex-row items-center justify-center">
-  <div class="bg-gray-300 rounded py-3 px-5">
-    <%= will_paginate @archive_products%>
-  </div>
-</div>
-
-
-
-
-<!-- <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin-left: 10px; margin-bottom: 10px;" onclick="window.history.back();">Back</button> -->
-

@@ -1,40 +1,58 @@
-<%= render 'users/navbar'%>
+<div class="fixed w-full top-0">
+  <%= render 'users/navbar'%>
+</div>
 <% first_id = current_user.id %>
+
 <% if current_user.buyer? %>
   <% second_id = @order.bid.ad.user_id%>
 <%else%>
   <% second_id = @order.bid.user_id%>
 <%end%>
 <% messages = Message.where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", first_id, second_id, second_id, first_id) %>
+
 <div id="chat-room">
   <div id="messages">
   <% if messages.length.zero? %>
     <%= "No Messages" %>
-  <% end %>
-    <div class= "mt-20">
+  <% else %>
+  <% last_date = (messages.first.created_at + 5.hours).strftime("%B %d, %Y") %>
+    <div class= "mt-20 mb-20 pb-5">
+    <div class="flex justify-center text-center mt-15">
+      <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
+    </div>
       <% messages.each do |message| %>
+        <% if last_date != (message.created_at+ 5.hours).strftime("%B %d, %Y") %>
+          <% last_date = (message.created_at+ 5.hours).strftime("%B %d, %Y")%>
+          <div class="flex justify-center text-center">
+            <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
+          </div>
+        <%end%>
+
         <%if current_user.id == message.sender_id %>
-          <div class="message text-green-600">
-            <span class="content text-right"><%= message.content %></span>
-            <span class="time"><%= (message.created_at + 5.hours).strftime("%B %d, %Y %I:%M %p") %></span>
+          <div class="message text-right mr-5 mt-5">
+            <span class="time text-xs text-gray-500"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
+            <span class="content bg-blue-600 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
           </div>
         <% else %>
-          <div class="message text-blue-600">
-            <span class="content"><%= message.content %></span>
-            <span class="time"><%= (message.created_at + 5.hours).strftime("%B %d, %Y %I:%M %p") %></span>
+          <div class="message  text-left ml-5 mt-5">
+            <span class="content bg-gray-500 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
+            <span class="time text-xs text-gray-500"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
           </div>
         <% end %>
       <% end %>
     </div>
-    <%= form_for Message.new, remote: true do |f| %>
-      <%= f.text_field :content, required: true %>
-      <%= f.hidden_field :sender_id, value: current_user.id %>
-      <% if current_user.seller? %>
-        <%= f.hidden_field :receiver_id, value: @order.bid.user_id %>
-      <%else%>
-        <%= f.hidden_field :receiver_id, value: @order.bid.ad.user_id %>
-      <%end%>
-        <%= f.submit %>
+    <% end %>
+    <div class="flex items-center fixed bottom-0 w-full p-4 bg-white rounded-lg w-100">
+      <%= form_for Message.new, remote: true do |f| %>
+          <%= f.text_field :content, required: true, placeholder: "Enter your message",  :maxlength=>"110", class: " flex-1 mr-2 border-2 border-gray-300 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" %>
+        <%= f.hidden_field :sender_id, value: current_user.id %>
+        <% if current_user.seller? %>
+          <%= f.hidden_field :receiver_id, value: @order.bid.user_id %>
+        <% else %>
+          <%= f.hidden_field :receiver_id, value: @order.bid.ad.user_id %>
+        <% end %>
+        <%= f.submit "send", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" %>
       <% end %>
+    </div>
   </div>
 </div>

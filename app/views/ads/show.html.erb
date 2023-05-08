@@ -23,28 +23,32 @@
         </p>
 
         <div>
+          <div class="flex justify-between"></div>
           <% if current_user.admin? %>
-            <div class="flex justify-between">
-              <%= link_to "View Bids", view_bids_ad_path, class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
               <% if @ad.status %>
-                <%= link_to "Back to Ads", ads_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+                <% if can? :index, Ad %>
+                  <%= link_to "Back", ads_path, class: "bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-lg shadow-md transition duration-300 ease-in-out", style: "margin: 2px;"%>
+                <% end %>
               <%else%>
-                <%= link_to "Back to Archive Ads", archives_ads_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+                <% if can? :archives, Ad%>
+                  <%= link_to "Back", archives_ads_path, class: "bg-gray-300 hover:bg-gray-400 text-gray-800 px-6 py-2 rounded-lg shadow-md transition duration-300 ease-in-out", style: "margin: 2px;"%>
+                <% end %>
               <%end%>
-            </div>
           <% elsif current_user.seller? %>
-            <div class="flex justify-between">
               <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded" style="margin: 2px;" onclick="window.history.back();">Back</button>
-              <%= link_to "Edit Ad", edit_ad_path(@ad), class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
-              <%= link_to "View Bids", view_bids_ad_path, class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
-            </div>
-
+              <% if can? :edit, Ad %>
+                <%= link_to "Edit Ad", edit_ad_path(@ad), class: "font-bold bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+              <%end%>
           <% elsif current_user.buyer? %>
-              <%= link_to "Bid", new_ad_bid_path(@ad), class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
-              <%= link_to "Back", buyer_home_path, class: "bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+            <%= link_to "Back", buyer_home_path, class: "font-bold bg-gray-300 text-gray-800 px-6 py-2 rounded-lg shadow-md hover:bg-gray-400 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+            <% if can? :new, Bid %>
+              <%= link_to "Bid", new_ad_bid_path(@ad), class: "font-bold bg-green-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+            <% end %>
           <% end %>
-
-          </div>
+          <% if can? :view_bids, Ad %>
+            <%= link_to "View Bids", view_bids_ad_path, class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+          <% end %>
+        </div>
     </div>
     <div>
       <% if @ad.ad_images.attached? %>
@@ -54,10 +58,4 @@
         <% end %>
     <% end %>
     </div>
-
 </div>
-
-
-
-
-

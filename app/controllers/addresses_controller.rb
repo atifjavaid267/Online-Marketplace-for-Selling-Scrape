@@ -1,4 +1,7 @@
 class AddressesController < ApplicationController
+  load_and_authorize_resource
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
   def index
     @addresses = current_user.addresses.paginate(page: params[:page], per_page: 5)
   end

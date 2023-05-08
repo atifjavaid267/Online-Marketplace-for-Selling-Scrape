@@ -4,59 +4,45 @@ class Ability
   include CanCan::Ability
 
   def initialize(user)
-    # See the wiki for details:
-    # https://github.com/CanCanCommunity/cancancan/blob/develop/docs/define_check_abilities.md
+    user ||= User.new
 
-    # user ||= User.new
+    can [:show_root], Product
 
     if user.admin?
+      can %i[new create show index edit update destroy publish unpublish archives], Product
+      can %i[index show destroy archives view_bids publish unpublish], Ad
+      can %i[index show show_pending show_successful show_cancelled], Order
 
-      can :create, Product
-      can :index, Product
-      can :show, Product
-      can :destroy, Product
-      can :publish, Product
-      can :unpublish, Product
-      can :archives, Product
+      cannot %i[new create], Bid
+      cannot %i[show new create], Message
 
-      can :index, Ad
-      can :show, Ad
-      can :destroy, Ad
-      can :archives, Ad
+    elsif user.seller?
+      can %i[index], Product
+      can %i[show], Product, status: true
 
-    end
+      can %i[new create index edit destroy], Address
+      can %i[display_ads new create edit update destroy publish unpublish archives view_bids], Ad
+      can %i[show], Ad, user_id: user.id
 
-    if user.seller?
+      can %i[index], Bid
+      can %i[index new create show_pending show_successful show_cancelled confirm cancel], Order
+      can %i[show], Order, bid: { ad: { user_id: user.id } }
+      can %i[show new create], Message
 
-      can :home, Seller
+      cannot %i[new create], Bid
 
-      can :index, Product
-      can :show, Product
+    elsif user.buyer?
+      can %i[index], Ad
+      can %i[show], Ad, status: true
+      can %i[new create index], Bid
+      can %i[index show], Order, bid: { user_id: user.id }
+      can %i[show new create], Message
 
-
-      can :create, Address
-      can :index, Address
-      can :edit, Address
-
-      can :display_ads, Ad
-      can :show, Ad
-      can :edit, Ad
-      can :destroy, Ad
-      can :publish, Ad
-      can :unpublish, Ad
-      can :archives, Ad
-
-      cannot :index, Ad
-
-      can :index, Bid
+      cannot %i[new create show edit update destroy publish unpublish archives], Product
+      cannot %i[display_ads new create edit update destroy publish unpublish archves view_bids], Ad
+      cannot %i[new create index edit destroy], Address
+      cannot %i[show_pending show_successful show_cancelled cancel], Order
 
     end
-
-    return unless user.buyer?
-
-    can :index, Ad
-    can :show, Ad
-
-    can :create, Bid
   end
 end

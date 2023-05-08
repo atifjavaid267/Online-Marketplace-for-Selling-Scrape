@@ -1,17 +1,20 @@
 class User < ApplicationRecord
-  #  provisioning_uri user.generate_totp_secret
-  #   user. # This assumes a user model with an email attribute
-  # has_secure_password
-  # include ActiveModel::OTP
+  # gem 'devise-two-factor'
+  devise :two_factor_authenticatable,
+         otp_secret_encryption_key: ENV['encryption_key_env']
 
-  # has_one_time_password(encrypted: true)
-  # def need_two_factor_authentication?(request)
-  #   request.ip != '127.0.0.1'
-  # end
+  def self.generate_otp_secret
+    ROTP::Base32.random_base32
+  end
+
+  def self.generate_otp(otp_secret)
+    totp = ROTP::TOTP.new(otp_secret)
+    totp.now
+  end
 
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :two_factor_authenticatable, :database_authenticatable, :registerable,
+  devise :registerable, # :confirmable,
          :recoverable, :rememberable, :validatable, :two_factor_authenticatable
 
   has_many :products
