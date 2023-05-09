@@ -23,7 +23,7 @@ module OnlineSellingScrape
     config.load_defaults 6.1
     # config/application.rb
     # config.middleware.use ActionCable.server
-
+    # config.action_controller.default_protect_from_forgery = true
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
