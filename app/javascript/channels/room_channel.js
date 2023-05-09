@@ -41,8 +41,7 @@ document.addEventListener("turbolinks:load", () => {
           <div class="message-content">${messageContent}</div>
         </div>
       `;
-        window.location.reload();
-        // messagesContainer.insertAdjacentHTML("beforeend", messageHtml);
+        messagesContainer.insertAdjacentHTML("beforeend", messageHtml);
         const inputField = document.getElementById("message_content");
         inputField.value = "";
       },
