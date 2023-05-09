@@ -27,7 +27,7 @@
           <%= link_to "Edit Ad", edit_ad_path(@ad), class: "font-bold bg-blue-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
         <%end%>
         <% if can? :new, Bid %>
-          <%= link_to "Bid", new_ad_bid_path(@ad), class: "font-bold bg-green-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
+          <%= link_to "Bid", new_ad_bid_path(@ad), class: "font-bold bg-green-500 text-white px-10 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
         <% end %>
         <% if can? :view_bids, Ad %>
           <%= link_to "View Bids", view_bids_ad_path, class: "font-bold bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out", style: "margin: 2px;"%>
