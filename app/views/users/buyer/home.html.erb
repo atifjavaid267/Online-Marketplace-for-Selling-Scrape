@@ -1,4 +1,4 @@
-<%=render 'users/navbar' %>
+<%= render 'devise/shared/navbar' %>
 
 <% ads = Ad.where(status: true).paginate(page: params[:page], per_page: 4) %>
 
