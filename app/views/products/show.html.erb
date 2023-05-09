@@ -1,5 +1,5 @@
-
-<%= render 'users/navbar'%>
+<%= render 'devise/shared/navbar' %>
+<%= render 'devise/shared/back' %>
 
 <div class="flex flex-row items-center justify-center">
   <div class="flex flex-row items-start justify-start my-20 w-full max-w-2xl">
@@ -9,20 +9,11 @@
       <h4 class="font-semibold text-lg">Product Description:</h4>
       <p class="text-gray-700 mb-10"><%= @product.description %></p>
       <div>
-        <%if @product.status %>
-          <% if can? :index, Product %>
-            <%= link_to "Back", products_path,           class: "bg-gray-300 font-bold text-gray-800 px-6 py-2 rounded-lg shadow-md hover:bg-gray-500 transition duration-300 ease-in-out"%>
-          <% end %>
-        <%else%>
-          <% if can? :archives, Product %>
-            <%= link_to "Back",  archives_products_path, class: "bg-gray-300 font-bold text-gray-800 px-6 py-2 rounded-lg shadow-md hover:bg-gray-500 transition duration-300 ease-in-out"%>
-          <%end%>
-        <%end%>
         <% if can? :new, Ad %>
-          <%= link_to "Create Ad", new_product_ad_path(@product), class: "bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out"%>
+          <%= link_to "Create Ad", new_product_ad_path(@product), class: "font-bold bg-green-500 text-white px-6 py-2 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out"%>
         <% end %>
         <% if can? :edit, Product %>
-          <%= link_to "Edit", edit_product_path(@product), class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-7 rounded"%>
+          <%= link_to "Edit", edit_product_path(@product), class: "font-bold bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-10 rounded"%>
         <% end %>
       </div>
     </div>

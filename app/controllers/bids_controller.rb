@@ -13,22 +13,24 @@ class BidsController < ApplicationController
     @bid = @ad.bids.build(bid_params)
     @bid.user_id = current_user.id
 
-    respond_to do |format|
-      if @bid.price.nil?
-        redirect_to new_ad_bid_path(@ad), notice: 'Bid amount should be positive number!'
-      elsif @bid.price.negative? || @bid.price.zero?
-        redirect_to new_ad_bid_path(@ad), notice: 'Bid amount should be a positive integer!'
-      elsif @bid.save
+    if @bid.price.nil?
+      redirect_to new_ad_bid_path(@ad), notice: 'Bid amount should be positive number!'
+    elsif @bid.price.negative? || @bid.price.zero?
+      redirect_to new_ad_bid_path(@ad), notice: 'Bid amount should be a positive integer!'
+    else
+      respond_to do |format|
+        if @bid.save
 
-        ActionCable.server.broadcast('bids_channel',
-                                     { ad_id: @ad.id, price: @bid.price, buyer_id: @bid.user_id,
-                                       buyer_name: @bid.user.first_name  })
-        format.json { render :show, status: :created, location: @bid }
-        format.html { redirect_to ads_path, notice: 'Bid was successfully created.' }
+          ActionCable.server.broadcast('bids_channel',
+                                       { ad_id: @ad.id, price: @bid.price, buyer_id: @bid.user_id,
+                                         buyer_name: @bid.user.first_name  })
+          format.json { render :show, status: :created, location: @bid }
+          format.html { redirect_to ads_path, notice: 'Bid was successfully created.' }
 
-      else
-        format.html { redirect_to new_ad_bid_path(@ad) }
-        format.json { render json: @bid.errors, status: :unprocessable_entity }
+        else
+          format.html { redirect_to new_ad_bid_path(@ad) }
+          format.json { render json: @bid.errors, status: :unprocessable_entity }
+        end
       end
     end
   end
