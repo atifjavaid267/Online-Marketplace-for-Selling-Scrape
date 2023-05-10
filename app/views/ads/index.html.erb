@@ -2,12 +2,8 @@
 
 <% flag = true %>
 
-<% if @ads==nil || @ads.empty? %>
+<% if @ads.nil? || @ads.empty? %>
   <% flag = false %>
-<% elsif current_user.buyer? %>
-  <% unless @ads.find_by(status: true) %>
-    <% flag = false%>
-  <% end %>
 <% end %>
 
 

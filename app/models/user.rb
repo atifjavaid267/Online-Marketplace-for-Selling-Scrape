@@ -12,6 +12,8 @@ class User < ApplicationRecord
     totp.now
   end
 
+  validates :phone_no, format: { with: /\A\+923|03\d{9}\z/ }
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable, # :confirmable,

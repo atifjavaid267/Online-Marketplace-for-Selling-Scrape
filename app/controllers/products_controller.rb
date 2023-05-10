@@ -5,15 +5,12 @@ class ProductsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   def index
-    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 6)
+    @products = @products.published.paginate(page: params[:page], per_page: 6)
   end
 
-  def new
-    @product = Product.new
-  end
+  def new; end
 
   def create
-    @product = Product.new(product_params)
     @product.user_id = current_user.id
 
     if @product.save
@@ -24,14 +21,9 @@ class ProductsController < ApplicationController
   end
 
   def show; end
-
-  def edit
-    @product = Product.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @product = Product.find(params[:id])
-
     if @product.update(product_params)
       redirect_to @product
     else
@@ -40,7 +32,6 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @product = Product.find(params[:id])
     @ads = Ad.all
 
     if Ad.find_by(product_id: @product.id)
@@ -69,11 +60,11 @@ class ProductsController < ApplicationController
   end
 
   def archives
-    @archive_products = Product.where(status: false).paginate(page: params[:page], per_page: 6)
+    @archive_products = Product.unpublished.paginate(page: params[:page], per_page: 6)
   end
 
   def show_root
-    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 4)
+    @products = Product.published.paginate(page: params[:page], per_page: 4)
   end
 
   private

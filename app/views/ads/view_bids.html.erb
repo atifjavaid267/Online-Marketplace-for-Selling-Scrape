@@ -11,9 +11,6 @@
   </div>
 <%else%>
 <%= render 'devise/shared/navbar'%>
-  <%# <div class = "text-red-500 text-xl">
-  <%= "bids-container-" + @ad.id.to_s%>
-<%# </div> %>
   <div id = <%= "bids-container-" + @ad.id.to_s%> class="grid gap-4 md:grid-cols-1 xl:grid-cols-1" style="margin-left: 10px; margin-right: 10px;">
     <br>
     <% @bids.each do |bid| %>

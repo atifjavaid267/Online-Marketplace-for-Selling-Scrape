@@ -2,25 +2,26 @@
 
 <div class="flex flex-row">
   <% if controller_name != 'sessions' %>
-    <div class="mt-6">
-      <p> Already have an account </p>
-    </div>
-    <div class="mx-5">
-      <%= link_to "Sign In", new_session_path(resource_name), class: "block mx-auto my-4 py-2 px-4 bg-green-500 font-semibold rounded-lg shadow-md text-white hover:bg-green-600" %><br>
+    <div class="text-sm">
+      <p> Already have an account? <span class="text-blue-500 hover:text-blue-700"><%= link_to "Log in", new_session_path(resource_name) %></span></p>
     </div>
   <% end %>
 </div>
 
-<div class="flex flex-row">
-  <div class="mt-6">
-    <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-      <%= link_to "Forgot your password?", new_password_path(resource_name), class: " mx-auto my-4 py-2 px-4 font-semibold text-white" %><br />
-    <% end %>
+<div class="flex flex-col text-sm">
+  <div class="flex row justify-center">
+    <div class="mt-2">
+      <% if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
+        <span class="hover:text-blue-600"><%= link_to "Forgot your password?", new_password_path(resource_name) %></span>
+      <% end %>
+    </div>
   </div>
   <div>
     <% if devise_mapping.registerable? && controller_name != 'registrations' %>
-      <%= link_to "Sign up", new_registration_path(resource_name), class: "block mx-auto my-4 py-2 px-4 bg-green-500 font-semibold rounded-lg shadow-md text-white hover:bg-green-600" %><br />
-    <% end %>
+      <div class="mt-4">
+        <p> Don't have an account? <span class="text-blue-500 hover:text-blue-700"><%= link_to "Sign up", new_registration_path(resource_name) %></span></p>
+      </div>
+      <% end %>
   </div>
 </div>
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>

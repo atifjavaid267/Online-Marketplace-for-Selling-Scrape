@@ -25,7 +25,7 @@ class BidsController < ApplicationController
                                        { ad_id: @ad.id, price: @bid.price, buyer_id: @bid.user_id,
                                          buyer_name: @bid.user.first_name  })
           format.json { render :show, status: :created, location: @bid }
-          format.html { redirect_to ads_path, notice: 'Bid was successfully created.' }
+          format.html { redirect_to buyer_home_path, notice: 'Bid was successfully created.' }
 
         else
           format.html { redirect_to new_ad_bid_path(@ad) }

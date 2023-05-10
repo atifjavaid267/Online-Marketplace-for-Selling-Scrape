@@ -70,6 +70,7 @@ class Users::SessionsController < Devise::SessionsController
 
   # POST /resource/sign_in
   def create
+    # byebug
     if user_signed_in?
       if current_user.admin?
         redirect_to admin_dashboard_path

@@ -6,7 +6,7 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-# User.create!(email: 'admin@gmail.com', password: 'admin12345',
-#              password_confirmation: 'admin12345', role: 'admin', first_name: 'Admin', last_name: 'User', phone_no: '11111111111111')
+User.create!(email: 'admin@gmail.com', password: 'admin12345',
+             password_confirmation: 'admin12345', role: 'admin', first_name: 'Admin', last_name: 'Admin', phone_no: '03451234567')
 
-User.find_each { |user| user.update_attribute(:otp_secret_key, User.otp_random_secret) }
+# User.find_each { |user| user.update_attribute(:otp_secret_key, User.otp_random_secret) }
