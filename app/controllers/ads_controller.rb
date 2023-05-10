@@ -41,7 +41,8 @@ class AdsController < ApplicationController
   def view_bids
     # Retrieve the ad and its bids
     @ad = Ad.find(params[:id])
-    @bids = @ad.bids.where(status: 'pending').order(price: :desc).paginate(page: params[:page], per_page: 10)
+    @bids = @ad.bids.where(status: 'pending').order(price: :desc).paginate(page: params[:page],
+                                                                           per_page: 10)
 
     # Render the view
     render 'view_bids'
@@ -106,7 +107,8 @@ class AdsController < ApplicationController
     if current_user.admin?
       @archive_ads = Ad.where(status: false).paginate(page: params[:page], per_page: 10)
     elsif current_user.seller?
-      @archive_ads = current_user.ads.where(status: false).paginate(page: params[:page], per_page: 10)
+      @archive_ads = current_user.ads.where(status: false).paginate(page: params[:page],
+                                                                    per_page: 10)
     end
   end
 

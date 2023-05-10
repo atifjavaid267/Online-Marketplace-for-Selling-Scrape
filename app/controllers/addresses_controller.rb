@@ -14,8 +14,7 @@ class AddressesController < ApplicationController
   def create
     @address = current_user.addresses.build(address_params)
     @address.geocode
-    # byebug
-    # @address.zip_code = Geocoder.search(@address.geocode).first.postal_code
+
     if @address.latitude.zero? || @address.longitude.zero?
       redirect_to new_address_path, notice: 'Address was not found' and return
     else
