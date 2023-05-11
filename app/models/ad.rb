@@ -13,7 +13,9 @@ class Ad < ApplicationRecord
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true
-  validates :price, presence: true, numericality: { greater_than_or_equal_to: 1 }
+  validates :price, presence: { message: "Price can't be blank" },
+                    numericality: { greater_than_or_equal_to: 1, message: 'Price cannot be negative or zero!' }
+
   validates :description, presence: true
   validates :ad_images, presence: true
 
@@ -24,4 +26,8 @@ class Ad < ApplicationRecord
   def unpublished!
     update_attribute(:status, false)
   end
+
+  # scopes
+  scope :published, -> { where(status: true) }
+  scope :unpublished, -> { where(status: false) }
 end

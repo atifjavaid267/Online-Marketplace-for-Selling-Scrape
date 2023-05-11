@@ -6,4 +6,8 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
   validates :product_image, presence: true
+
+  # scopes
+  scope :published, -> { where(status: true) }
+  scope :unpublished, -> { where(status: false) }
 end
