@@ -19,6 +19,8 @@ class Ad < ApplicationRecord
   validates :description, presence: true
   validates :ad_images, presence: true
 
+  # validate :no_associated_bids
+
   def published!
     update_attribute(:status, true)
   end
@@ -30,4 +32,12 @@ class Ad < ApplicationRecord
   # scopes
   scope :published, -> { where(status: true) }
   scope :unpublished, -> { where(status: false) }
+
+  private
+
+  def no_associated_bids
+    return if Bid.where(ad_id: id).count.zero?
+
+    errors.add(:base, 'Ad is associated with bid, cannot be deleted!')
+  end
 end

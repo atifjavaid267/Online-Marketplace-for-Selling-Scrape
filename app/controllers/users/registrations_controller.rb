@@ -28,7 +28,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         if resource.valid? && resource.persisted?
 
           resource.update(
-            otp_required_for_login: false,
+            otp_required_for_login: true,
             otp_secret: User.generate_otp_secret
           )
         end
@@ -51,27 +51,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #     render 'users_otp/two_fa'
   #   end
   # end
-
-  # def auth_with_2fa(user)
-  #   return unless user.validate_and_consume_otp!(user_params[:otp_attempt])
-
-  #   user.save!
-  #   sign_in(user)
-  # end
-
-  # def find_user
-  #   if session[:user_id]
-  #     User.find(session[:user_id])
-  #   elsif user_params[:email]
-  #     User.find_by(email: user_params[:email])
-  #   end
-  # end
-
-  # def user_params
-  #   params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
-  # end
-
-  # #####################
 
   # GET /resource/edit
   # def edit

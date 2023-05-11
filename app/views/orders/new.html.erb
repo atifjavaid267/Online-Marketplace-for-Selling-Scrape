@@ -4,15 +4,16 @@
     <div class = "pt-5 mx-12 mt-20" style="display: flex; justify-content: center; align-items: center;">
         <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
             <div class="flex flex-col items-center justify-between space-y-5 ">
-                <h3 class="font-bold">Creating new Order</h3>
+                <h3 class="font-bold">Create Order</h3>
 
-                <%= form_with(model: [@bid, @order], local: true) do |form| %>
+                <%= form_with(model: @order, local: true) do |form| %>
                     <div class="field ">
                         <div class="card bg-white p-4 rounded-lg shadow-md">
                             <div class="form-group mb-4">
                                 <%= form.label :pickup_time, class: "font-bold mb-2 block" %>
                                 <%= form.datetime_local_field :pickup_time, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
                             </div>
+                            <%= form.hidden_field :bid_id, value: @order.bid_id %>
                             <div class="actions flex justify-center">
                                 <%= form.submit "Create Order", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
                             </div>

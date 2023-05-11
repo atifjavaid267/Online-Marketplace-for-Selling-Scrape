@@ -1,6 +1,5 @@
 class MessagesController < ApplicationController
   load_and_authorize_resource
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   def show; end
 
@@ -11,7 +10,6 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
 
-    # @messages = Message.all.length
     if @message.save
       sender = @message.sender_id
       receiver = @message.receiver_id
@@ -26,7 +24,6 @@ class MessagesController < ApplicationController
                                      timestamp: time
                                    })
     else
-      # handle errors here
       puts @message.errors.full_messages
     end
   end
