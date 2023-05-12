@@ -1,8 +1,7 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, except: %i[show_root]
   load_and_authorize_resource
-
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  before_action :authenticate_user!, except: %i[show_root]
+  before_action :store_location, only: %i[index archives]
 
   def index
     @products = @products.published.paginate(page: params[:page], per_page: 6)
@@ -32,35 +31,22 @@ class ProductsController < ApplicationController
   end
 
   def destroy
-    @ads = Ad.all
-
     if Ad.find_by(product_id: @product.id)
-      redirect_to products_path, alert: 'Product cannot be deleted!'
+      redirect_to stored_location, alert: 'Product is associated with ad, cannot be deleted!'
     else
-      flag = @product.status
       @product.destroy
-      if flag
-        redirect_to products_path, notice: 'Product deleted successfully.'
-      else
-        redirect_to archives_products_path, notice: 'Product deleted successfully.'
-      end
+      redirect_to stored_location, notice: 'Product deleted successfully.'
     end
   end
 
-  def publish
-    @product = Product.find(params[:id])
+  def toggle_published
+    # @product = Product.find(params[:id])
     @product.update_attribute(:status, !@product.status)
-    redirect_to archives_products_path
-  end
-
-  def unpublish
-    @product = Product.find(params[:id])
-    @product.update_attribute(:status, !@product.status)
-    redirect_to products_path
+    redirect_to stored_location
   end
 
   def archives
-    @archive_products = Product.unpublished.paginate(page: params[:page], per_page: 6)
+    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: 6)
   end
 
   def show_root

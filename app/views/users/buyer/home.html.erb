@@ -1,19 +1,8 @@
 <%= render 'devise/shared/navbar' %>
 
-<% ads = Ad.where(status: true).paginate(page: params[:page], per_page: 6) %>
-
-<% flag = true %>
-
-<% if ads == nil || ads.empty? %>
-  <% flag = false %>
-<% elsif current_user.buyer? %>
-  <% unless ads.find_by(status: true) %>
-    <% flag = false%>
-  <%end%>
-<% end %>
-
-<% if !flag %>
+<% if @ads.empty? %>
     <div class="bg-cover bg-no-repeat h-full" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+        <%= render 'devise/shared/back' %>
         <div class = "pt-5">
             <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
                 <h1 class="text-center font-bold">Sorry</h1>
@@ -22,13 +11,12 @@
         </div>
     </div>
 <% else %>
-
 <div class="bg-cover bg-no-repeat h-full " style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
     <div class = "pt-5">
             <div class="grid grid-cols-2 gap-4">
                 <% counter = 1 %>
 
-                <% ads.each do |ad| %>
+                <% @ads.each do |ad| %>
                     <%next if !ad.status%>
                     <div class="p-5 rounded-lg bg-gray-800 text-white mx-10 my-5 flex bg-opacity-95">
                         <div class="flex-grow">
@@ -58,7 +46,7 @@
             </div>
         </div>
         <div class = "pb-20 flex flex-row items-center justify-center">
-            <%= will_paginate ads, class: "bg-gray-300 rounded py-3 px-5" %>
+            <%= will_paginate @ads, class: "bg-gray-300 rounded py-3 px-5" %>
       </div>
     </div>
 <% end %>

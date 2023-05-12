@@ -1,14 +1,4 @@
-
-<% flag = true %>
-<% if @products.empty? %>
-  <% flag = false %>
-<% elsif current_user.seller? %>
-  <% unless @products.find_by(status: true) %>
-    <% flag = false%>
-  <%end%>
-<% end %>
-
-<%if !flag %>
+<%if @products.empty? %>
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
   <%= render 'devise/shared/navbar' %>
   <%= render 'devise/shared/back' %>
@@ -50,8 +40,8 @@
                <%= link_to "View", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%>
             </td>
             <%if current_user.admin? %>
-              <% if can? :unpublish, Product %>
-                <td class="py-3 px-6 text-center"><%= button_to "Unpublish", unpublish_product_path(product),data: { confirm: "Are you sure to unpublish product?", turbo_confirm: "Are you sure to unpublish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+              <% if can? :toggle_published, Product %>
+                <td class="py-3 px-6 text-center"><%= button_to "Unpublish", toggle_published_product_path(product),data: { confirm: "Are you sure to unpublish product?", turbo_confirm: "Are you sure to unpublish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
               <%end%>
               <% if can? :destroy, Product %>
                 <td class="py-3 px-6 text-center"><%= button_to "Delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
