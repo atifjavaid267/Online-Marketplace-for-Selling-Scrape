@@ -13,12 +13,12 @@ class BidsController < ApplicationController
 
     respond_to do |format|
       if @bid.save
-
+        flash[:notice] = 'Bid was created successfully.'
         ActionCable.server.broadcast('bids_channel',
                                      { ad_id: @bid.ad_id, price: @bid.price, buyer_id: @bid.user_id,
                                        buyer_name: @bid.user.first_name })
         format.json { render :show, status: :created, location: @bid }
-        format.html { redirect_to buyer_home_path, notice: 'Bid was successfully created.' }
+        format.html { redirect_to buyer_home_path }
 
       else
         format.html { redirect_to stored_location }

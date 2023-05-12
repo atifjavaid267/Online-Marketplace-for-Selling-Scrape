@@ -25,9 +25,11 @@ class AdsController < ApplicationController
     @addresses = current_user.addresses
 
     if @ad.save
-      redirect_to @ad, notice: 'Ad was created successfully.'
+      flash[:notice] = 'Ad was successfully created'
+      redirect_to @ad
     else
-      redirect stored_location, notice: 'Ad was not created.'
+      flash[:alert] = 'Failed to create Ad'
+      redirect stored_location
     end
   end
 
@@ -37,15 +39,22 @@ class AdsController < ApplicationController
 
   def update
     if @ad.update(ad_params)
+      flash[:notice] = 'Ad was updated successfully'
       redirect_to @ad
     else
+      flash[:alert] = 'Failed to update Ad'
       render :edit
     end
   end
 
   def destroy
-    @ad.destroy
-    redirect_to stored_location, notice: 'Ad deleted successfully.'
+    if @ad.destroy
+      flash[:notice] = 'Ad deleted successfully.'
+      redirect_to stored_location
+    else
+      flash[:alert] = @ad.errors.full_messages[0]
+      redirect_to stored_location
+    end
   end
 
   def view_bids
@@ -54,6 +63,7 @@ class AdsController < ApplicationController
 
   def toggle_published
     @ad.update_attribute(:status, !@ad.status)
+    flash[:notice] = @ad.status == true ? 'Ad Published' : 'Ad Unpublished'
     redirect_to stored_location
   end
 

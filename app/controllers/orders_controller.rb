@@ -8,13 +8,14 @@ class OrdersController < ApplicationController
   end
 
   def create
-    # byebug
     if @order.save
       @order.bid.successful!
       @order.bid.ad.unpublished!
-      redirect_to @order, notice: 'New Order Opened.'
+      flash[:notice] = 'New Order Opened.'
+      redirect_to @order
     else
-      redirect_to stored_location, notice: "Pickup time can't be blank"
+      flash[:alert] = @order.errors.full_messages[0]
+      redirect_to stored_location
     end
   end
 
@@ -52,7 +53,7 @@ class OrdersController < ApplicationController
 
       bid.failed!
     end
-
+    flash[:notice] = 'Order Completed.'
     redirect_to @order
   end
 
@@ -60,7 +61,7 @@ class OrdersController < ApplicationController
     @order.update_attribute(:status, 'cancelled')
     @order.bid.failed!
     @order.bid.ad.published!
-
+    flash[:alert] = 'Order Cancelled.'
     redirect_to @order
   end
 

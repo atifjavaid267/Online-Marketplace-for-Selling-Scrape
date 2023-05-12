@@ -19,7 +19,7 @@ class Ad < ApplicationRecord
   validates :description, presence: true
   validates :ad_images, presence: true
 
-  # validate :no_associated_bids
+  before_destroy :check_associated_bids
 
   def published!
     update_attribute(:status, true)
@@ -35,9 +35,10 @@ class Ad < ApplicationRecord
 
   private
 
-  def no_associated_bids
-    return if Bid.where(ad_id: id).count.zero?
+  def check_associated_bids
+    return unless Bid.where(ad_id: id).any?
 
-    errors.add(:base, 'Ad is associated with bid, cannot be deleted!')
+    errors.add(:base, 'There are bids, Ad cannot be destroyed')
+    throw(:abort)
   end
 end

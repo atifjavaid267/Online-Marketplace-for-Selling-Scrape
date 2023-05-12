@@ -19,7 +19,8 @@ class Ability
       can %i[show], Product, status: true
 
       can %i[index], Address, user_id: user.id
-      can %i[new create edit update destroy], Address
+      can %i[new create], Address
+      can %i[edit update destroy], Address, user_id: user.id
 
       can %i[new create toggle_published view_bids], Ad
       can %i[index archives show edit update destroy], Ad, user_id: user.id
