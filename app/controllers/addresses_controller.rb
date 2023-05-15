@@ -2,7 +2,7 @@ class AddressesController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @addresses = @addresses.paginate(page: params[:page], per_page: 5)
+    @addresses = @addresses.paginate(page: params[:page], per_page: 6)
   end
 
   def new
@@ -14,9 +14,11 @@ class AddressesController < ApplicationController
     @address.user_id = current_user.id
 
     if @address.save
-      redirect_to addresses_path, notice: 'Address was successfully created.'
+      flash[:notice] = 'Address was successfully created.'
+      redirect_to addresses_path
     else
-      redirect_to new_address_path, notice: 'Address was not found'
+      flash[:error] = @address.errors.to_a
+      redirect_to new_address_path
     end
   end
 
@@ -24,20 +26,21 @@ class AddressesController < ApplicationController
 
   def update
     if @address.update(address_params)
-      redirect_to addresses_path, notice: 'Address was successfully updated'
+      flash[:notice] = 'Address was successfully updated'
+      redirect_to addresses_path
     else
-      redirect_to edit_address_path(@address), notice: 'Adddress was not updated'
+      flash[:alert] = 'Adddress was not updated'
+      render :edit
     end
   end
 
   def destroy
-    if Ad.find_by(address_id: @address.id)
-      redirect_to addresses_path, alert: 'Address is associated with ad, cannot be deleted!'
-    elsif @address.destroy
-      redirect_to addresses_path, notice: 'Address deleted successfully.'
+    if @address.destroy
+      flash[:notice] = 'Address deleted successfully.'
     else
-      redirect_to addresses_path, notice: 'Failed to delete address.'
+      flash[:alert] = @address.errors.full_messages[0]
     end
+    redirect_to addresses_path
   end
 
   private

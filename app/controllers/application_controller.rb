@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   # for gem 'devise-two-factor'
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  # rescue_from StandardError, with: :render_500
+  rescue_from StandardError, with: :render_500
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
 
   rescue_from CanCan::AccessDenied do |exception|
@@ -43,6 +43,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_in) do |user_params|
       user_params.permit(:email, :password)
     end
+
     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
       user_params.permit(:first_name, :last_name, :email, :phone_no, :role, :password,
                          :password_confirmation)

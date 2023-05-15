@@ -1,21 +1,46 @@
 <% if notice %>
-<div class="bg-white-600 z-10 text-black">
-  <div class="alert alert-info alert-dismissible fade show m-1" role="alert">
-    <%= notice %>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-</div>
-<% end %>
-
-<% if alert %>
-  <div class="bg-white-600 z-10 text-black">
-    <div class="alert alert-warning alert-dismissible fade show m-1" role="alert">
-      <%= alert %>
-      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+  <div class="flex flex-row justify-center bg-green-600">
+    <div class="text-black alert alert-info alert-dismissible fade show py-2" role="alert">
+      <%= notice %>
+      <button type="button" class="close bg-black px-1 text-sm text-white rounded-lg" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
   </div>
 <% end %>
+
+<% if alert %>
+  <div class="flex flex-row justify-center bg-red-500">
+    <div class="text-black alert alert-warning alert-dismissible fade show py-2" role="alert">
+      <%= alert %>
+      <button type="button" class="close bg-black px-1 text-sm text-white rounded-lg" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+<% end %>
+
+
+<script>
+document.querySelectorAll('.close').forEach(function(button) {
+  button.addEventListener('click', function() {
+    this.closest('.alert').remove();
+  });
+});
+
+document.querySelectorAll('.alert').forEach(function(alert) {
+  if (alert.classList.contains('alert-dismissible')) {
+    var closeButton = alert.querySelector('.close');
+    if (closeButton) {
+      closeButton.addEventListener('click', function() {
+        clearTimeout(timeoutId);
+      });
+    }
+  }
+
+  var timeoutId = setTimeout(function() {
+    alert.remove();
+  }, 5000);
+});
+
+</script>

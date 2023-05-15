@@ -13,9 +13,11 @@ class ProductsController < ApplicationController
     @product.user_id = current_user.id
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      flash[:notice] = 'Product created successfully.'
+      redirect_to @product
     else
-      redirect_to new_product_path, notice: 'Failed to create Product.'
+      flash[:alert] = 'Failed to create a Product.'
+      render :new
     end
   end
 
@@ -24,24 +26,26 @@ class ProductsController < ApplicationController
 
   def update
     if @product.update(product_params)
+      flash[:notice] = 'Product updated successfully.'
       redirect_to @product
     else
+      flash[:alert] = 'Failed to update the Product.'
       render :edit
     end
   end
 
   def destroy
-    if Ad.find_by(product_id: @product.id)
-      redirect_to stored_location, alert: 'Product is associated with ad, cannot be deleted!'
+    if @product.destroy
+      flash[:notice] = 'Product deleted successfully.'
     else
-      @product.destroy
-      redirect_to stored_location, notice: 'Product deleted successfully.'
+      flash[:alert] = @product.errors.full_messages[0]
     end
+    redirect_to stored_location
   end
 
   def toggle_published
-    # @product = Product.find(params[:id])
     @product.update_attribute(:status, !@product.status)
+    flash[:notice] = @product.status == true ? 'Product Published' : 'Product Unpublished'
     redirect_to stored_location
   end
 
