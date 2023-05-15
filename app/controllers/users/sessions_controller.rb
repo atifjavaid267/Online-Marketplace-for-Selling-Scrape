@@ -1,9 +1,4 @@
-# frozen_string_literal: true
-
 class Users::SessionsController < Devise::SessionsController
-  # GET /resource/sign_in
-  # before_action :configure_sign_in_params, only: [:create]
-
   # for gem 'devise-two-factor'
   before_action :authenticate_2fa!, only: [:create]
 
@@ -12,7 +7,6 @@ class Users::SessionsController < Devise::SessionsController
 
   before_action :authenticate_2fa!, only: %i[new create]
 
-  #### for gem 'devise-two-factor' #####
   def authenticate_2fa!
     user = find_user
     self.resource = user
@@ -59,8 +53,6 @@ class Users::SessionsController < Devise::SessionsController
   def user_params
     params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
   end
-
-  #####################
 
   def new
     return if user_signed_in?

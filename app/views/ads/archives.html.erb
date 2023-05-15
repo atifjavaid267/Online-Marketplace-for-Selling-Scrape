@@ -1,7 +1,6 @@
 
 <% if @archive_ads.empty? %>
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
-  <%= render 'devise/shared/navbar'%>
   <%= render 'devise/shared/back'%>
     <div class = "pt-5">
       <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
@@ -10,7 +9,6 @@
     </div>
   </div>
 <% else %>
-  <%= render 'devise/shared/navbar'%>
   <br>
     <div class="grid grid-cols-2 gap-4">
       <% counter = 1 %>

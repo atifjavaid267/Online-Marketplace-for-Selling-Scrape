@@ -3,23 +3,13 @@
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-        <!-- Mobile menu button-->
         <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
           <span class="sr-only">Open main Dashboard</span>
 
-          <!--
-            Icon when menu is closed.
-
-            Menu open: "hidden", Menu closed: "block"
-          -->
           <svg class="block h-12 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
-          <!--
-            Icon when menu is open.
 
-            Menu open: "block", Menu closed: "hidden"
-          -->
           <svg class="hidden h-12 w-12" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -55,12 +45,15 @@
           </div>
         </div>
 
-        <div class="hidden sm:ml-6 sm:block">
-          <div class="flex space-x-4">
-            <%= link_to "Orders", orders_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+        <% if can? :index, Order %>
+          <div class="hidden sm:ml-6 sm:block">
+            <div class="flex space-x-4">
+              <%= link_to "Orders", orders_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+            </div>
           </div>
-        </div>
-        <% if current_user.buyer? %>
+        <% end %>
+
+        <% if can? :index, Bid && current_user.buyer?%>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <%= link_to "Bids", bids_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
@@ -83,22 +76,32 @@
 
         <% if user_signed_in? %>
 
-        <!-- Profile dropdown -->
-        <div class="relative ml-3">
-            <%= link_to "Sign Out", destroy_user_session_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
-        </div>
-
-        <div class="relative ml-3">
-            <%= link_to "Profile", edit_user_registration_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
-        </div>
-
-        <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+        <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 mx-3">
           <span class="sr-only">View notifications</span>
           <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
           </svg>
         </button>
 
+        <!-- Profile dropdown -->
+        <div class="relative inline-block text-left">
+          <div>
+            <button type="button" class="inline-flex w-full justify-center gap-x-1.5 bg-gray-800 px-3 py-2 hover:bg-gray-600 rounded-lg text-white shadow-sm" id="menu-button" aria-expanded="false" aria-haspopup="true">
+              Profile
+              <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="absolute right-0 z-10 mt-2 w-36 origin-top-right border-gray-300 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="menu">
+            <div class="py-1" role="none">
+              <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "Edit Profile", edit_user_registration_path %></span>
+              <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "OTP Setting", users_otp_settings_path %></span>
+              <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"> <%= link_to "Sign Out", destroy_user_session_path %> </span>
+            </div>
+          </div>
+        </div>
         <%elsif%>
         <div class="relative ml-3">
           <%= link_to "Sign In", new_user_session_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
@@ -113,9 +116,32 @@
       </div>
     </div>
   </div>
-  <!-- Mobile menu, show/hide based on menu state. -->
   <div class="sm:hidden" id="mobile-menu">
     <div class="space-y-1 px-2 pt-2 pb-3">
     </div>
   </div>
 </nav>
+
+
+<script>
+  var menuButton = document.querySelector('#menu-button');
+  var menu = document.querySelector('#menu');
+
+
+  // Hide the menu when the user clicks somewhere else on the page
+  document.addEventListener('click', (event) => {
+    // If the click happened outside of the menu element
+    if (!menu.contains(event.target) && event.target !== menuButton) {
+      menu.classList.add('hidden');
+      menuButton.setAttribute('aria-expanded', 'false');
+    }
+  });
+
+  // Show/hide the menu when the user clicks the menu button
+  menuButton.addEventListener('click', () => {
+    var expanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
+    menuButton.setAttribute('aria-expanded', !expanded);
+    menu.classList.toggle('hidden');
+  });
+</script>
+

@@ -1,10 +1,13 @@
 class UsersOtpController < ApplicationController
   before_action :authenticate_user!
+  before_action :store_location, only: %i[settings]
 
-  def toggle_otp_enable
+  def settings; end
+
+  def toggle
     current_user.otp_secret = User.generate_otp_secret
     current_user.otp_required_for_login = !current_user.otp_required_for_login
     current_user.save!
-    redirect_back(fallback_location: root_path)
+    redirect_to stored_location
   end
 end
