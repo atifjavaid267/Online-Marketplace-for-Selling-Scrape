@@ -1,5 +1,6 @@
 class AddressesController < ApplicationController
   load_and_authorize_resource
+  before_action :authenticate_user!
 
   def index
     @addresses = @addresses.paginate(page: params[:page], per_page: 6)
