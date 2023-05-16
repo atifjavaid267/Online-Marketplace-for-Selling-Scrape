@@ -43,7 +43,7 @@ class ProductsController < ApplicationController
     redirect_to stored_location
   end
 
-  def toggle_published
+  def toggle_status
     @product.update_attribute(:status, !@product.status)
     flash[:notice] = @product.status == true ? 'Product Published' : 'Product Unpublished'
     redirect_to stored_location

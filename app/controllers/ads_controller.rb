@@ -34,8 +34,9 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-     @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: 10)
+    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: 10)
   end
+
   def edit
     @addresses = current_user.addresses
   end
@@ -60,11 +61,7 @@ class AdsController < ApplicationController
     end
   end
 
-  def view_bids
-    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: 10)
-  end
-
-  def toggle_published
+  def toggle_status
     @ad.update_attribute(:status, !@ad.status)
     flash[:notice] = @ad.status == true ? 'Ad Published' : 'Ad Unpublished'
     redirect_to stored_location

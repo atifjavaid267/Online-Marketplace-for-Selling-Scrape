@@ -1,5 +1,4 @@
 class NotificationController < ApplicationController
-  
 
   def create
     @notification = Notifications.new(notification_params)
@@ -16,7 +15,7 @@ class NotificationController < ApplicationController
     @notifaction.destroy
   end
 
- 
+
   private
 
   def notification_params
