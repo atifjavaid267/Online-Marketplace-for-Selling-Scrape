@@ -10,43 +10,38 @@
   </div>
 <% else %>
   <br>
-    <div class="grid grid-cols-2 gap-4">
-      <% counter = 1 %>
-      <% @archive_ads.each do |ad| %>
-        <div class="border p-4 rounded-lg">
-          <h4 class="font-bold mb-2"><%="Ad-#{counter}."%></h4>
-          <% ad.ad_images.each do |image| %>
-            <%= image_tag image, class: "w-28 h-20 object-cover rounded-lg shadow-md"%>
-          <% end %>
-          <br>
-          <% product = Product.find_by(id: ad.product_id) %>
-
-          <span class="font-bold">Name:</span>:</span> <%= product.name %> <br>
-          <span class="font-bold">Price:</span> <%= ad.price %> <br>
-
-          <div class="flex space-x-4">
-            <%= link_to "View", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
-            <%if can? :toggle_status, ad %>
-                <%= button_to "Publish", toggle_status_ad_path(ad),data: { confirm: "Are you sure to publish ad?", turbo_confirm: "Are you sure to publish ad?" }, method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
-            <%end%>
-            <% if can? :destroy, Ad %>
-              <%= button_to "Delete", ad, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
-            <% end %>
-          </div>
-
-        </div>
-        <% counter += 1 %>
-        <% if counter % 2 == 1 %>
-          </div><div class="grid grid-cols-2 gap-4">
+  <div class="grid grid-cols-2 gap-4">
+    <% counter = 1 %>
+    <% @archive_ads.each do |ad| %>
+      <div class="border p-4 rounded-lg">
+        <h4 class="font-bold mb-2"><%="Ad-#{counter}."%></h4>
+        <% ad.ad_images.each do |image| %>
+          <%= image_tag image, class: "w-28 h-20 object-cover rounded-lg shadow-md"%>
         <% end %>
+        <br>
+        <% product = Product.find_by(id: ad.product_id) %>
+        <span class="font-bold">Name:</span>:</span> <%= product.name %> <br>
+        <span class="font-bold">Price:</span> <%= ad.price %> <br>
+        <div class="flex space-x-4">
+          <%= link_to "View", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+          <%if can? :toggle_status, ad %>
+            <%= button_to "Publish", toggle_status_ad_path(ad),data: { confirm: "Are you sure to publish ad?", turbo_confirm: "Are you sure to publish ad?" }, method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
+          <%end%>
+          <% if can? :destroy, Ad %>
+            <%= button_to "Delete", ad, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+          <% end %>
+        </div>
+      </div>
+      <% counter += 1 %>
+      <% if counter % 2 == 1 %>
+        </div><div class="grid grid-cols-2 gap-4">
       <% end %>
-    </div>
-    <br>
-
-    <div class = "pb-20 flex flex-row items-center justify-center">
-        <%= will_paginate @archive_ads, class:"bg-gray-300 rounded py-3 px-5"%>
-    </div>
-
+    <% end %>
+  </div>
+  <br>
+  <div class = "pb-20 flex flex-row items-center justify-center">
+    <%= will_paginate @archive_ads, class:"bg-gray-300 rounded py-3 px-5"%>
+  </div>
 <% end %>
 
 

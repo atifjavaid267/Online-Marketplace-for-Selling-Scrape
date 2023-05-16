@@ -67,7 +67,7 @@ var input = document.getElementById('pac-input');
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 6,
-    center: {lat: 30.3753, lng: 69.3451}, // set center to Pakistan's lat and lng
+    center: {lat: 30.3753, lng: 69.3451},
     zoomControl: true
   });
   marker = new google.maps.Marker({
@@ -85,24 +85,22 @@ function initMap() {
     geocodeLatLng(event.latLng);
     map.panTo(event.latLng);
   });
-  
+
   geocoder = new google.maps.Geocoder();
-  // Add the Place Autocomplete search box
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
 
-  // Update the map and marker position when a place is selected
   autocomplete.addListener('place_changed', function() {
     var place = autocomplete.getPlace();
     if (!place.geometry) {
       alert("No details available for input: " + place.name );
       return;
     }
-    // Update the map and marker position
+
     map.setCenter(place.geometry.location);
     marker.setPosition(place.geometry.location);
     map.setZoom(18);
-    // Update the address fields
+
     var address_components = place.address_components;
     var street_number = "";
     var route = "";
@@ -128,7 +126,6 @@ function initMap() {
     document.getElementById("address_state").value = state;
     document.getElementById("address_zip_code").value = zip_code;
 
-    // Save the address
     var address = {
       street1: street_number + " " + route,
       city: city,
@@ -136,16 +133,15 @@ function initMap() {
       zip_code: zip_code
     };
 
-    document.getElementById("address_street2").value = ""; // clear street2 field
-    document.getElementById("map").focus(); // focus on the first field
-    console.log(address); // log the address to the console for testing
+    document.getElementById("address_street2").value = "";
+    document.getElementById("map").focus();
+    console.log(address);
   });
 }
 function geocodeLatLng(latlng) {
   geocoder.geocode({ 'location': latlng }, function(results, status) {
     if (status === 'OK') {
       if (results[0]) {
-        // Update the address fields
         var address_components = results[0].address_components;
         var street_number = "";
         var route = "";
@@ -171,16 +167,15 @@ function geocodeLatLng(latlng) {
         document.getElementById("address_state").value = state;
         document.getElementById("address_zip_code").value = zip_code;
 
-        // Save the address
         var address = {
           street1: street_number + " " + route,
           city: city,
           state: state,
           zip_code: zip_code
         };
-        document.getElementById("address_street2").value = ""; // clear street2 field
-        console.log(address); // log the address to the console for testing
-        
+        document.getElementById("address_street2").value = "";
+        console.log(address);
+
       } else {
         window.alert('No results found');
       }
@@ -191,4 +186,4 @@ function geocodeLatLng(latlng) {
 }
 
 </script>
-  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3JUhLERQ9GxZnC4OHjA_AzieuJlcW6Is&libraries=places&callback=initMap"></script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3JUhLERQ9GxZnC4OHjA_AzieuJlcW6Is&libraries=places&callback=initMap"></script>

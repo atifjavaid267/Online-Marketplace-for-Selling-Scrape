@@ -7,7 +7,6 @@ class Bid < ApplicationRecord
   # validations
   validates :price, numericality: { greater_than_or_equal_to: 1 }
 
-
   def successful!
     update_attribute(:status, 'successful')
   end
