@@ -1,79 +1,60 @@
 class ProductsController < ApplicationController
-  before_action :authenticate_user!, except: %i[show_root]
   load_and_authorize_resource
-
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  before_action :authenticate_user!, except: %i[show_root]
+  before_action :store_location, only: %i[index archives]
 
   def index
-    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 6)
+    @products = @products.published.paginate(page: params[:page], per_page: 6)
   end
 
-  def new
-    @product = Product.new
-  end
+  def new; end
 
   def create
-    @product = Product.new(product_params)
     @product.user_id = current_user.id
 
     if @product.save
-      redirect_to @product, notice: 'Product was successfully created.'
+      flash[:notice] = 'Product created successfully.'
+      redirect_to @product
     else
-      redirect_to new_product_path, notice: 'Failed to create Product.'
+      flash[:alert] = 'Failed to create a Product.'
+      render :new
     end
   end
 
   def show; end
-
-  def edit
-    @product = Product.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @product = Product.find(params[:id])
-
     if @product.update(product_params)
+      flash[:notice] = 'Product updated successfully.'
       redirect_to @product
     else
+      flash[:alert] = 'Failed to update the Product.'
       render :edit
     end
   end
 
   def destroy
-    @product = Product.find(params[:id])
-    @ads = Ad.all
-
-    if Ad.find_by(product_id: @product.id)
-      redirect_to products_path, alert: 'Product cannot be deleted!'
+    if @product.destroy
+      flash[:notice] = 'Product deleted successfully.'
     else
-      flag = @product.status
-      @product.destroy
-      if flag
-        redirect_to products_path, notice: 'Product deleted successfully.'
-      else
-        redirect_to archives_products_path, notice: 'Product deleted successfully.'
-      end
+      flash[:alert] = @product.errors.full_messages[0]
     end
+    redirect_to stored_location
   end
 
-  def publish
-    @product = Product.find(params[:id])
+  def toggle_published
     @product.update_attribute(:status, !@product.status)
-    redirect_to archives_products_path
-  end
-
-  def unpublish
-    @product = Product.find(params[:id])
-    @product.update_attribute(:status, !@product.status)
-    redirect_to products_path
+    flash[:notice] = @product.status == true ? 'Product Published' : 'Product Unpublished'
+    redirect_to stored_location
   end
 
   def archives
-    @archive_products = Product.where(status: false).paginate(page: params[:page], per_page: 6)
+    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: 6)
   end
 
   def show_root
-    @products = Product.all.where(status: true).paginate(page: params[:page], per_page: 4)
+    @products = Product.published.paginate(page: params[:page], per_page: 4)
   end
 
   private

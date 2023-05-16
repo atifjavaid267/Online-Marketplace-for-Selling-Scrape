@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   load_and_authorize_resource
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  before_action :authenticate_user!
 
   def show; end
 
@@ -11,7 +11,6 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
 
-    # @messages = Message.all.length
     if @message.save
       sender = @message.sender_id
       receiver = @message.receiver_id
@@ -29,7 +28,6 @@ class MessagesController < ApplicationController
       #                                     receiver: @message.receiver_id)
       # @notification_id = @notification.id
     else
-      # handle errors here
       puts @message.errors.full_messages
     end
     respond_to do |format|

@@ -7,6 +7,9 @@ class ApplicationController < ActionController::Base
   # for gem 'devise-two-factor'
   before_action :configure_permitted_parameters, if: :devise_controller?
 
+  rescue_from StandardError, with: :render_500
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, alert: exception.message
   end
@@ -15,7 +18,19 @@ class ApplicationController < ActionController::Base
     render file: "#{Rails.root}/public/404.html", status: :not_found
   end
 
+  def render_500
+    render file: "#{Rails.root}/public/500.html", status: :internal_server_error
+  end
+
   private
+
+  def store_location
+    session[:stored_location] = request.path
+  end
+
+  def stored_location
+    session[:stored_location]
+  end
 
   def load_and_authorize_resource
     authorize! params[:action].to_sym, current_user
@@ -28,6 +43,7 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:sign_in) do |user_params|
       user_params.permit(:email, :password)
     end
+
     devise_parameter_sanitizer.permit(:sign_up) do |user_params|
       user_params.permit(:first_name, :last_name, :email, :phone_no, :role, :password,
                          :password_confirmation)

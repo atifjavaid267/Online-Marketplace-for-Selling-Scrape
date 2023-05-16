@@ -1,7 +1,6 @@
 
 <%if @archive_products.empty? %>
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
-  <%= render 'devise/shared/navbar' %>
   <%= render 'devise/shared/back' %>
     <div class = "pt-5">
       <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
@@ -10,7 +9,6 @@
     </div>
   </div>
 <% else %>
-  <%= render 'devise/shared/navbar' %>
   <div class="bg-white shadow-md rounded my-6"></div>
     <table class="w-full">
       <thead>
@@ -30,8 +28,8 @@
             <% if can? :show, Product %>
               <td class="py-3 px-6 text-center"> <%= link_to "View", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
             <%end%>
-            <% if can? :publish, Product %>
-              <td class="py-3 px-6 text-center"><%= button_to "Publish", publish_product_path(product),data: { confirm: "Are you sure to publish product?", turbo_confirm: "Are you sure to publish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
+            <% if can? :toggle_published, Product %>
+              <td class="py-3 px-6 text-center"><%= button_to "Publish", toggle_published_product_path(product),data: { confirm: "Are you sure to publish product?", turbo_confirm: "Are you sure to publish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
             <%end%>
             <% if can? :destroy, Product %>
               <td class="py-3 px-6 text-center"><%= button_to "Delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
