@@ -28,7 +28,7 @@ class AdsController < ApplicationController
       flash[:notice] = 'Ad was successfully created'
       redirect_to @ad
     else
-      flash[:alert] = 'Failed to create Ad'
+      flash[:alert] = @ad.errors.full_messages.join(', ')
       redirect stored_location
     end
   end
@@ -46,7 +46,7 @@ class AdsController < ApplicationController
       flash[:notice] = 'Ad was updated successfully'
       redirect_to @ad
     else
-      flash[:alert] = 'Failed to update Ad'
+      flash[:alert] = @ad.errors.full_messages.join(', ')
       render :edit
     end
   end
@@ -56,7 +56,7 @@ class AdsController < ApplicationController
       flash[:notice] = 'Ad deleted successfully.'
       redirect_to stored_location
     else
-      flash[:alert] = @ad.errors.full_messages[0]
+      flash[:alert] = @ad.errors.full_messages.join(', ')
       redirect_to stored_location
     end
   end

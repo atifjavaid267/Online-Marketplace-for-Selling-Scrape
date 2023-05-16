@@ -16,7 +16,7 @@ class ProductsController < ApplicationController
       flash[:notice] = 'Product created successfully.'
       redirect_to @product
     else
-      flash[:alert] = 'Failed to create a Product.'
+      flash[:alert] = @product.errors.full_messages.join(', ')
       render :new
     end
   end
@@ -29,7 +29,7 @@ class ProductsController < ApplicationController
       flash[:notice] = 'Product updated successfully.'
       redirect_to @product
     else
-      flash[:alert] = 'Failed to update the Product.'
+      flash[:alert] = @product.errors.full_messages.join(', ')
       render :edit
     end
   end
@@ -38,7 +38,7 @@ class ProductsController < ApplicationController
     if @product.destroy
       flash[:notice] = 'Product deleted successfully.'
     else
-      flash[:alert] = @product.errors.full_messages[0]
+      flash[:alert] = @product.errors.full_messages.join(', ')
     end
     redirect_to stored_location
   end
