@@ -1,6 +1,6 @@
 class BidsController < ApplicationController
   load_and_authorize_resource
-
+  before_action :authenticate_user!
   before_action :store_location, only: %i[new]
 
   def new

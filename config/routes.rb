@@ -2,6 +2,10 @@ Rails.application.routes.draw do
   # for gem 'devise-two-factor'
   patch 'users_otp/enable'
   get 'users_otp/disable'
+
+  get 'users_otp/settings'
+  patch 'users_otp/toggle'
+
   # root
   root 'products#show_root'
 
