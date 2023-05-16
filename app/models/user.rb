@@ -15,6 +15,11 @@ class User < ApplicationRecord
     totp.now
   end
 
+  validates :phone_no, format: { with: /\A\+923|03\d{9}\z/ }
+  validates :first_name, format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
+  validates :last_name, format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
+  validates :role, presence: true
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable, # :confirmable,

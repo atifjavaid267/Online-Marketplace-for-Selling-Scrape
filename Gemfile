@@ -81,4 +81,4 @@ gem "attr_encrypted"
 
 gem "twilio-ruby", "~> 5.76"
 
-gem "breadcrumbs_on_rails"
+gem "erb-formatter"

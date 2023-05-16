@@ -1,53 +1,49 @@
 class AddressesController < ApplicationController
   load_and_authorize_resource
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  before_action :authenticate_user!
 
   def index
-    @addresses = current_user.addresses.paginate(page: params[:page], per_page: 5)
+    @addresses = @addresses.paginate(page: params[:page], per_page: 6)
   end
 
   def new
-    @address = Address.new
     @address.user_id = current_user.id
   end
 
   def create
-    @address = current_user.addresses.build(address_params)
     @address.geocode
 
-    if @address.latitude.zero? || @address.longitude.zero?
-      redirect_to new_address_path, notice: 'Address was not found' and return
+    @address.user_id = current_user.id
+
+    if @address.save
+      flash[:notice] = 'Address was successfully created.'
+      redirect_to addresses_path
+
     else
-      @address.save
-      redirect_to addresses_path, notice: 'Address was successfully created.'
+      flash[:error] = @address.errors.to_a
+      redirect_to new_address_path
     end
   end
 
-  def edit
-    @address = Address.find(params[:id])
-    @address.user_id = current_user.id
-  end
+  def edit; end
 
   def update
-    @address = Address.find(params[:id])
-    @address.user_id = current_user.id
-
     if @address.update(address_params)
-      redirect_to addresses_path, notice: 'Address was successfully updated'
+      flash[:notice] = 'Address was successfully updated'
+      redirect_to addresses_path
     else
-      redirect_to edit_address_path, notice: 'address was not updated'
+      flash[:alert] = 'Adddress was not updated'
+      render :edit
     end
   end
 
   def destroy
-    @address = Address.find(params[:id])
-
-    if Ad.find_by(address_id: @address.id)
-      redirect_to addresses_path, alert: 'Address cannot be deleted!'
+    if @address.destroy
+      flash[:notice] = 'Address deleted successfully.'
     else
-      @address.destroy
-      redirect_to addresses_path, notice: 'Address deleted successfully.'
+      flash[:alert] = @address.errors.full_messages[0]
     end
+    redirect_to addresses_path
   end
 
   private

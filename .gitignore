@@ -39,8 +39,3 @@ yarn-debug.log*
 !/app/assets/builds/.keep
 
 config/database.yml
-
-
-
-
-

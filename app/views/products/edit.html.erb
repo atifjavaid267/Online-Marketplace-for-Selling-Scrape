@@ -1,8 +1,7 @@
 
 <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
-  <%= render 'devise/shared/navbar' %>
+  <%= render 'devise/shared/back' %>
   <div class = "pt-5 mx-12" style="display: flex; justify-content: center; align-items: center;">
-
   <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
     <div class="flex flex-col items-center justify-between space-y-5 ">
       <h3 class="font-bold">Edit Product</h3>
@@ -21,9 +20,10 @@
             <%= form.label :product_image, class: "font-bold mb-2 block" %>
             <%= form.file_field :product_image, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
           </div>
-          <div class="actions">
-            <%= link_to "Back", @product, class: "py-2 px-4 bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold rounded-lg" %>
-            <%= form.submit "Update Product", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+          <div class="flex flex-row justify-center">
+            <div class="actions">
+              <%= form.submit "Update", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+            </div>
           </div>
       <% end %>
     </div>

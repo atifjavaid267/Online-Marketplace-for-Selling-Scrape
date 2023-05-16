@@ -1,7 +1,11 @@
 class MessagesController < ApplicationController
   load_and_authorize_resource
+
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   skip_before_action :verify_authenticity_token
+
+  before_action :authenticate_user!
+
   def show; end
 
   def new
@@ -11,12 +15,14 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
 
+
     return unless @message.save
 
     sender_id = @message.sender_id
     receiver_id = @message.receiver_id
     message_content = @message.content
     sender_name = User.find(sender_id).first_name
+
 
     sender_name = @message.sender.first_name
 
@@ -25,8 +31,10 @@ class MessagesController < ApplicationController
     if notification.nil?
       notification = Notification.create(sender_id:, receiver_id:)
     else
+
       notification_count = notification.count || 0
       notification.update(count: notification_count + 1)
+
     end
 
     # broadcast notification

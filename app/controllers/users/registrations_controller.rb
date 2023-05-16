@@ -21,12 +21,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     # authenticate_2fa!
     existing_user = User.find_by_email(sign_up_params[:email])
     if existing_user
-      flash[:notice] = "This email is already registered as #{existing_user.role}"
+      flash[:alert] = "This email is already registered as #{existing_user.role}"
       redirect_to new_user_registration_path
     else
       super do |resource|
         if resource.valid? && resource.persisted?
-
           resource.update(
             otp_required_for_login: true,
             otp_secret: User.generate_otp_secret
@@ -51,27 +50,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
   #     render 'users_otp/two_fa'
   #   end
   # end
-
-  # def auth_with_2fa(user)
-  #   return unless user.validate_and_consume_otp!(user_params[:otp_attempt])
-
-  #   user.save!
-  #   sign_in(user)
-  # end
-
-  # def find_user
-  #   if session[:user_id]
-  #     User.find(session[:user_id])
-  #   elsif user_params[:email]
-  #     User.find_by(email: user_params[:email])
-  #   end
-  # end
-
-  # def user_params
-  #   params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
-  # end
-
-  # #####################
 
   # GET /resource/edit
   # def edit

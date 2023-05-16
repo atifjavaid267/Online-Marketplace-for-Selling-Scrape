@@ -7,6 +7,10 @@ Rails.application.routes.draw do
   # for gem 'devise-two-factor'
   patch 'users_otp/enable'
   get 'users_otp/disable'
+
+  get 'users_otp/settings'
+  patch 'users_otp/toggle'
+
   # root
   root 'products#show_root'
 
@@ -33,14 +37,12 @@ Rails.application.routes.draw do
   get '/users/admin/dashboard' => 'users/admin#dashboard', as: 'admin_dashboard'
   get '/users/seller/home' => 'users/seller#home', as: 'seller_home'
   get '/users/buyer/home' => 'users/buyer#home', as: 'buyer_home'
-  get 'display_ads' => 'ads#display_ads', as: 'seller_ads'
   resources :bids
 
   resources :products do
     resources :ads, only: %i[new create]
     member do
-      post :publish
-      post :unpublish
+      post :toggle_published
     end
     collection do
       get 'archives' => 'products#archives'
@@ -52,8 +54,7 @@ Rails.application.routes.draw do
     resources :bids, only: %i[new create]
     get 'view_bids', on: :member
     member do
-      post :publish
-      post :unpublish
+      post :toggle_published
     end
     collection do
       get 'archives' => 'ads#archives'

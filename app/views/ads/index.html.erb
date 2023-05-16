@@ -1,17 +1,4 @@
-<%= render 'devise/shared/navbar'%>
-
-<% flag = true %>
-
-<% if @ads==nil || @ads.empty? %>
-  <% flag = false %>
-<% elsif current_user.buyer? %>
-  <% unless @ads.find_by(status: true) %>
-    <% flag = false%>
-  <% end %>
-<% end %>
-
-
-<% if !flag %>
+<% if @ads.nil? || @ads.empty? %>
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
   <%= render 'devise/shared/back'%>
     <div class = "pt-5">
@@ -37,8 +24,8 @@
           <% if can? :show, Ad %>
             <%= link_to "View Ad", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
           <% end %>
-          <% if can? :unpublish, ad %>
-            <%= button_to "Unpublish", unpublish_ad_path(ad), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
+          <% if can? :toggle_published, ad %>
+            <%= button_to "Unpublish", toggle_published_ad_path(ad), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
           <% end %>
           <% if can? :destroy, ad %>
             <%= button_to "Delete", ad, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
