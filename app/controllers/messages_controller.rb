@@ -1,5 +1,9 @@
 class MessagesController < ApplicationController
   load_and_authorize_resource
+
+  rescue_from ActiveRecord::RecordNotFound, with: :render_404
+  skip_before_action :verify_authenticity_token
+
   before_action :authenticate_user!
 
   def show; end
@@ -11,62 +15,51 @@ class MessagesController < ApplicationController
   def create
     @message = Message.new(message_params)
 
-    if @message.save
-      sender = @message.sender_id
-      receiver = @message.receiver_id
-      message_content = @message.content
 
-      time = Time.now.strftime('%B %d, %Y %I:%M %p')
+    return unless @message.save
 
-      ActionCable.server.broadcast('room_channel_1', {
-                                     sender_id: sender,
-                                     receiver_id: receiver,
-                                     message: message_content,
-                                     timestamp: time
-                                   })
-      # @notification = Notification.create(sender: @message.sender_id,
-      #                                     receiver: @message.receiver_id)
-      # @notification_id = @notification.id
+    sender_id = @message.sender_id
+    receiver_id = @message.receiver_id
+    message_content = @message.content
+    sender_name = User.find(sender_id).first_name
+
+
+    sender_name = @message.sender.first_name
+
+    # create or update notification
+    notification = Notification.already_existing(sender_id, receiver_id)
+    if notification.nil?
+      notification = Notification.create(sender_id:, receiver_id:)
     else
-      puts @message.errors.full_messages
+
+      notification_count = notification.count || 0
+      notification.update(count: notification_count + 1)
+
     end
-    respond_to do |format|
-      format.js { render(js: "") }
-    end
+
+    # broadcast notification
+    ActionCable.server.broadcast("notifications_#{receiver_id}", {
+                                   count: notification.count,
+                                   read: false,
+                                   message: message_content,
+                                   sender_name:,
+                                   sender_id:,
+                                   receiver_id:,
+                                   timestamp: Time.now.strftime('%B %d, %Y %I:%M %p')
+                                 })
+
+    # broadcast message
+    ActionCable.server.broadcast('room_channel_1', {
+                                   sender_id:,
+                                   receiver_id:,
+                                   sender_name:,
+                                   message: message_content,
+                                   timestamp: Time.now.strftime('%I:%M %p')
+                                 })
+
+    puts @message.errors.full_messages
   end
-  # def create
-  #   @message = Message.new(message_params)
 
-  #   if @message.save
-  #     sender = @message.sender_id
-  #     receiver = @message.receiver_id
-  #     message_content = @message.content
-  #     time = Time.now.strftime('%B %d, %Y %I:%M %p')
-
-  #     ActionCable.server.broadcast('room_channel_1', {
-  #                                    sender_id: sender,
-  #                                    receiver_id: receiver,
-  #                                    message: message_content,
-  #                                    timestamp: time
-  #                                  })
-
-  #     # Create or update the Notification record
-  #     @notification = Notification.find_or_initialize_by(
-  #       sender: @message.sender_id,
-  #       receiver: @message.receiver_id
-  #     )
-  #     @notification.count += 1
-  #     @notification.read = false
-  #     @notification.save
-
-  #     respond_to do |format|
-  #       format.js {}
-  #     end
-  #   else
-  #     # handle errors here
-  #     puts @message.errors.full_messages
-  #   end
-  # end
   private
 
   def message_params

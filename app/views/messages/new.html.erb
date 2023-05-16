@@ -1,16 +1,21 @@
-<div class="fixed w-full top-0">
-</div>
 
 <% first_id = current_user.id %>
-
 <% if current_user.buyer? %>
   <% second_id = @order.bid.ad.user_id%>
 <%else%>
   <% second_id = @order.bid.user_id%>
 <%end%>
+
+<% noti = Notification.where(receiver_id: current_user.id, sender_id: second_id ).first %>
+<% if noti %>
+  <% noti.count = nil %>
+  <% noti.read = true %>
+  <% noti.save %>
+<% end %>
+
 <% messages = Message.where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", first_id, second_id, second_id, first_id) %>
 
-<div id="chat-room">
+<div id="chat-room" class = "pb-16">
   <div id="messages">
 
   <% unless messages.length.zero? %>
@@ -27,22 +32,24 @@
             <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
           </div>
         <%end%>
-
-        <%if current_user.id == message.sender_id %>
-          <div class="message text-right mr-5 mt-5">
-            <span class="time text-xs text-gray-500"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
-            <span class="content bg-blue-600 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
-          </div>
-        <% else %>
-          <div class="message  text-left ml-5 mt-5">
-            <span class="content bg-gray-500 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
-            <span class="time text-xs text-gray-500"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
-          </div>
-        <% end %>
+          <div id = "user", data-user-id = <%= @current_user_id %>></div>
+          <%if current_user.id == message.sender_id %>
+        
+            <div class="message text-right mr-5 mt-5">
+              <span class="time text-xs text-gray-500"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
+              <span class="content bg-blue-600 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
+            </div>
+          <% else %>
+            <div class="message  text-left ml-5 mt-5">
+              <span class="content bg-gray-500 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
+              <span class="time text-xs text-gray-500"><%= (message.created_at + 5.hours).strftime("%I:%M %p") %></span>
+            </div>
+          <% end %>
       <% end %>
     </div>
-    <% end %>
-    <div class="flex items-center fixed bottom-0 w-full p-4 bg-white rounded-lg w-100">
+    <% end %>  
+  
+      <div class=" pt-16 flex items-center fixed bottom-0 w-full p-4 bg-white rounded-lg w-100">
 
     <%= form_for Message.new, url:messages_path, remote: true do |f| %>
   <%= f.text_field :content, required: true, placeholder: "Enter your message",  :maxlength=>"110", class: "flex-1 mr-2 border-2 border-gray-300 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" %>
@@ -54,8 +61,29 @@
   <% end %>
   <%= f.submit "send", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg" %>
 <% end %>
-
-
     </div>
   </div>
 </div>
+<script>
+// if (window.location.pathname === "/messages/new") {
+//           const countElement = document.getElementById("count");
+//           localStorage.setItem("count", "");
+//           countElement.innerHTML = "";
+//         }
+document.addEventListener("turbolinks:load", () => {
+  // Check if the user is on the messages/new path
+  if (window.location.pathname === "/messages/new") {
+    // Clear the notification count and dropdown
+    const countElement = document.getElementById("count");
+    localStorage.setItem("count", "");
+    countElement.innerHTML = "";
+
+    const notificationDropdown = document.getElementById("notification-dropdown");
+    notificationDropdown.innerHTML = "";
+    localStorage.setItem("notifications", "{}");
+  }
+
+  // ...
+});
+
+</script>

@@ -1,11 +1,5 @@
 class NotificationController < ApplicationController
-  def index
-    @notifications = Notification.all
-  end
-
-  def show
-    @notifications = Notification.find(params[:id])
-  end
+  
 
   def create
     @notification = Notifications.new(notification_params)
@@ -22,6 +16,7 @@ class NotificationController < ApplicationController
     @notifaction.destroy
   end
 
+ 
   private
 
   def notification_params

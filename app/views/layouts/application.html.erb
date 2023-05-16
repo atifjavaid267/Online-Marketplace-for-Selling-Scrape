@@ -9,7 +9,7 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_importmap_tags %>
+    <%# <%= javascript_importmap_tags %> 
     <%# <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script> %>
     <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&callback=fireMapsLoadedEvent" async defer></script>
 
@@ -27,9 +27,15 @@
           }
         }
     </script>
+    
 
   </head>
-
+  <% if current_user %>
+    <% current_user_id = current_user.id %>
+  <% else %>
+    <% current_user_id = 'x' %>
+  <% end %>
+  <div id = "user", data-user-id = <%= current_user_id %>></div>
   <body>
     <%= render "shared/flashes" %>
     <% if user_signed_in? %>
