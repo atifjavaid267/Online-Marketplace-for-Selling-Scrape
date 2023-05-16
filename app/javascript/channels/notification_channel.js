@@ -6,7 +6,6 @@ document.addEventListener("turbolinks:load", () => {
   const countElement = document.getElementById("count");
   const notificationDropdown = document.getElementById("notification-dropdown");
 
-  // Retrieve notification count and data from local storage
   const storedCount = localStorage.getItem("count") || 0;
   countElement.innerHTML = storedCount;
 
@@ -15,7 +14,6 @@ document.addEventListener("turbolinks:load", () => {
   const messageCounts = storedNotifications.messageCounts || {};
   const notificationMessages = storedNotifications.notificationMessages || {};
 
-  // Loop over the stored notifications and recreate them
   for (const senderId in messageCounts) {
     const senderName = notificationMessages[senderId].senderName;
     const messageCount = messageCounts[senderId];
@@ -41,19 +39,16 @@ document.addEventListener("turbolinks:load", () => {
         const senderId = data.sender_id;
         const senderName = data.sender_name;
 
-        // Get the count and existing message for the current sender
         const messageCount = messageCounts[senderId] || 0;
         const existingMessage = document.getElementById(
           `notification-${senderId}`
         );
 
         if (existingMessage) {
-          // Update the existing message
           existingMessage.textContent = `${senderName} sent you ${
             messageCount + 1
           } messages`;
         } else {
-          // Create a new message
           const notificationMessage = document.createElement("div");
           notificationMessage.textContent = `${senderName} sent you a message`;
           notificationMessage.classList.add("p-2", "text-black");

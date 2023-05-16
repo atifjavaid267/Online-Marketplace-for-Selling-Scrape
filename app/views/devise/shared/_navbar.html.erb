@@ -128,16 +128,13 @@
   var menu = document.querySelector('#menu');
 
 
-  // Hide the menu when the user clicks somewhere else on the page
   document.addEventListener('click', (event) => {
-    // If the click happened outside of the menu element
     if (!menu.contains(event.target) && event.target !== menuButton) {
       menu.classList.add('hidden');
       menuButton.setAttribute('aria-expanded', 'false');
     }
   });
 
-  // Show/hide the menu when the user clicks the menu button
   menuButton.addEventListener('click', () => {
     var expanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
     menuButton.setAttribute('aria-expanded', !expanded);
@@ -149,9 +146,8 @@
 <script>
   const notificationBell = document.getElementById('notification-bell');
   const notificationDropdown = document.getElementById('notification-dropdown');
-  const userMessage = { senderName: '' , message: '' }; // replace with user's message
+  const userMessage = { senderName: '' , message: '' };
 
-  // create notification message for user's message
   const notificationMessage = document.createElement('div');
   notificationMessage.textContent = `${userMessage.senderName} ${userMessage.message}`;
   notificationMessage.classList.add('p-2', 'text-black');
