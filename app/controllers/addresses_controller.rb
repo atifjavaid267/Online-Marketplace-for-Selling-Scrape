@@ -12,11 +12,13 @@ class AddressesController < ApplicationController
 
   def create
     @address.geocode
+
     @address.user_id = current_user.id
 
     if @address.save
       flash[:notice] = 'Address was successfully created.'
       redirect_to addresses_path
+
     else
       flash[:error] = @address.errors.to_a
       redirect_to new_address_path

@@ -33,6 +33,9 @@ class AdsController < ApplicationController
     end
   end
 
+  def view_bids
+     @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: 10)
+  end
   def edit
     @addresses = current_user.addresses
   end

@@ -1,4 +1,9 @@
 Rails.application.routes.draw do
+  get 'notification/index'
+  get 'notification/show'
+  get 'notification/create'
+  get 'notification/update'
+  get 'notification/destroy'
   # for gem 'devise-two-factor'
   patch 'users_otp/enable'
   get 'users_otp/disable'

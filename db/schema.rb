@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_05_144530) do
+ActiveRecord::Schema.define(version: 2023_05_10_064852) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -85,6 +85,15 @@ ActiveRecord::Schema.define(version: 2023_05_05_144530) do
     t.integer "room_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "sender"
+    t.string "receiver"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.integer "count", default: 1
+    t.boolean "read", default: false
+  end
+nav
   create_table "orders", force: :cascade do |t|
     t.integer "bid_id", null: false
     t.datetime "pickup_time"
