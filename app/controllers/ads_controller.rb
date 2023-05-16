@@ -62,8 +62,11 @@ class AdsController < ApplicationController
   end
 
   def toggle_status
-    @ad.update_attribute(:status, !@ad.status)
-    flash[:notice] = @ad.status == true ? 'Ad Published' : 'Ad Unpublished'
+    if @ad.update_attribute(:status, !@ad.status)
+      flash[:notice] = @ad.status == true ? 'Ad Published' : 'Ad Unpublished'
+    else
+      flash[:alert] = @ad.errors.full_messages.join(', ')
+    end
     redirect_to stored_location
   end
 

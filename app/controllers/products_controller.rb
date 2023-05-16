@@ -44,8 +44,11 @@ class ProductsController < ApplicationController
   end
 
   def toggle_status
-    @product.update_attribute(:status, !@product.status)
-    flash[:notice] = @product.status == true ? 'Product Published' : 'Product Unpublished'
+    if @product.update_attribute(:status, !@product.status)
+      flash[:notice] = @product.status == true ? 'Product Published' : 'Product Unpublished'
+    else
+      flash[:alert] = @product.errors.full_messages.join(', ')
+    end
     redirect_to stored_location
   end
 

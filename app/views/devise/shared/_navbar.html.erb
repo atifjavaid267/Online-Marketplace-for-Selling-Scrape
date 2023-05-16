@@ -51,7 +51,8 @@
             </div>
           <% end %>
 
-          <% if can? :index, Bid && current_user.buyer?%>
+          <% if can? :index, Bid %>
+
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
                 <%= link_to "Bids", bids_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>

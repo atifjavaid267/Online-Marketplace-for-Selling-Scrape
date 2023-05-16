@@ -11,7 +11,6 @@ class BidsController < ApplicationController
   def create
     @bid.user_id = current_user.id
 
-
     if @bid.save
       respond_to do |format|
         flash[:notice] = 'Bid was created successfully.'
@@ -22,7 +21,7 @@ class BidsController < ApplicationController
         format.html { redirect_to buyer_home_path }
       end
     else
-      flash[:alert] = @bid.errors.full_messages.join(", ")
+      flash[:alert] = @bid.errors.full_messages.join(', ')
       redirect_to stored_location
     end
   end
