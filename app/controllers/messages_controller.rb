@@ -16,12 +16,16 @@ class MessagesController < ApplicationController
     sender_id = @message.sender_id
     receiver_id = @message.receiver_id
     message_content = @message.content
+    sender_name = User.find(sender_id).first_name
+
+    sender_name = @message.sender.first_name
+
     # create or update notification
     notification = Notification.already_existing(sender_id, receiver_id)
     if notification.nil?
       notification = Notification.create(sender_id:, receiver_id:)
     else
-      notification_count = notification.count
+      notification_count = notification.count || 0
       notification.update(count: notification_count + 1)
     end
 
@@ -30,6 +34,7 @@ class MessagesController < ApplicationController
                                    count: notification.count,
                                    read: false,
                                    message: message_content,
+                                   sender_name:,
                                    sender_id:,
                                    receiver_id:,
                                    timestamp: Time.now.strftime('%B %d, %Y %I:%M %p')
@@ -39,73 +44,13 @@ class MessagesController < ApplicationController
     ActionCable.server.broadcast('room_channel_1', {
                                    sender_id:,
                                    receiver_id:,
+                                   sender_name:,
                                    message: message_content,
-                                   timestamp: Time.now.strftime('%B %d, %Y %I:%M %p')
+                                   timestamp: Time.now.strftime('%I:%M %p')
                                  })
 
     puts @message.errors.full_messages
   end
-
-  # def create
-  #   @message = Message.new(message_params)
-
-  #   return unless @message.save
-
-  #   sender_id = @message.sender_id
-  #   receiver_id = @message.receiver_id
-  #   message_content = @message.content
-
-  #   notification = Notification.already_existing(sender_id, receiver_id)
-  #   if notification.nil?
-  #     notification = Notification.create(sender_id:, receiver_id:)
-  #   else
-  #     notification_count = notification.count
-  #     notification.update(count: notification_count + 1)
-  #   end
-
-  #   time = Time.now.strftime('%B %d, %Y %I:%M %p')
-
-  #   ActionCable.server.broadcast('room_channel_1', {
-  #                                  sender_id:,
-  #                                  receiver_id:,
-  #                                  message: message_content,
-  #                                  timestamp: time
-  #                                })
-
-  #   puts @message.errors.full_messages
-  # end
-
-  # def create
-  #   @message = Message.new(message_params)
-
-  #   return unless @message.save
-
-  #   sender = @message.sender_id
-  #   receiver = @message.receiver_id
-  #   message_content = @message.content
-
-  #   notification = Notification.already_existing(sender_id, receiver)
-  #   if notification.nil?
-  #     notification = Notification.create(sender: sender.to_s, receiver: receiver.to_s)
-  #   else
-  #     notification_count = notification.count
-  #     notification.update(count: notification_count + 1)
-  #   end
-
-  #   ActionCable.server.broadcast("notification_channel_#{receiver}",
-  #                                notification: notification.count)
-
-  #   time = Time.now.strftime('%B %d, %Y %I:%M %p')
-
-  #   ActionCable.server.broadcast('room_channel_1', {
-  #                                  sender_id: sender,
-  #                                  receiver_id: receiver,
-  #                                  message: message_content,
-  #                                  timestamp: time
-  #                                })
-
-  #   puts @message.errors.full_messages
-  # end
 
   private
 

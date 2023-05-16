@@ -5,54 +5,50 @@ document.addEventListener("turbolinks:load", () => {
 
     {
       connected() {
-        // Called when the subscription is ready for use on the server"
         console.log("Connected to the RoomChannel");
       },
 
       disconnected() {
-        // Called when the subscription has been terminated by the server
         console.log("Disconnected from the RoomChannel");
       },
 
       received(data) {
-        console.log("received");
-        // Called when there's incoming data on the websocket for this channel
         console.log(data);
-        console.log("message received");
+        const userDiv = document.getElementById("user");
         const messagesContainer = document.getElementById("messages");
-        const senderName = data.sender_id;
-        const receiverName = data.receiver_id;
-        const messageContent = data.message;
-        const timestamp = data.timestamp;
-        const messageHtml = `
-          <div class="message">
-            <div class="message-header text-red-500">
-              <span class="sender">${senderName}</span>
-              <span class="receiver">${receiverName}</span>
-              <span class="timestamp">${timestamp}</span>
+
+        if (userDiv && messagesContainer) {
+          let messageHtml;
+          const current_user_id = parseInt(
+            userDiv.getAttribute("data-user-id")
+          );
+
+          if (data.sender_id === current_user_id) {
+            messageHtml = `
+            <div class="message text-right mr-5 mt-5">
+              <span class="time text-xs text-gray-500">${data.timestamp}</span>
+              <span class="content bg-blue-600 rounded-full px-3 py-2 m-1 text-white text-lg">${data.message}</span>
             </div>
-            <div class="message-content">${messageContent}</div>
-          </div>
-        `;
-        messagesContainer.insertAdjacentHTML("beforeend", messageHtml);
-        const inputField = document.getElementById("message_content");
-        inputField.value = "";
-      },
+          `;
+          } else {
+            messageHtml = `
+            <div class="message  text-left ml-5 mt-5">
 
-      send(data) {
-        console.log("send");
-        const messageInput = document.getElementById("message_content");
-        const messageContent = messageInput.value;
+              <span class="content bg-gray-500 rounded-full px-3 py-2 m-1 text-white text-lg">${data.message}</span>
+              <span class="time text-xs text-gray-500">${data.timestamp}</span>
+            </div>
+          `;
+          }
 
-        const messageData = {
-          content: messageContent,
-          sender_id: senderId,
-          receiver_id: receiverId,
-          room_id: 1,
-        };
-
-        this.perform("send", messageData);
-        messageInput.value = "";
+          messagesContainer.insertAdjacentHTML("beforeend", messageHtml);
+          const inputField = document.getElementById("message_content");
+          inputField.value = "";
+        }
+        if (window.location.pathname === "/messages/new") {
+          const countElement = document.getElementById("count");
+          localStorage.setItem("count", " ");
+          countElement.innerHTML = "";
+        }
       },
     }
   );
