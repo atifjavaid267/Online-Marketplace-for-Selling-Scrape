@@ -20,7 +20,7 @@ class AddressesController < ApplicationController
       redirect_to addresses_path
 
     else
-      flash[:error] = @address.errors.to_a
+      flash[:error] = @address.errors.full_messages.join(', ')
       redirect_to new_address_path
     end
   end
@@ -32,7 +32,7 @@ class AddressesController < ApplicationController
       flash[:notice] = 'Address was successfully updated'
       redirect_to addresses_path
     else
-      flash[:alert] = 'Adddress was not updated'
+      flash[:alert] = @address.errors.full_messages.join(', ')
       render :edit
     end
   end
@@ -41,7 +41,7 @@ class AddressesController < ApplicationController
     if @address.destroy
       flash[:notice] = 'Address deleted successfully.'
     else
-      flash[:alert] = @address.errors.full_messages[0]
+      flash[:alert] = @address.errors.full_messages.join(', ')
     end
     redirect_to addresses_path
   end

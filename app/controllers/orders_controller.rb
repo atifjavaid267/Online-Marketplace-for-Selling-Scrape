@@ -14,7 +14,7 @@ class OrdersController < ApplicationController
       flash[:notice] = 'New Order Opened.'
       redirect_to @order
     else
-      flash[:alert] = @order.errors.full_messages[0]
+      flash[:alert] = @order.errors.full_messages.join(", ")
       redirect_to stored_location
     end
   end
