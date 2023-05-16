@@ -3,16 +3,11 @@
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
       <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
-      
         <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
           <span class="sr-only">Open main Dashboard</span>
-
-        
           <svg class="block h-12 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
           </svg>
-         
-
           <svg class="hidden h-12 w-12" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
           </svg>
@@ -28,94 +23,66 @@
 
         <% if user_signed_in? %>
 
-        <div class="hidden sm:ml-6 sm:block">
-          <div class="flex space-x-4">
-            <%if current_user.admin?%>
-              <%= link_to "Dashboard", admin_dashboard_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
-            <%elsif current_user.seller?%>
-              <%= link_to "Dashboard", seller_home_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
-            <%elsif current_user.buyer?%>
-              <%= link_to "Home", buyer_home_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
-            <%end%>
-          </div>
-        </div>
-
-        <div class="hidden sm:ml-6 sm:block">
-          <div class="flex space-x-4">
-            <%if current_user.admin? || current_user.seller?%>
-              <%= link_to "Products", products_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
-            <%end%>
-          </div>
-        </div>
-
-        <% if can? :index, Order %>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <%= link_to "Orders", orders_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              <%if current_user.admin?%>
+                <%= link_to "Dashboard", admin_dashboard_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              <%elsif current_user.seller?%>
+                <%= link_to "Dashboard", seller_home_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              <%elsif current_user.buyer?%>
+                <%= link_to "Home", buyer_home_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              <%end%>
             </div>
           </div>
-        <% end %>
 
-        <% if can? :index, Bid && current_user.buyer?%>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <%= link_to "Bids", bids_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              <%if current_user.admin? || current_user.seller?%>
+                <%= link_to "Products", products_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              <%end%>
             </div>
           </div>
-        <% end %>
 
-      <%elsif%>
-      <div class="hidden sm:ml-6 sm:block">
-        <div class="flex space-x-4">
-        </div>
-      </div>
+          <% if can? :index, Order %>
+            <div class="hidden sm:ml-6 sm:block">
+              <div class="flex space-x-4">
+                <%= link_to "Orders", orders_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              </div>
+            </div>
+          <% end %>
 
-      <%end%>
+          <% if can? :index, Bid && current_user.buyer?%>
+            <div class="hidden sm:ml-6 sm:block">
+              <div class="flex space-x-4">
+                <%= link_to "Bids", bids_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              </div>
+            </div>
+          <% end %>
 
+        <%elsif%>
+          <div class="hidden sm:ml-6 sm:block">
+            <div class="flex space-x-4">
+            </div>
+          </div>
+        <%end%>
       </div>
 
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-
-        <% if user_signed_in? %>
-       
-
-        <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-          <span class="sr-only text-white">View notifications</span>  
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell cursor-pointer" viewBox="0 0 16 16" id="notification-bell">
-
-  <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
-  <text x="11.5" y="6.5" font-size="8" text-anchor="middle" fill="yellow" id="count">0</text>
-</svg>
-
-<div class="hidden bg-white shadow-lg rounded-lg mt-2 absolute right-0" id="notification-dropdown">
-</div>
-
-<script>
-  const notificationBell = document.getElementById('notification-bell');
-  const notificationDropdown = document.getElementById('notification-dropdown');
-  const userMessage = { senderName: '' , message: '' }; // replace with user's message
-
-  // create notification message for user's message
-  const notificationMessage = document.createElement('div');
-  notificationMessage.textContent = `${userMessage.senderName} ${userMessage.message}`;
-  notificationMessage.classList.add('p-2', 'text-black');
-  notificationDropdown.appendChild(notificationMessage);
-
-  notificationBell.addEventListener('mouseenter', () => {
-    notificationDropdown.classList.remove('hidden');
-  });
-
-  notificationDropdown.addEventListener('mouseleave', () => {
-    notificationDropdown.classList.add('hidden');
-  });
-</script>
-
-
-
-        </button>
+        <% if user_signed_in?%>
+          <% unless current_user.admin?%>
+            <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+              <span class="sr-only text-white">View notifications</span>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell cursor-pointer" viewBox="0 0 16 16" id="notification-bell">
+              <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+              <text x="11.5" y="6.5" font-size="8" text-anchor="middle" fill="yellow" id="count">0</text>
+              </svg>
+              <div class="hidden bg-white shadow-lg rounded-lg mt-2 absolute right-0" id="notification-dropdown">
+              </div>
+            </button>
+          <%end%>
 
         <!-- Profile dropdown -->
-        <div class="relative inline-block text-left">
+        <div class="relative inline-block text-left ml-5">
           <div>
             <button type="button" class="inline-flex w-full justify-center gap-x-1.5 bg-gray-800 px-3 py-2 hover:bg-gray-600 rounded-lg text-white shadow-sm" id="menu-button" aria-expanded="false" aria-haspopup="true">
               Profile
@@ -174,6 +141,27 @@
     var expanded = menuButton.getAttribute('aria-expanded') === 'true' || false;
     menuButton.setAttribute('aria-expanded', !expanded);
     menu.classList.toggle('hidden');
+  });
+</script>
+
+
+<script>
+  const notificationBell = document.getElementById('notification-bell');
+  const notificationDropdown = document.getElementById('notification-dropdown');
+  const userMessage = { senderName: '' , message: '' }; // replace with user's message
+
+  // create notification message for user's message
+  const notificationMessage = document.createElement('div');
+  notificationMessage.textContent = `${userMessage.senderName} ${userMessage.message}`;
+  notificationMessage.classList.add('p-2', 'text-black');
+  notificationDropdown.appendChild(notificationMessage);
+
+  notificationBell.addEventListener('mouseenter', () => {
+    notificationDropdown.classList.remove('hidden');
+  });
+
+  notificationDropdown.addEventListener('mouseleave', () => {
+    notificationDropdown.classList.add('hidden');
   });
 </script>
 
