@@ -9,10 +9,8 @@
 
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-    <%# <%= javascript_importmap_tags %> 
-    <%# <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places"></script> %>
-    <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&callback=fireMapsLoadedEvent" async defer></script>
 
+    <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&callback=fireMapsLoadedEvent" async defer></script>
 
     <script>
         var i = 0;
@@ -27,9 +25,8 @@
           }
         }
     </script>
-    
-
   </head>
+
   <% if current_user %>
     <% current_user_id = current_user.id %>
   <% else %>
@@ -42,7 +39,7 @@
       <div class="fixed w-full top-0 z-10">
         <%= render 'devise/shared/navbar' %>
       </div>
-      <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 relative flex h-16"></div>
+      <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 relative flex h-16 bg-gray-800"></div>
     <% end %>
     <%= yield %>
   </body>

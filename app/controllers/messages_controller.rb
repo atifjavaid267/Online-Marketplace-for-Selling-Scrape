@@ -1,10 +1,11 @@
 class MessagesController < ApplicationController
   load_and_authorize_resource
+   before_action :authenticate_user!
 
   rescue_from ActiveRecord::RecordNotFound, with: :render_404
   skip_before_action :verify_authenticity_token
 
-  before_action :authenticate_user!
+
 
   def show; end
 
@@ -13,8 +14,7 @@ class MessagesController < ApplicationController
   end
 
   def create
-    @message = Message.new(message_params)
-
+    # @message = Message.new(message_params)
 
     return unless @message.save
 
@@ -23,8 +23,7 @@ class MessagesController < ApplicationController
     message_content = @message.content
     sender_name = User.find(sender_id).first_name
 
-
-    sender_name = @message.sender.first_name
+    # sender_name = @message.sender.first_name
 
     # create or update notification
     notification = Notification.already_existing(sender_id, receiver_id)

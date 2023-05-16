@@ -39,9 +39,9 @@
                <%= link_to "View", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
             </td>
             <% if current_user.admin? %>
-              <% if can? :toggle_published, Product %>
+              <% if can? :toggle_status, Product %>
                 <td class="py-3 px-6 text-center">
-                  <%= button_to "Unpublish", toggle_published_product_path(product), data: { confirm: "Are you sure to unpublish product?", turbo_confirm: "Are you sure to unpublish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
+                  <%= button_to "Unpublish", toggle_status_product_path(product), data: { confirm: "Are you sure to unpublish product?", turbo_confirm: "Are you sure to unpublish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded" %>
                 </td>
               <% end %>
               <% if can? :destroy, Product %>

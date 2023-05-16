@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_11_105253) do
+ActiveRecord::Schema.define(version: 2023_05_16_095903) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -121,24 +121,23 @@ ActiveRecord::Schema.define(version: 2023_05_11_105253) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "phone_no"
     t.string "role"
-    t.integer "second_factor_attempts_count", default: 0
-    t.string "encrypted_otp_secret_key"
-    t.string "encrypted_otp_secret_key_iv"
-    t.string "encrypted_otp_secret_key_salt"
-    t.string "direct_otp"
-    t.datetime "direct_otp_sent_at"
-    t.datetime "totp_timestamp"
-    t.string "otp"
+    t.string "phone_no"
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
     t.integer "consumed_timestep"
     t.boolean "otp_required_for_login"
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
+    t.string "confirmation_token"
+    t.datetime "confirmed_at"
+    t.datetime "confirmation_sent_at"
+    t.string "unconfirmed_email"
     t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["encrypted_otp_secret_key"], name: "index_users_on_encrypted_otp_secret_key", unique: true
-    t.index ["phone_no"], name: "index_users_on_phone_no", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

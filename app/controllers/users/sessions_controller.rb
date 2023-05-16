@@ -1,11 +1,7 @@
 class Users::SessionsController < Devise::SessionsController
-  # for gem 'devise-two-factor'
-  before_action :authenticate_2fa!, only: [:create]
-
+  before_action :authenticate_2fa!, only: %i[new create]
   before_action :authenticate_user!, except: %i[new create destroy]
   before_action :load_and_authorize_resource, except: %i[new create destroy]
-
-  before_action :authenticate_2fa!, only: %i[new create]
 
   def authenticate_2fa!
     user = find_user
@@ -59,8 +55,6 @@ class Users::SessionsController < Devise::SessionsController
 
     super
   end
-
-  # POST /resource/sign_in
   def create
     # byebug
     if user_signed_in?
@@ -75,16 +69,4 @@ class Users::SessionsController < Devise::SessionsController
       super
     end
   end
-
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
-
-  # protected
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
 end

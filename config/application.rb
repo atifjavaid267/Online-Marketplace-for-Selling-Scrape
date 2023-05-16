@@ -1,9 +1,9 @@
-require_relative "boot"
+require_relative 'boot'
 
-require "rails/all"
+require 'rails/all'
 
-require "active_storage/attached"
-require "active_storage/engine"
+require 'active_storage/attached'
+require 'active_storage/engine'
 
 require 'will_paginate/array'
 
@@ -29,7 +29,7 @@ module OnlineSellingScrape
     # These settings can be overridden in specific environments using the files
     # in config/environments, which are processed later.
     #
-    # config.time_zone = "Central Time (US & Canada)"
+    config.time_zone = 'Karachi'
     # config.eager_load_paths << Rails.root.join("extras")
   end
 end

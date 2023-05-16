@@ -42,7 +42,7 @@ Rails.application.routes.draw do
   resources :products do
     resources :ads, only: %i[new create]
     member do
-      post :toggle_published
+      post :toggle_status
     end
     collection do
       get 'archives' => 'products#archives'
@@ -54,7 +54,7 @@ Rails.application.routes.draw do
     resources :bids, only: %i[new create]
     get 'view_bids', on: :member
     member do
-      post :toggle_published
+      post :toggle_status
     end
     collection do
       get 'archives' => 'ads#archives'

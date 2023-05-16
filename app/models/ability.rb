@@ -9,8 +9,8 @@ class Ability
     can [:show_root], Product
 
     if user.admin?
-      can %i[new create show index edit update destroy toggle_published archives], Product
-      can %i[index show destroy archives view_bids toggle_published], Ad
+      can %i[new create show index edit update destroy toggle_status archives], Product
+      can %i[index show destroy archives view_bids toggle_status], Ad
       can %i[index show show_pending show_successful show_cancelled], Order
 
     elsif user.seller?
@@ -22,7 +22,7 @@ class Ability
       can %i[new create], Address
       can %i[edit update destroy], Address, user_id: user.id
 
-      can %i[new create toggle_published view_bids], Ad
+      can %i[new create toggle_status view_bids], Ad
       can %i[index archives show edit update destroy], Ad, user_id: user.id
 
       can %i[index], Bid
