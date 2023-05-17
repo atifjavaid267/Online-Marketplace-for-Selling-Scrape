@@ -18,9 +18,8 @@ class AddressesController < ApplicationController
     if @address.save
       flash[:notice] = 'Address was successfully created.'
       redirect_to addresses_path
-
     else
-      flash[:error] = @address.errors.full_messages.join(', ')
+      flash[:alert] = @address.errors.full_messages.join(', ')
       redirect_to new_address_path
     end
   end
