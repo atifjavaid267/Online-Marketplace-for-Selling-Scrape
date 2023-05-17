@@ -6,7 +6,7 @@ class Ad < ApplicationRecord
   belongs_to :product
   belongs_to :user
 
-  has_one :address
+  belongs_to :address
   has_many :bids
 
   # validations
