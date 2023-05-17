@@ -19,11 +19,6 @@ class OrdersController < ApplicationController
 
   def show
     @address = Address.find(@order.bid.ad.address_id)
-    @lati = @address.latitude
-    @longi = @address.longitude
-    @buyer = User.find(@order.bid.user_id)
-    @seller = User.find(@order.bid.ad.user_id)
-    @amount = @order.bid.price
   rescue ActiveRecord::RecordNotFound => e
     flash[:alert] = "Error: Record not found - #{e.message}"
     redirect_to action: 'index'
