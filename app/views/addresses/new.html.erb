@@ -125,15 +125,18 @@ function initMap() {
       zip_code: zip_code
     };
 
+
     document.getElementById("address_street2").value = "";
     document.getElementById("map").focus();
     console.log(address);
+
   });
 }
 function geocodeLatLng(latlng) {
   geocoder.geocode({ 'location': latlng }, function(results, status) {
     if (status === 'OK') {
       if (results[0]) {
+
         var address_components = results[0].address_components;
         var street_number = "";
         var route = "";
@@ -165,8 +168,9 @@ function geocodeLatLng(latlng) {
           state: state,
           zip_code: zip_code
         };
-        document.getElementById("address_street2").value = "";
-        console.log(address);
+        
+        document.getElementById("address_street2").value = ""; 
+        console.log(address); 
 
       } else {
         window.alert('No results found');
@@ -176,6 +180,4 @@ function geocodeLatLng(latlng) {
     }
   });
 }
-
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3JUhLERQ9GxZnC4OHjA_AzieuJlcW6Is&libraries=places&callback=initMap"></script>
+</script><script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3JUhLERQ9GxZnC4OHjA_AzieuJlcW6Is&libraries=places&callback=initMap"></script>

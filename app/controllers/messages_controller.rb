@@ -8,10 +8,16 @@ class MessagesController < ApplicationController
   def show; end
 
   def new
-    @order = Order.find(params[:order_id])
+    @order = Order.find(params[:order_id].to_i)
+
+    @message = Message.new(order_id: @order.id)
   end
 
   def create
+    @order = Order.find(params[:message][:order_id].to_i)
+    @message = Message.new(message_params)
+    @message.order_id = @order.id
+
     return unless @message.save
 
     sender_id = @message.sender_id
@@ -36,6 +42,7 @@ class MessagesController < ApplicationController
                                    sender_name:,
                                    sender_id:,
                                    receiver_id:,
+                                   order_id: @order.id,
                                    timestamp: Time.now.strftime('%B %d, %Y %I:%M %p')
                                  })
 
@@ -44,6 +51,7 @@ class MessagesController < ApplicationController
                                    receiver_id:,
                                    sender_name:,
                                    message: message_content,
+                                   order_id: @order.id,
                                    timestamp: Time.now.strftime('%I:%M %p')
                                  })
 
