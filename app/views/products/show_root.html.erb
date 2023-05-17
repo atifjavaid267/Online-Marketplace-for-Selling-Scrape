@@ -1,6 +1,8 @@
 <body onload="typeWriter()">
   <% unless user_signed_in? %>
+  <div>
     <%= render 'devise/shared/navbar' %>
+  </div>
   <% end %>
   <div class="bg-gray-800 h-screen">
     <div class="bg-gray-800">

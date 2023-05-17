@@ -5,9 +5,13 @@ class UsersOtpController < ApplicationController
   def settings; end
 
   def toggle
-    current_user.otp_secret = User.generate_otp_secret
-    current_user.otp_required_for_login = !current_user.otp_required_for_login
-    current_user.save!
+    begin
+      current_user.otp_secret = User.generate_otp_secret
+      current_user.otp_required_for_login = !current_user.otp_required_for_login
+      current_user.save!
+    rescue StandardError => e
+      flash[:alert] = "Error: #{e.message}"
+    end
     redirect_to stored_location
   end
 end

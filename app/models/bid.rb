@@ -5,8 +5,7 @@ class Bid < ApplicationRecord
   has_one    :order
 
   # validations
-  validates :price, presence: true
-  validates :price, numericality: { greater_than_or_equal_to: 1 } # 'Bid amount should be a positive integer!'
+  validates :price, numericality: { greater_than_or_equal_to: 1 }
 
   def successful!
     update_attribute(:status, 'successful')

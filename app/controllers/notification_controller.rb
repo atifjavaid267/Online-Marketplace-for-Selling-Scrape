@@ -1,5 +1,4 @@
 class NotificationController < ApplicationController
-
   def create
     @notification = Notifications.new(notification_params)
     @notification.save
@@ -14,7 +13,6 @@ class NotificationController < ApplicationController
     @notification = Notification.find(params[:id])
     @notifaction.destroy
   end
-
 
   private
 

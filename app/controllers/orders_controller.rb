@@ -9,12 +9,10 @@ class OrdersController < ApplicationController
 
   def create
     if @order.save
-      @order.bid.successful!
-      @order.bid.ad.unpublished!
       flash[:notice] = 'New Order Opened.'
       redirect_to @order
     else
-      flash[:alert] = @order.errors.full_messages[0]
+      flash[:alert] = @order.errors.full_messages.join(', ')
       redirect_to stored_location
     end
   end
@@ -26,6 +24,12 @@ class OrdersController < ApplicationController
     @buyer = User.find(@order.bid.user_id)
     @seller = User.find(@order.bid.ad.user_id)
     @amount = @order.bid.price
+  rescue ActiveRecord::RecordNotFound => e
+    flash[:alert] = "Error: Record not found - #{e.message}"
+    redirect_to action: 'index'
+  rescue StandardError => e
+    flash[:alert] = "Error: #{e.message}"
+    redirect_to action: 'index'
   end
 
   def index
@@ -45,23 +49,20 @@ class OrdersController < ApplicationController
   end
 
   def confirm
-    @order.update_attribute(:status, 'successful')
-
-    ad = @order.bid.ad
-    ad.bids.each do |bid|
-      next if bid.id == @order.bid.id
-
-      bid.failed!
+    if @order.update_attribute(:status, 'successful')
+      flash[:notice] = 'Order Completed.'
+    else
+      flash[:alert] = @order.errors.full_messages.join(', ')
     end
-    flash[:notice] = 'Order Completed.'
     redirect_to @order
   end
 
   def cancel
-    @order.update_attribute(:status, 'cancelled')
-    @order.bid.failed!
-    @order.bid.ad.published!
-    flash[:alert] = 'Order Cancelled.'
+    flash[:alert] = if @order.update_attribute(:status, 'cancelled')
+                      'Order Cancelled.'
+                    else
+                      @order.errors.full_messages.join(', ')
+                    end
     redirect_to @order
   end
 

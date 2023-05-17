@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 class Ability
   include CanCan::Ability
 
@@ -24,8 +22,6 @@ class Ability
 
       can %i[new create toggle_status view_bids], Ad
       can %i[index archives show edit update destroy], Ad, user_id: user.id
-
-      can %i[index], Bid
 
       can %i[new create confirm cancel], Order
       can %i[index show show_pending show_successful show_cancelled], Order, bid: { ad: { user_id: user.id } }

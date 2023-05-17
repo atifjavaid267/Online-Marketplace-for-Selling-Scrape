@@ -14,7 +14,6 @@
 <% end %>
 
 <% messages = Message.where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", first_id, second_id, second_id, first_id) %>
-
 <div id="chat-room" class = "pb-16">
   <div id="messages">
     <% unless messages.length.zero? %>
@@ -30,6 +29,7 @@
               <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
             </div>
           <%end%>
+
           <div id = "user", data-user-id = <%= @current_user_id %>></div>
           <%if current_user.id == message.sender_id %>
             <div class="message text-right mr-5 mt-5">

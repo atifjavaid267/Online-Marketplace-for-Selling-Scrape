@@ -6,15 +6,14 @@ class Ad < ApplicationRecord
   belongs_to :product
   belongs_to :user
 
-  has_one :address
+  belongs_to :address
   has_many :bids
 
   # validations
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true
-  validates :price, presence: { message: "Price can't be blank" },
-                    numericality: { greater_than_or_equal_to: 1, message: 'Price cannot be negative or zero!' }
+  validates :price, numericality: { greater_than_or_equal_to: 1 }
 
   validates :description, presence: true
   validates :ad_images, presence: true

@@ -17,6 +17,7 @@ class MessagesController < ApplicationController
     @order = Order.find(params[:message][:order_id].to_i)
     @message = Message.new(message_params)
     @message.order_id = @order.id
+
     return unless @message.save
 
     sender_id = @message.sender_id

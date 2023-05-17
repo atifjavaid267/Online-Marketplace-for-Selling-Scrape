@@ -3,11 +3,9 @@ import consumer from "./consumer";
 consumer.subscriptions.create("BidsChannel", {
   connected() {
     console.log("Connected to the BidsChannel");
-    // Called when the subscription is ready for use on the server
   },
 
   disconnected() {
-    // Called when the subscription has been terminated by the server
   },
   received(data) {
     console.log("received data:", data);
@@ -29,5 +27,4 @@ consumer.subscriptions.create("BidsChannel", {
     `;
     bidsContainer.insertAdjacentHTML("beforeend", html);
   },
- 
 });
