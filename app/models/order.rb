@@ -1,6 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :bid
-
+  has_many :messages
   # validations
   validates :pickup_time, presence: true
   validate :pickup_time_cannot_be_in_the_past
