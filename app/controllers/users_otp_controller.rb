@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# UsersOtp Controller
 class UsersOtpController < ApplicationController
   before_action :authenticate_user!
   before_action :store_location, only: %i[settings]

@@ -8,9 +8,7 @@ class RoomChannel < ApplicationCable::Channel
   def speak(data)
     message = Message.create!(sender_id: data['sender_id'], receiver_id: data['receiver_id'],
                               content: data['message'],  order_id: data['order_id'], timestamp: Time.now.strftime('%I:%M %p'))
-
     html = render_to_string(partial: 'messages/message', locals: { message: })
-
     ActionCable.server.broadcast "room_channel_#{params[:room_id]}", html:,
                                                                      content: message.content
   end

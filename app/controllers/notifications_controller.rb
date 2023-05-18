@@ -1,4 +1,8 @@
-class NotificationController < ApplicationController
+# frozen_string_literal: true
+
+# Notification Controller
+class NotificationsController < ApplicationController
+
   def create
     @notification = Notifications.new(notification_params)
     @notification.save
