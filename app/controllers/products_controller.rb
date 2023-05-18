@@ -7,7 +7,7 @@ class ProductsController < ApplicationController
   before_action :store_location, only: %i[index archives]
 
   def index
-    @products = @products.published.paginate(page: params[:page], per_page: 6)
+    @products = @products.published.paginate(page: params[:page], per_page: 10)
   end
 
   def new; end
@@ -56,7 +56,7 @@ class ProductsController < ApplicationController
   end
 
   def archives
-    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: 6)
+    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: 10)
   end
 
   def show_root

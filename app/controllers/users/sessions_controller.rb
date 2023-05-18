@@ -55,8 +55,8 @@ class Users::SessionsController < Devise::SessionsController
 
     super
   end
+
   def create
-    # byebug
     if user_signed_in?
       if current_user.admin?
         redirect_to admin_dashboard_path
