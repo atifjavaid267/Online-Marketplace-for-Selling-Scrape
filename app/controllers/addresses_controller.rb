@@ -11,10 +11,6 @@ class AddressesController < ApplicationController
   end
 
   def create
-    @address.geocode
-
-    @address.user_id = current_user.id
-
     if @address.save
       flash[:notice] = 'Address was successfully created.'
       redirect_to addresses_path

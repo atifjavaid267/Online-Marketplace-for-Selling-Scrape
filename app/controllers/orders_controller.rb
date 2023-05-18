@@ -17,15 +17,7 @@ class OrdersController < ApplicationController
     end
   end
 
-  def show
-    @address = Address.find(@order.bid.ad.address_id)
-  rescue ActiveRecord::RecordNotFound => e
-    flash[:alert] = "Error: Record not found - #{e.message}"
-    redirect_to action: 'index'
-  rescue StandardError => e
-    flash[:alert] = "Error: #{e.message}"
-    redirect_to action: 'index'
-  end
+  def show; end
 
   def index
     @orders = @orders.paginate(page: params[:page], per_page: 10)

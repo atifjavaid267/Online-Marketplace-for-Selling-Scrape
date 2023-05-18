@@ -1,7 +1,6 @@
 class Order < ApplicationRecord
   belongs_to :bid
 
-  
   has_many :messages
 
   after_create :change_bids_status_for_create_order
@@ -44,11 +43,7 @@ class Order < ApplicationRecord
 
   def change_bids_status_for_confirm_order
     ad = bid.ad
-    ad.bids.each do |b|
-      next if b.id == bid.id
-
-      b.failed!
-    end
+    ad.bids.where.not(id: bid.id).update_all(status: 'failed')
   end
 
   def change_bids_status_for_cancel_order
