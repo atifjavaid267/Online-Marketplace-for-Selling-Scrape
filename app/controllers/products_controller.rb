@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Product Controller
 class ProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!, except: %i[show_root]

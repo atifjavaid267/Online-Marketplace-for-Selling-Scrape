@@ -1,20 +1,14 @@
 class Ad < ApplicationRecord
-  # active stporage
   has_many_attached :ad_images
-
-  # association
+  has_many :bids
   belongs_to :product
   belongs_to :user
-
   belongs_to :address
-  has_many :bids
 
-  # validations
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true
   validates :price, numericality: { greater_than_or_equal_to: 1 }
-
   validates :description, presence: true
   validates :ad_images, presence: true
 
@@ -28,14 +22,13 @@ class Ad < ApplicationRecord
     update_attribute(:status, false)
   end
 
-  # scopes
   scope :published, -> { where(status: true) }
   scope :unpublished, -> { where(status: false) }
 
   private
 
   def check_associated_bids
-    return unless Bid.where(ad_id: id).any?
+    return unless bids.any?
 
     errors.add(:base, 'There are bids, Ad cannot be destroyed')
     throw(:abort)

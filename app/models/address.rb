@@ -15,7 +15,6 @@ class Address < ApplicationRecord
     super || 0.0
   end
 
-  # validations
   validates :user_id, presence: true
   validates :city, presence: true
   validates :state, presence: true

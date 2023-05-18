@@ -7,7 +7,6 @@ class Order < ApplicationRecord
   after_update :change_bids_status_for_confirm_order, if: :successful?
   after_update :change_bids_status_for_cancel_order, if: :cancelled?
 
-  # validations
   validates :pickup_time, presence: true
   validate :pickup_time_cannot_be_in_the_past
 
@@ -23,7 +22,6 @@ class Order < ApplicationRecord
     status == 'cancelled'
   end
 
-  # scopes
   scope :pending, -> { where(status: 'pending') }
   scope :successful, -> { where(status: 'successful') }
   scope :cancelled, -> { where(status: 'cancelled') }

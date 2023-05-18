@@ -2,7 +2,6 @@ class User < ApplicationRecord
   has_many :received_messages, class_name: 'Message', foreign_key: 'receiver_id'
   has_many :sent_messages, class_name: 'Message', foreign_key: 'sender_id'
 
-  # gem 'devise-two-factor'
   devise :two_factor_authenticatable,
          otp_secret_encryption_key: ENV['encryption_key_env']
 
@@ -20,8 +19,6 @@ class User < ApplicationRecord
   validates :last_name, format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
   validates :role, presence: true
 
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :registerable,
          :recoverable, :rememberable, :validatable, :two_factor_authenticatable
 

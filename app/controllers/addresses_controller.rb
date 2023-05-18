@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Address Controller
 class AddressesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!

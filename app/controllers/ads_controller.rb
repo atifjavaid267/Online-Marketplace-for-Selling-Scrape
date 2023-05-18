@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Ads Controller
 class AdsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
@@ -16,7 +19,6 @@ class AdsController < ApplicationController
   def new
     @ad.user_id = current_user.id
     @ad.product_id = params[:product_id]
-
     @addresses = current_user.addresses
   end
 

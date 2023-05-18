@@ -67,12 +67,11 @@
   document.addEventListener("turbolinks:load", () => {
     if (window.location.pathname === "/messages/new") {
       const countElement = document.getElementById("count");
-      localStorage.setItem("count", "");
-      countElement.innerHTML = "";
-
+      localStorage.setItem("count", "0");
+      countElement.innerHTML = "0";
       const notificationDropdown = document.getElementById("notification-dropdown");
       notificationDropdown.innerHTML = "";
-      localStorage.setItem("notifications", "{}");
+      localStorage.setItem("notifications", JSON.stringify({ messageCounts: {}, notificationMessages: {} }));
     }
   });
 </script>
