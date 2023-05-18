@@ -31,7 +31,7 @@ class Address < ApplicationRecord
   private
 
   def check_associated_ads
-    return unless Ad.where(address_id: id).any?
+    return unless ads.any?
 
     errors.add(:base, 'Ads associated with address, cannot be destroyed')
     throw(:abort)
