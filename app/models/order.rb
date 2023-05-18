@@ -29,7 +29,7 @@ class Order < ApplicationRecord
   private
 
   def pickup_time_cannot_be_in_the_past
-    return unless pickup_time.present? && pickup_time < Time.now
+    return unless pickup_time.present? && pickup_time < Time.zone.now
 
     errors.add(:pickup_time, 'cannot be in the past')
   end

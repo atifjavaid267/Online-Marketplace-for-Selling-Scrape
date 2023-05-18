@@ -2,20 +2,18 @@
 
 # Notification Controller
 class NotificationsController < ApplicationController
+  load_and_authorize_resource
 
   def create
-    @notification = Notifications.new(notification_params)
-    @notification.save
+    return unless @notification.save
   end
 
   def update
-    @notification = Notification.find(params[:id])
-    @notifaction.update(notification_params)
+    return unless @notifaction.update(notification_params)
   end
 
   def destroy
-    @notification = Notification.find(params[:id])
-    @notifaction.destroy
+    return unless @notifaction.destroy
   end
 
   private
