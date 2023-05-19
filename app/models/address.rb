@@ -18,9 +18,6 @@ class Address < ApplicationRecord
   validates :user_id, presence: true
   validates :city, presence: true
   validates :state, presence: true
-  validates :latitude, presence: true
-  validates :longitude, presence: true
-
   before_destroy :check_associated_ads
 
   def full_address

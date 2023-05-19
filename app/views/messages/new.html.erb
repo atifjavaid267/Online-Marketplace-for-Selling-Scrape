@@ -8,7 +8,7 @@
 
 <% noti = Notification.where(receiver_id: current_user.id, sender_id: second_id ).first %>
 <% if noti %>
-  <% noti.count = nil %>
+  <% noti.count = 0 %>
   <% noti.read = true %>
   <% noti.save %>
 <% end %>
