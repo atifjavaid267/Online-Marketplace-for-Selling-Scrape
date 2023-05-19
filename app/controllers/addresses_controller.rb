@@ -14,15 +14,12 @@ class AddressesController < ApplicationController
   end
 
   def create
-    if @address.latitude.zero? && @address.longitude.zero?
-      flash[:error] = 'Address was not found'
-      redirect_to new_address_path
-    elsif @address.save
+    if @address.save
       flash[:notice] = 'Address was successfully created.'
       redirect_to addresses_path
     else
-      flash[:error] = @address.errors.full_messages.join(', ')
-      redirect_to new_address_path
+      flash[:alert] = @address.errors.full_messages.join(', ')
+      render :new
     end
   end
 

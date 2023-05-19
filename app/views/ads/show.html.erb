@@ -29,13 +29,13 @@
         <% end %>
       </div>
     </div>
-    <div>
       <% if @ad.ad_images.attached? %>
-        <% @ad.ad_images.each do |image| %>
-            <%= image_tag image, style: "length: 200px; width: 200px"%>
-            <span> </span>
-        <% end %>
-    <% end %>
+        <div>
+          <% @ad.ad_images.each do |image| %>
+            <%= image_tag image, class:"w-40 h-40"%>
+          <% end %>
+        </div>
+      <% end %>
     </div>
   </div>
 </div>

@@ -5,6 +5,8 @@ class Bid < ApplicationRecord
 
   validates :price, numericality: { greater_than_or_equal_to: 1 }
 
+  scope :pending, -> { where(status: 'pending') }
+
   def successful!
     update_attribute(:status, 'successful')
   end
@@ -12,6 +14,4 @@ class Bid < ApplicationRecord
   def failed!
     update_attribute(:status, 'failed')
   end
-
-  scope :pending, -> { where(status: 'pending') }
 end

@@ -14,6 +14,9 @@ class Ad < ApplicationRecord
 
   before_destroy :check_associated_bids
 
+  scope :published, -> { where(status: true) }
+  scope :unpublished, -> { where(status: false) }
+
   def published!
     update_attribute(:status, true)
   end
@@ -21,9 +24,6 @@ class Ad < ApplicationRecord
   def unpublished!
     update_attribute(:status, false)
   end
-
-  scope :published, -> { where(status: true) }
-  scope :unpublished, -> { where(status: false) }
 
   private
 

@@ -1,6 +1,6 @@
 <% if @addresses.empty? %>
   <%= render 'devise/shared/back'%>
-  <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+  <div class="bg-cover bg-no-repeat h-screen bg-background_img">
     <div class = "pt-28">
       <div class ="bg-gray-800" style="border: 2px; margin-top: 100px; margin-right: 100px; margin-left: 100px; margin-bottom: 50px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
         <h1 class="text-center font-bold">You added no Address Yet!</h1>
@@ -16,8 +16,8 @@
 </div>
 <% else %>
   <% if can? :new, Address %>
-    <div class="flex justify-end mb-1 mt-2 mr-2">
-      <%= link_to "Add Address", new_address_path, class: " text-blue-600 hover:font-semibold mt-2 mb-2 px-4 rounded"%>
+    <div class="flex justify-end mt-2 mr-2">
+      <%= link_to "Add Address", new_address_path, class: " text-blue-600 hover:font-semibold mt-2 px-4 rounded"%>
     </div>
   <%end%>
   <div class="py-5">
