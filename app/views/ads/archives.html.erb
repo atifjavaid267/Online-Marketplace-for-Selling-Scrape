@@ -1,21 +1,16 @@
 
 <% if @archive_ads.empty? %>
-  <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
-    <div class = "pt-28">
-      <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
-        <h1 class="text-center font-bold">No Archive Ad Found!</h1>
-      </div>
-    </div>
-  </div>
+  <%= render partial: 'shared/data_not_found', locals: { message: 'No Archive Ad Found!' } %>
 <% else %>
 
 <div class="grid grid-cols-2 gap-4 m-5">
-  <% counter = 1 %>
+  <% page = params[:page].to_i==1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
+  <% counter = (page * @archive_ads.limit_value) + 1 %>
   <% @archive_ads.each do |ad| %>
     <div class="border p-4 rounded-lg flex w-full">
       <div class="w-1/2">
         <div>
-          <h4 class="font-bold mb-2"><%="Ad-#{counter}."%></h4>
+          <h4 class="font-bold mb-2"><%="Ad - #{sprintf('%02d', counter)}"%></h4>
           <span class="font-bold">Seller ID:</span> <%= ad.user_id %> <br>
           <span class="font-bold">Price:</span> <%= ad.price %> <br>
         </div>
@@ -42,11 +37,7 @@
       </div>
       </div>
     </div>
-
-    <% counter += 1 %>
-    <% if counter % 2 == 1 %>
-      </div><div class="grid grid-cols-2 gap-4 m-5">
-    <% end %>
+    <% counter = counter + 1%>
   <% end %>
 </div>
 <br>

@@ -19,7 +19,7 @@ class AddressesController < ApplicationController
       redirect_to addresses_path
     else
       flash[:alert] = @address.errors.full_messages.join(', ')
-      redirect_to new_address_path
+      render :new
     end
   end
 

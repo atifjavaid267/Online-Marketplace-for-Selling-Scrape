@@ -24,17 +24,21 @@
     <table class="w-full table-auto">
       <thead>
         <tr class="bg-gray-200 text-gray-800 text-left font-bold">
-          <th class="px-4 py-2">Street 1</th>
-          <th class="px-4 py-2">Street 2</th>
-          <th class="px-4 py-2">City</th>
-          <th class="px-4 py-2">State</th>
-          <th class="px-4 py-2">Zip Code</th>
-          <th class="px-4 py-2" colspan="2">Actions</th>
+          <th class="px-4 py-3">No.</th>
+          <th class="px-4 py-3">Street 1</th>
+          <th class="px-4 py-3">Street 2</th>
+          <th class="px-4 py-3">City</th>
+          <th class="px-4 py-3">State</th>
+          <th class="px-4 py-3">Zip Code</th>
+          <th class="px-4 py-3" colspan="2">Actions</th>
         </tr>
       </thead>
       <tbody>
+        <% page = params[:page].to_i==1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
+        <% counter = (page * @addresses.limit_value) + 1 %>
         <% @addresses.each do |address| %>
           <tr class="<%= cycle('bg-white', 'bg-gray-100') %>">
+            <td class="px-4 py-2"><%= counter %></td>
             <td class="px-4 py-2"><%= address.street1 %></td>
             <td class="px-4 py-2"><%= address.street2 %></td>
             <td class="px-4 py-2"><%= address.city %></td>
@@ -47,11 +51,11 @@
               <td class="px-4 py-2"><%= button_to "Delete", address, data: { confirm: "Are you sure to delete address?", turbo_confirm: "Are you sure to delete address?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
             <% end %>
             </tr>
+            <% counter = counter + 1 %>
         <% end %>
       </tbody>
     </table>
   </div>
-
   <div class = "pb-10 flex flex-row items-center justify-center">
       <%= will_paginate @adresses, class:"bg-gray-300 rounded py-3 px-5" %>
   </div>
