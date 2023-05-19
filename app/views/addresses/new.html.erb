@@ -11,6 +11,14 @@
             </p>
           </div>
         <% end %>
+           <% if flash[:error].present? %>
+          <div class="py-2 flex flex-row items-center justify-evenly">
+            <p class="px-3 text-red-600 font-bold rounded-lg inline-block" id="error">
+              <%= flash[:error] %>
+            </p>
+          </div>
+        <% end %>
+
         <%= form_with(model: @address, local: true) do |form| %>
           <div class="field ">
             <div class="card bg-white p-4 rounded-lg shadow-md">

@@ -16,18 +16,12 @@ class Address < ApplicationRecord
     super || 0.0
   end
 
-  # validations
   validates :user_id, presence: true
   validates :city, presence: true
   validates :state, presence: true
-  # validates :zip_code, presence: true
-  validates :latitude, presence: true
-  validates :longitude, presence: true
 
   before_destroy :check_associated_ads
 
-  # for geocoder
-  # after_validation :geocode
   def full_address
     [street1, street2, city, state, zip_code].compact.join(',')
   end

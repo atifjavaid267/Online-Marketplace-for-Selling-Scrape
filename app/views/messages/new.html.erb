@@ -8,7 +8,7 @@
 
 <% noti = Notification.where(receiver_id: current_user.id, sender_id: second_id ).first %>
 <% if noti %>
-  <% noti.count = nil %>
+  <% noti.count = 0 %>
   <% noti.read = true %>
   <% noti.save %>
 <% end %>
@@ -63,16 +63,22 @@
   </div>
 </div>
 
+
+
+
+
+
 <script>
   document.addEventListener("turbolinks:load", () => {
     if (window.location.pathname === "/messages/new") {
       const countElement = document.getElementById("count");
-      localStorage.setItem("count", "");
-      countElement.innerHTML = "";
+      localStorage.setItem("count", "0");
+      countElement.innerHTML = "0";
 
       const notificationDropdown = document.getElementById("notification-dropdown");
       notificationDropdown.innerHTML = "";
-      localStorage.setItem("notifications", "{}");
+      // localStorage.setItem("notifications", "{}");
+      localStorage.setItem("notifications", JSON.stringify({ messageCounts: {}, notificationMessages: {} }));
     }
   });
 </script>
