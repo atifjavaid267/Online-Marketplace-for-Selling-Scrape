@@ -3,6 +3,45 @@ class Users::SessionsController < Devise::SessionsController
   before_action :authenticate_user!, except: %i[new create destroy]
   before_action :load_and_authorize_resource, except: %i[new create destroy]
 
+  def new
+    return if user_signed_in?
+
+    super
+  end
+
+  def create
+    if user_signed_in?
+      if current_user.admin?
+        redirect_to admin_dashboard_path
+      elsif current_user.seller?
+        redirect_to seller_home_path
+      elsif current_user.buyer?
+        redirect_to buyer_home_path
+      end
+    else
+      super
+    end
+  end
+
+  def find_user
+    if session[:user_id]
+      User.find(session[:user_id])
+    elsif user_params[:email]
+      User.find_by(email: user_params[:email])
+    end
+  end
+
+  def user_params
+    params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
+  end
+
+  def auth_with_2fa(user)
+    return unless user.validate_and_consume_otp!(user_params[:otp_attempt])
+
+    user.save!
+    sign_in(user)
+  end
+
   def authenticate_2fa!
     user = find_user
     self.resource = user
@@ -29,44 +68,5 @@ class Users::SessionsController < Devise::SessionsController
       to: '+923081186267',
       body: "our OTP is #{code}"
     )
-  end
-
-  def auth_with_2fa(user)
-    return unless user.validate_and_consume_otp!(user_params[:otp_attempt])
-
-    user.save!
-    sign_in(user)
-  end
-
-  def find_user
-    if session[:user_id]
-      User.find(session[:user_id])
-    elsif user_params[:email]
-      User.find_by(email: user_params[:email])
-    end
-  end
-
-  def user_params
-    params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
-  end
-
-  def new
-    return if user_signed_in?
-
-    super
-  end
-
-  def create
-    if user_signed_in?
-      if current_user.admin?
-        redirect_to admin_dashboard_path
-      elsif current_user.seller?
-        redirect_to seller_home_path
-      elsif current_user.buyer?
-        redirect_to buyer_home_path
-      end
-    else
-      super
-    end
   end
 end

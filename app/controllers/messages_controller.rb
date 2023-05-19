@@ -4,15 +4,12 @@
 class MessagesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
-
-  rescue_from ActiveRecord::RecordNotFound, with: :render_404
   skip_before_action :verify_authenticity_token
 
   def show; end
 
   def new
     @order = Order.find(params[:order_id].to_i)
-
     @message = Message.new(order_id: @order.id)
   end
 

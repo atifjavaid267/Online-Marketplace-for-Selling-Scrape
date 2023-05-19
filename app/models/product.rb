@@ -5,7 +5,6 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
   validates :product_image, presence: true
-
   before_destroy :check_associated_ads
 
   scope :published, -> { where(status: true) }

@@ -1,7 +1,7 @@
 <% if @ads.empty? %>
     <%= render partial: 'shared/data_not_found', locals: { message: 'Sorry, No ad is available to show :()' } %>
 <% else %>
-<div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
+<div class="bg-cover bg-no-repeat h-full bg-background_img" >
     <div class = "pt-5">
         <div class="grid grid-cols-2 gap-4">
             <% page = params[:page].to_i==1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
@@ -11,13 +11,11 @@
                 <div class="p-5 rounded-lg bg-gray-800 text-white mx-10 my-5 flex bg-opacity-95">
                     <div class="flex-grow">
                         <h4 class="font-bold mb-2"><%="Ad - #{sprintf('%02d', counter)}"%></h4>
-                        <span class="font-bold">Name:</span> <%= ad.product.name %> <br>
-                        <span class="font-bold">Price:</span> <%= ad.price %> <br>
+                        <span class="font-bold"> <%= ad.product.name %> </span><br>
+                        <span class="font-medium">Price: <%= ad.price %> </span><br>
                         <div class="flex space-x-4 mt-5">
-                            <%= link_to "View Ad", ad, class: "mt-2 bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin-top: 5px;" %>
-
-                            <% if current_user.admin? %>
-                                <%= button_to "delete ad", ad, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+                            <% if can? :show, Ad %>
+                                <%= link_to "View Ad", ad, class: "mt-2 bg-blue-500 text-white px-6 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out", style: "margin-top: 5px;" %>
                             <% end %>
                         </div>
                     </div>

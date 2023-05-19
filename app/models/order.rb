@@ -1,14 +1,16 @@
 class Order < ApplicationRecord
   belongs_to :bid
-
   has_many :messages
 
   after_create :change_bids_status_for_create_order
   after_update :change_bids_status_for_confirm_order, if: :successful?
   after_update :change_bids_status_for_cancel_order, if: :cancelled?
-
   validates :pickup_time, presence: true
   validate :pickup_time_cannot_be_in_the_past
+
+  scope :pending, -> { where(status: 'pending') }
+  scope :successful, -> { where(status: 'successful') }
+  scope :cancelled, -> { where(status: 'cancelled') }
 
   def pending?
     status == 'pending'
@@ -21,10 +23,6 @@ class Order < ApplicationRecord
   def cancelled?
     status == 'cancelled'
   end
-
-  scope :pending, -> { where(status: 'pending') }
-  scope :successful, -> { where(status: 'successful') }
-  scope :cancelled, -> { where(status: 'cancelled') }
 
   private
 

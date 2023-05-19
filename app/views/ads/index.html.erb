@@ -1,4 +1,4 @@
-<% if @ads.nil? || @ads.empty? %>
+<% if @ads.empty? %>
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Ad Found!' } %>
 <% else %>
   <div class="grid grid-cols-2 gap-4 m-5">
@@ -9,8 +9,8 @@
         <div class="w-1/2">
           <div>
             <h4 class="font-bold mb-2"><%="Ad - #{sprintf('%02d', counter)}"%></h4>
-            <span class="font-bold">Seller ID:</span> <%= ad.user_id %> <br>
-            <span class="font-bold">Price:</span> <%= ad.price %> <br>
+            <span class="font-semibold"><%= ad.product.name %> <br>
+            <span class="font-semibold">Price:</span> <%= ad.price %> <br>
           </div>
           <br>
           <div class="flex space-x-4">

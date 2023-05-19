@@ -3,16 +3,18 @@
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Order Found!' } %>
 <% else %>
   <div class="grid gap-4 grid-cols-2 mx-4 my-2 mt-6">
+    <% page = params[:page].to_i==1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
+    <% counter = (page * @orders.limit_value) + 1 %>
     <% @orders.each do |order| %>
       <div class="col-span-1 flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
-          <%unless current_user.buyer?%>
-              <p class="text-lg font-bold">Buyer Name: <span class="text-gray-600"><%= "#{order.bid.user.first_name } #{order.bid.user.last_name }" %> </span></p>
-          <%end%>
+          <p class="text-lg font-bold"><%= "Order - #{sprintf('%02d', counter)}" %></p>
           <%unless current_user.seller?%>
-              <p class="text-lg font-bold">Seller Name: <span class="text-gray-600"><%= "#{order.bid.ad.user.first_name} #{order.bid.ad.user.last_name}" %> </span></p>
+              <p class="text-lg font-semibold">Seller Name: <span class="text-gray-600"><%= "#{order.bid.ad.user.first_name} #{order.bid.ad.user.last_name}" %> </span></p>
           <%end%>
-          <p class="text-lg font-bold">Order Price: <span class="text-gray-600"><%= "Rs. #{order.bid.price}" %></span> </p>
+          <%unless current_user.buyer?%>
+              <p class="text-lg font-semibold">Buyer Name: <span class="text-gray-600"><%= "#{order.bid.user.first_name } #{order.bid.user.last_name }" %> </span></p>
+          <%end%>
         </div>
         <div class="flex justify-between flex-row items-center">
           <%if order.status=="pending"%>
@@ -27,6 +29,7 @@
           <%end%>
         </div>
       </div>
+      <% counter += 1 %>
     <% end %>
   </div>
 

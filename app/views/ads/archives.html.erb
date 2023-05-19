@@ -11,8 +11,8 @@
       <div class="w-1/2">
         <div>
           <h4 class="font-bold mb-2"><%="Ad - #{sprintf('%02d', counter)}"%></h4>
-          <span class="font-bold">Seller ID:</span> <%= ad.user_id %> <br>
-          <span class="font-bold">Price:</span> <%= ad.price %> <br>
+          <span class="font-semibold"> <%= ad.product.name %> <br>
+          <span class="font-semibold">Price:</span> <%= ad.price %> <br>
         </div>
         <br>
         <div class="flex space-x-4">

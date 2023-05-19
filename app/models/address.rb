@@ -1,11 +1,17 @@
 class Address < ApplicationRecord
   has_many :ads
   belongs_to :user
-
   geocoded_by :full_address
+  validates :user_id, presence: true
+  validates :city, presence: true
+  validates :state, presence: true
+  before_destroy :check_associated_ads
+  before_save :geocode
+  before_save :check_coordinates
+
   after_validation :geocode, if: lambda { |obj|
-                                   obj.street1.present? || obj.street2.present? || obj.city.present? || obj.state.present? || obj.zip_code.present?
-                                 }
+    obj.street1.present? || obj.street2.present? || obj.city.present? || obj.state.present? || obj.zip_code.present?
+  }
 
   def latitude
     super || 0.0
@@ -14,11 +20,6 @@ class Address < ApplicationRecord
   def longitude
     super || 0.0
   end
-
-  validates :user_id, presence: true
-  validates :city, presence: true
-  validates :state, presence: true
-  before_destroy :check_associated_ads
 
   def full_address
     [street1, street2, city, state, zip_code].compact.join(',')
@@ -30,6 +31,13 @@ class Address < ApplicationRecord
     return unless ads.any?
 
     errors.add(:base, 'Ads associated with address, cannot be destroyed')
+    throw(:abort)
+  end
+
+  def check_coordinates
+    return unless latitude.zero? && longitude.zero?
+
+    errors.add(:base, 'Address was not found')
     throw(:abort)
   end
 end
