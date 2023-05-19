@@ -1,19 +1,26 @@
 <% if @addresses.empty? %>
   <%= render 'devise/shared/back'%>
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
-    <div class = "pt-5">
-      <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
+    <div class = "pt-28">
+      <div class ="bg-gray-800" style="border: 2px; margin-top: 100px; margin-right: 100px; margin-left: 100px; margin-bottom: 50px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
         <h1 class="text-center font-bold">You added no Address Yet!</h1>
       </div>
       <div class="flex flex-row justify-center">
+        <% if can? :new, Address%>
         <div>
-        <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full focus:outline-none focus:shadow-outline" %>
-      </div>
+          <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline" %>
+        </div>
+        <% end %>
     </div>
   </div>
 </div>
 <% else %>
-  <div class="py-8">
+  <% if can? :new, Address %>
+    <div class="flex justify-end mb-1 mt-2 mr-2">
+      <%= link_to "Add Address", new_address_path, class: " text-blue-600 hover:font-semibold mt-2 mb-2 px-4 rounded"%>
+    </div>
+  <%end%>
+  <div class="py-5">
     <table class="w-full table-auto">
       <thead>
         <tr class="bg-gray-200 text-gray-800 text-left font-bold">
@@ -47,11 +54,5 @@
 
   <div class = "pb-10 flex flex-row items-center justify-center">
       <%= will_paginate @adresses, class:"bg-gray-300 rounded py-3 px-5" %>
-  </div>
-
-  <div class="flex items-center py-2 flex-row justify-center">
-    <% if can? :new, Address %>
-      <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline", style: "margin-left: 10px;" %>
-    <% end %>
   </div>
 <% end %>

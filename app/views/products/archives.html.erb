@@ -1,45 +1,52 @@
-
 <%if @archive_products.empty? %>
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
-  <%= render 'devise/shared/back' %>
-    <div class = "pt-5">
-      <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
-        <h1 class="text-center font-bold">No Product is Archived!</h1>
+    <div class = "pt-28">
+      <div class ="bg-gray-800" style="border: 2px; margin-top: 100px; margin-bottom:30px; margin-left: 100px; margin-right:100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
+        <h1 class="text-center font-bold">No Archive Product Found!</h1>
       </div>
     </div>
   </div>
 <% else %>
-  <div class="bg-white shadow-md rounded my-6"></div>
-    <table class="w-full">
-      <thead>
-        <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-          <th class="py-3 px-6 text-left font-bold"> Name</th>
-          <th class="py-3 px-6 text-left"> Image</th>
-          <th class="py-3 px-6 text-center" colspan="3">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="text-gray-600 text-sm font-light">
-        <% @archive_products.each do |product|%>
-          <tr class="border-b border-gray-200 hover:bg-gray-100">
-            <td class="py-3 px-6 text-left whitespace-nowrap font-bold"><%= product.name%></td>
-            <% if product.product_image.attached? %>
-              <td class="py-3 px-6 text-left"><%= image_tag product.product_image, style: "length: 100px; width: 70px"%></td>
-            <%end%>
+
+  <div class="grid grid-cols-2 gap-4 m-5">
+    <% counter = 1 %>
+    <% @archive_products.each do |product| %>
+      <div class="border p-4 rounded-lg flex w-full">
+        <div class="w-1/2">
+          <div>
+            <h4 class="font-bold mb-2"><%="Product-#{counter}."%></h4>
+            <span class="font-bold">Product Name:</span> <%= product.name %> <br>
+          </div>
+          <br>
+          <div class="flex space-x-4">
             <% if can? :show, Product %>
-              <td class="py-3 px-6 text-center"> <%= link_to "View", product, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <%end%>
+              <%= link_to "View", product, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+            <% end %>
             <% if can? :toggle_status, Product %>
-              <td class="py-3 px-6 text-center"><%= button_to "Publish", toggle_status_product_path(product),data: { confirm: "Are you sure to publish product?", turbo_confirm: "Are you sure to publish product?" }, method: :post, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <%end%>
+              <%= button_to "Publish", toggle_status_product_path(product), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-green-500 text-white px-3 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
+            <% end %>
             <% if can? :destroy, Product %>
-              <td class="py-3 px-6 text-center"><%= button_to "Delete", product, data: { confirm: "Are you sure to delete product?", turbo_confirm: "Are you sure to delete product?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"%></td>
-            <%end%>
-          </tr>
-        <%end%>
-      </tbody>
-    </table>
-    <div class = "pb-20 flex flex-row items-center justify-center">
-      <%= will_paginate @archive_products, class:"bg-gray-300 rounded py-3 px-5"%>
-    </div>
+              <%= button_to "Delete", product, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+            <% end %>
+          </div>
+        </div>
+        <div class="flex justify-center w-1/2">
+          <div class="flex flex-col justify-center">
+          <% if product.product_image.attached? %>
+            <%= image_tag product.product_image, class: "w-32 h-28 object-cover rounded-lg shadow-md"%>
+          <% end %>
+        </div>
+        </div>
+      </div>
+      <% counter += 1 %>
+      <% if counter % 2 == 1 %>
+        </div><div class="grid grid-cols-2 gap-4 m-5">
+      <% end %>
+    <% end %>
+  </div>
+  <br>
+  <div class = "pb-20 flex flex-row items-center justify-center">
+    <%= will_paginate @archive_products, class:"bg-gray-300 rounded py-3 px-5"%>
   </div>
 <% end %>
+

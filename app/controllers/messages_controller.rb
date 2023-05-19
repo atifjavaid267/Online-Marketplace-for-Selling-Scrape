@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Message Controller
 class MessagesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
@@ -17,6 +20,7 @@ class MessagesController < ApplicationController
     @order = Order.find(params[:message][:order_id].to_i)
     @message = Message.new(message_params)
     @message.order_id = @order.id
+
     return unless @message.save
 
     sender_id = @message.sender_id
@@ -34,7 +38,7 @@ class MessagesController < ApplicationController
                                    sender_id:,
                                    receiver_id:,
                                    order_id: @order.id,
-                                   timestamp: Time.now.strftime('%B %d, %Y %I:%M %p')
+                                   timestamp: Time.zone.now.strftime('%B %d, %Y %I:%M %p')
                                  })
 
     ActionCable.server.broadcast('room_channel_1', {
@@ -43,7 +47,7 @@ class MessagesController < ApplicationController
                                    sender_name:,
                                    message: message_content,
                                    order_id: @order.id,
-                                   timestamp: Time.now.strftime('%I:%M %p')
+                                   timestamp: Time.zone.now.strftime('%I:%M %p')
                                  })
 
     puts @message.errors.full_messages

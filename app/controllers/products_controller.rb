@@ -1,10 +1,13 @@
+# frozen_string_literal: true
+
+# Product Controller
 class ProductsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!, except: %i[show_root]
   before_action :store_location, only: %i[index archives]
 
   def index
-    @products = @products.published.paginate(page: params[:page], per_page: 6)
+    @products = @products.published.paginate(page: params[:page], per_page: 10)
   end
 
   def new; end
@@ -16,7 +19,7 @@ class ProductsController < ApplicationController
       flash[:notice] = 'Product created successfully.'
       redirect_to @product
     else
-      flash[:alert] = 'Failed to create a Product.'
+      flash[:alert] = @product.errors.full_messages.join(', ')
       render :new
     end
   end
@@ -29,7 +32,7 @@ class ProductsController < ApplicationController
       flash[:notice] = 'Product updated successfully.'
       redirect_to @product
     else
-      flash[:alert] = 'Failed to update the Product.'
+      flash[:alert] = @product.errors.full_messages.join(', ')
       render :edit
     end
   end
@@ -38,19 +41,22 @@ class ProductsController < ApplicationController
     if @product.destroy
       flash[:notice] = 'Product deleted successfully.'
     else
-      flash[:alert] = @product.errors.full_messages[0]
+      flash[:alert] = @product.errors.full_messages.join(', ')
     end
     redirect_to stored_location
   end
 
   def toggle_status
-    @product.update_attribute(:status, !@product.status)
-    flash[:notice] = @product.status == true ? 'Product Published' : 'Product Unpublished'
+    if @product.update_attribute(:status, !@product.status)
+      flash[:notice] = @product.status == true ? 'Product Published' : 'Product Unpublished'
+    else
+      flash[:alert] = @product.errors.full_messages.join(', ')
+    end
     redirect_to stored_location
   end
 
   def archives
-    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: 6)
+    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: 10)
   end
 
   def show_root

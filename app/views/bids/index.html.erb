@@ -2,7 +2,7 @@
 <% if @bids.empty? %>
   <div class="bg-cover bg-no-repeat h-screen" style="background-image: url('https://images.unsplash.com/photo-1475275083424-b4ff81625b60?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1472&q=80');">
     <%= render 'devise/shared/back' %>
-    <div class = "pt-5">
+    <div class = "pt-28">
       <div class ="bg-gray-800" style="border: 2px; margin: 100px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
         <h1 class="text-center font-bold">No Bid Found!</h1>
       </div>
@@ -11,8 +11,6 @@
 <% else %>
   <div class="grid grid-cols-2 gap-4 items-center p-4 border rounded-md shadow-md mt-2">
     <% @bids.each do |bid| %>
-
-      <!-- <% ad = Ad.find_by(id: bid.ad_id) %> -->
       <div class="flex justify-between p-4 border rounded-md shadow-md mt-2">
         <div>
           <p class="text-gray-600 font-bold">Product Name: <%= bid.ad.product.name %></p>
@@ -31,9 +29,8 @@
       </div>
     <% end %>
   </div>
-
   <br>
-  <div class = "pb-20 flex flex-row items-center justify-center">
-      <%= will_paginate @bids, class:"bg-gray-300 rounded py-3 px-5"%>
+  <div class = "pb-10 flex flex-row items-center justify-center">
+    <%= will_paginate @bids, class:"bg-gray-300 rounded py-3 px-5"%>
   </div>
 <%end%>

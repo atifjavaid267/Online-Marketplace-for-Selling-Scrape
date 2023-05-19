@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
+# Address Controller
 class AddressesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
 
   def index
-    @addresses = @addresses.paginate(page: params[:page], per_page: 6)
+    @addresses = @addresses.paginate(page: params[:page], per_page: 10)
   end
 
   def new
@@ -11,10 +14,6 @@ class AddressesController < ApplicationController
   end
 
   def create
-    @address.geocode
-
-    @address.user_id = current_user.id
-
     if @address.latitude.zero? && @address.longitude.zero?
       flash[:error] = 'Address was not found'
       redirect_to new_address_path
@@ -34,7 +33,7 @@ class AddressesController < ApplicationController
       flash[:notice] = 'Address was successfully updated'
       redirect_to addresses_path
     else
-      flash[:alert] = 'Adddress was not updated'
+      flash[:alert] = @address.errors.full_messages.join(', ')
       render :edit
     end
   end
@@ -43,7 +42,7 @@ class AddressesController < ApplicationController
     if @address.destroy
       flash[:notice] = 'Address deleted successfully.'
     else
-      flash[:alert] = @address.errors.full_messages[0]
+      flash[:alert] = @address.errors.full_messages.join(', ')
     end
     redirect_to addresses_path
   end

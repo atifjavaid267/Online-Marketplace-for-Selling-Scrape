@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Ads Controller
 class AdsController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
@@ -16,7 +19,6 @@ class AdsController < ApplicationController
   def new
     @ad.user_id = current_user.id
     @ad.product_id = params[:product_id]
-
     @addresses = current_user.addresses
   end
 
@@ -28,7 +30,7 @@ class AdsController < ApplicationController
       flash[:notice] = 'Ad was successfully created'
       redirect_to @ad
     else
-      flash[:alert] = 'Failed to create Ad'
+      flash[:alert] = @ad.errors.full_messages.join(', ')
       redirect stored_location
     end
   end
@@ -46,7 +48,7 @@ class AdsController < ApplicationController
       flash[:notice] = 'Ad was updated successfully'
       redirect_to @ad
     else
-      flash[:alert] = 'Failed to update Ad'
+      flash[:alert] = @ad.errors.full_messages.join(', ')
       render :edit
     end
   end
@@ -56,14 +58,17 @@ class AdsController < ApplicationController
       flash[:notice] = 'Ad deleted successfully.'
       redirect_to stored_location
     else
-      flash[:alert] = @ad.errors.full_messages[0]
+      flash[:alert] = @ad.errors.full_messages.join(', ')
       redirect_to stored_location
     end
   end
 
   def toggle_status
-    @ad.update_attribute(:status, !@ad.status)
-    flash[:notice] = @ad.status == true ? 'Ad Published' : 'Ad Unpublished'
+    if @ad.update_attribute(:status, !@ad.status)
+      flash[:notice] = @ad.status == true ? 'Ad Published' : 'Ad Unpublished'
+    else
+      flash[:alert] = @ad.errors.full_messages.join(', ')
+    end
     redirect_to stored_location
   end
 

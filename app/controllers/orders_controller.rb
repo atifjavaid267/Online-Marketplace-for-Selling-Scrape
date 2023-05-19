@@ -1,3 +1,6 @@
+# frozen_string_literal: true
+
+# Order Controller
 class OrdersController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
@@ -9,24 +12,15 @@ class OrdersController < ApplicationController
 
   def create
     if @order.save
-      @order.bid.successful!
-      @order.bid.ad.unpublished!
       flash[:notice] = 'New Order Opened.'
       redirect_to @order
     else
-      flash[:alert] = @order.errors.full_messages[0]
+      flash[:alert] = @order.errors.full_messages.join(', ')
       redirect_to stored_location
     end
   end
 
-  def show
-    @address = Address.find(@order.bid.ad.address_id)
-    @lati = @address.latitude
-    @longi = @address.longitude
-    @buyer = User.find(@order.bid.user_id)
-    @seller = User.find(@order.bid.ad.user_id)
-    @amount = @order.bid.price
-  end
+  def show; end
 
   def index
     @orders = @orders.paginate(page: params[:page], per_page: 10)
@@ -45,23 +39,20 @@ class OrdersController < ApplicationController
   end
 
   def confirm
-    @order.update_attribute(:status, 'successful')
-
-    ad = @order.bid.ad
-    ad.bids.each do |bid|
-      next if bid.id == @order.bid.id
-
-      bid.failed!
+    if @order.update_attribute(:status, 'successful')
+      flash[:notice] = 'Order Completed.'
+    else
+      flash[:alert] = @order.errors.full_messages.join(', ')
     end
-    flash[:notice] = 'Order Completed.'
     redirect_to @order
   end
 
   def cancel
-    @order.update_attribute(:status, 'cancelled')
-    @order.bid.failed!
-    @order.bid.ad.published!
-    flash[:alert] = 'Order Cancelled.'
+    flash[:alert] = if @order.update_attribute(:status, 'cancelled')
+                      'Order Cancelled.'
+                    else
+                      @order.errors.full_messages.join(', ')
+                    end
     redirect_to @order
   end
 

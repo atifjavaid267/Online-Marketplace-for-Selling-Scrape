@@ -30,19 +30,18 @@
                 <%= form.label :zip_code, class: "font-bold mb-2 block" %>
                 <%= form.text_field :zip_code, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
               </div>
-              <div class="flex-col">
+            <%= form.hidden_field :user_id, value: @address.user_id %>
+
+              <div class="flex-col my-2">
                 <div>
-                  <input id="pac-input" class="controls" type="text" placeholder="Search Location">
-                </div>
-                <div>
-                  <button onclick="searchLocation()" class="bg-blue-600 hover:bg-blue-800 p-2 my-2 rounded-md text-white font-bold">Search</button>
+                  <input id="pac-input" class="controls w-full" type="text" placeholder="Search your location">
                 </div>
               </div>
               <div id="map" class="w-80 h-80"></div>
-              <div class="actions flex items-center flex-row justify-center">
-                <%= form.submit "Submit", class: " mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+                <div class="actions flex items-center flex-row justify-center">
+                  <%= form.submit "Submit", class: " mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
+                </div>
               </div>
-            </div>
           </div>
         <% end %>
       </div>
@@ -59,7 +58,7 @@ var input = document.getElementById('pac-input');
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
     zoom: 6,
-    center: {lat: 30.3753, lng: 69.3451}, // set center to Pakistan's lat and lng
+    center: {lat: 30.3753, lng: 69.3451},
     zoomControl: true
   });
   marker = new google.maps.Marker({
@@ -77,7 +76,7 @@ function initMap() {
     geocodeLatLng(event.latLng);
     map.panTo(event.latLng);
   });
-  
+
   geocoder = new google.maps.Geocoder();
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo('bounds', map);
@@ -88,9 +87,11 @@ function initMap() {
       alert("No details available for input: " + place.name );
       return;
     }
+
     map.setCenter(place.geometry.location);
     marker.setPosition(place.geometry.location);
     map.setZoom(18);
+
     var address_components = place.address_components;
     var street_number = "";
     var route = "";
@@ -123,16 +124,18 @@ function initMap() {
       zip_code: zip_code
     };
 
-    document.getElementById("address_street2").value = ""; 
-    document.getElementById("map").focus(); 
-    console.log(address); 
+
+    document.getElementById("address_street2").value = "";
+    document.getElementById("map").focus();
+    console.log(address);
+
   });
 }
 function geocodeLatLng(latlng) {
   geocoder.geocode({ 'location': latlng }, function(results, status) {
     if (status === 'OK') {
       if (results[0]) {
-        
+
         var address_components = results[0].address_components;
         var street_number = "";
         var route = "";
@@ -158,16 +161,16 @@ function geocodeLatLng(latlng) {
         document.getElementById("address_state").value = state;
         document.getElementById("address_zip_code").value = zip_code;
 
-        
         var address = {
           street1: street_number + " " + route,
           city: city,
           state: state,
           zip_code: zip_code
         };
-        document.getElementById("address_street2").value = ""; 
-        console.log(address); 
-        
+
+        document.getElementById("address_street2").value = "";
+        console.log(address);
+
       } else {
         window.alert('No results found');
       }

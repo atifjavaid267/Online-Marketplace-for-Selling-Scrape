@@ -2,7 +2,6 @@ class Address < ApplicationRecord
   has_many :ads
   belongs_to :user
 
-  # geocoded_by :city
   geocoded_by :full_address
   after_validation :geocode, if: lambda { |obj|
                                    obj.street1.present? || obj.street2.present? || obj.city.present? || obj.state.present? || obj.zip_code.present?
@@ -19,7 +18,6 @@ class Address < ApplicationRecord
   validates :user_id, presence: true
   validates :city, presence: true
   validates :state, presence: true
-
   before_destroy :check_associated_ads
 
   def full_address
@@ -29,7 +27,7 @@ class Address < ApplicationRecord
   private
 
   def check_associated_ads
-    return unless Ad.where(address_id: id).any?
+    return unless ads.any?
 
     errors.add(:base, 'Ads associated with address, cannot be destroyed')
     throw(:abort)
