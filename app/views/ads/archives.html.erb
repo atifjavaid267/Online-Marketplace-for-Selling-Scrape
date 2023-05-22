@@ -20,10 +20,10 @@
           <%= link_to "View", ad, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
         <% end %>
         <% if can? :toggle_status, Ad %>
-          <%= button_to "Publish", toggle_status_ad_path(ad), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
+          <%= link_to "Publish", toggle_status_ad_path(ad), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
         <% end %>
         <% if can? :destroy, Ad %>
-          <%= button_to "Delete", ad, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+          <%= link_to "Delete", ad, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
         <% end %>
         </div>
       </div>

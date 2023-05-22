@@ -4,8 +4,14 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    can [:show_root], Product
+    # can :read, Product
+    # can :manage, Product
+    # can :manage, Ad
 
+    can [:show_root], Product
+    can :manage, User
+
+    # byebug
     if user.admin?
       can %i[new create show index edit update destroy toggle_status archives], Product
       can %i[index show destroy archives view_bids toggle_status], Ad

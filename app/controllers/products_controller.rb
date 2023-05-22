@@ -2,11 +2,15 @@
 
 # Product Controller
 class ProductsController < ApplicationController
-  load_and_authorize_resource
-  before_action :authenticate_user!, except: %i[show_root]
+  load_and_authorize_resource except: [:show_root]
+
+  # load_resource :user
+  # load_and_authorize_resource :product, through: :user, except: [:show_root]
+  # before_action :authenticate_user!, except: %i[show_root]
   before_action :store_location, only: %i[index archives]
 
   def index
+    # byebug
     @products = @products.published.paginate(page: params[:page], per_page: 10)
   end
 
@@ -14,6 +18,8 @@ class ProductsController < ApplicationController
 
   def create
     @product.user_id = current_user.id
+
+    byebug
 
     if @product.save
       flash[:notice] = 'Product created successfully.'

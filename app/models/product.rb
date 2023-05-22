@@ -1,12 +1,10 @@
 class Product < ApplicationRecord
   has_one_attached :product_image
   has_many :ads
+  belongs_to :user
 
   validates :name, presence: true
   validates :description, presence: true
-  validates :product_image, presence: true
-  before_destroy :check_associated_ads
-
   scope :published, -> { where(status: true) }
   scope :unpublished, -> { where(status: false) }
 
