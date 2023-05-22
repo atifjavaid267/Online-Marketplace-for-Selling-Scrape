@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   get 'notification/destroy'
 
   get 'users/home'
-  get 'users/settings'
+  get 'users/otp_setting'
   patch 'users/toggle_otp_status'
 
   # root

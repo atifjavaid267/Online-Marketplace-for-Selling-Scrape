@@ -3,13 +3,11 @@
 # Users Controller
 class UsersController < ApplicationController
   before_action :authenticate_user!
-  before_action :store_location, only: %i[settings]
+  before_action :store_location, only: %i[otp_setting]
 
-  def home
-    @ads = Ad.published.paginate(page: params[:page], per_page: 10)
-  end
+  def home; end
 
-  def settings; end
+  def otp_setting; end
 
   def toggle_otp_status
     begin

@@ -10,15 +10,7 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def create
-    if user_signed_in? # return unless user_signed_in?
-      # if current_user.admin?
-      #   redirect_to admin_dashboard_path
-      # elsif current_user.seller?
-      #   redirect_to seller_home_path
-      # elsif current_user.buyer?
-      #   redirect_to buyer_home_path
-      # end
-
+    if user_signed_in?
       redirect_to users_home_path
     else
       super
