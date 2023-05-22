@@ -20,10 +20,16 @@ class AdsController < ApplicationController
     @ad.user_id = current_user.id
     @ad.product_id = params[:product_id]
     @addresses = current_user.addresses
+    @addresses = {}
+    current_user.addresses.each do |a|
+      @addresses["#{a.street1} #{a.street2}, #{a.city},#{a.zip_code}, #{a.state}"] = a.id
+    end
   end
 
   def create
     @ad.user_id = current_user.id
+    @ad.product_id = params[:product_id]
+
     @addresses = current_user.addresses
 
     if @ad.save
@@ -31,7 +37,7 @@ class AdsController < ApplicationController
       redirect_to @ad
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
-      redirect stored_location
+      render :new
     end
   end
 
@@ -40,7 +46,10 @@ class AdsController < ApplicationController
   end
 
   def edit
-    @addresses = current_user.addresses
+    @addresses = {}
+    current_user.addresses.each do |a|
+      @addresses["#{a.street1} #{a.street2}, #{a.city},#{a.zip_code}, #{a.state}"] = a.id
+    end
   end
 
   def update
