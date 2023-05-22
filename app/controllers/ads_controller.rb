@@ -21,7 +21,7 @@ class AdsController < ApplicationController
     @ad.product_id = params[:product_id].to_i
     @addresses = {}
     current_user.addresses.each do |a|
-      @addresses["#{a.street1} #{a.street2}, #{a.city},#{a.zip_code}, #{a.state}"] = a.id
+      @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
     end
   end
 
@@ -43,7 +43,7 @@ class AdsController < ApplicationController
   def edit
     @addresses = {}
     current_user.addresses.each do |a|
-      @addresses["#{a.street1} #{a.street2}, #{a.city},#{a.zip_code}, #{a.state}"] = a.id
+      @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
     end
   end
 
