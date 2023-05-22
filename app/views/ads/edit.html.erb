@@ -5,45 +5,7 @@
   <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
     <div class="flex flex-col items-center justify-between ">
       <h3 class="font-bold">Creating new Ad</h3>
-      <%= form_with(model: @ad, local: true) do |form| %>
-        <div class="field ">
-          <div class="card bg-white p-4 rounded-lg shadow-md">
-          <div class="form-group mb-4">
-            <%= form.label :price, class: "font-bold mb-2 block" %>
-            <%= form.number_field :price, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="form-group mb-4">
-            <%= form.label :description, class: "font-bold mb-2 block" %>
-            <%= form.text_area :description, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="form-group mb-4">
-            <%= form.label :ad_images, class: "font-bold mb-2 block" %>
-            <%= form.file_field :ad_images, multiple: true, direct_upload: true, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-
-          <% if @addresses.empty? %>
-            <div class="text-center mt-4">
-              <h2 class="text-lg font-medium mb-2">No address available</h2>
-              <p class="text-sm text-gray-600">First Add your address then add product</p>
-              <%= link_to "Add Address", new_address_path, class: "inline-block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
-            </div>
-          <% else %>
-            <div class="form-group mb-4">
-              <%= form.label :address_id, "Select Address", class: "block font-medium text-gray-700" %> <br>
-              <% address_hash = Hash.new %>
-              <% @addresses.each { |a| address_hash["#{a.street1} #{a.street2}, #{a.city},#{a.zip_code}, #{a.state}"] = a.id } %>
-              <%= form.select :address_id, options_for_select(address_hash), {}, class: "block w-full mt-1 rounded-md shadow-sm form-select sm:text-sm sm:leading-5" %>
-            </div>
-            <div class="my-2">
-              <%= link_to "New Address", new_address_path, class:"pl-1 text-blue-600 hover:text-blue-800" %>
-            </div>
-            <div class="flex flex-row justify-center">
-              <div>
-                <%= form.submit "Update", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-              </div>
-            </div>
-          <% end %>
-      <% end %>
+      <%= render 'form' %>
     </div>
   </div>
 </div>
