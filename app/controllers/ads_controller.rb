@@ -18,8 +18,7 @@ class AdsController < ApplicationController
 
   def new
     @ad.user_id = current_user.id
-    @ad.product_id = params[:product_id]
-    @addresses = current_user.addresses
+    @ad.product_id = params[:product_id].to_i
     @addresses = {}
     current_user.addresses.each do |a|
       @addresses["#{a.street1} #{a.street2}, #{a.city},#{a.zip_code}, #{a.state}"] = a.id
@@ -28,10 +27,6 @@ class AdsController < ApplicationController
 
   def create
     @ad.user_id = current_user.id
-    @ad.product_id = params[:product_id]
-
-    @addresses = current_user.addresses
-
     if @ad.save
       flash[:notice] = 'Ad was successfully created'
       redirect_to @ad
