@@ -56,11 +56,10 @@ class AdsController < ApplicationController
   def destroy
     if @ad.destroy
       flash[:notice] = 'Ad deleted successfully.'
-      redirect_to stored_location
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
-      redirect_to stored_location
     end
+    redirect_to stored_location
   end
 
   def toggle_status

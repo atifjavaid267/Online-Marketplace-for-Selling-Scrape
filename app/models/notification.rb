@@ -1,4 +1,4 @@
-class Notification < ApplicationRecord
+class Notification < ApplicationRecord # find / find_create_by
   def self.already_existing(sender_id, receiver_id)
     notification = Notification.find_by(sender_id:, receiver_id:)
     if notification.nil?

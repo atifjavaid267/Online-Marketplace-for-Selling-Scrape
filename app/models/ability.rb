@@ -29,13 +29,16 @@ class Ability
       can %i[show new create], Message
 
     elsif user.buyer?
+
+      can %i[index], Product
+
       can %i[index], Ad
       can %i[show], Ad, status: true
 
       can %i[new create], Bid
       can %i[index], Bid, user_id: user.id
 
-      can %i[index show], Order, bid: { user_id: user.id }
+      can %i[index show show_pending show_successful show_cancelled], Order, bid: { user_id: user.id }
       can %i[show new create], Message
 
     end

@@ -34,25 +34,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
     devise_parameter_sanitizer.permit(:account_update, keys: %i[first_name last_name phone_no])
   end
 
-  def after_sign_up_path_for(resource)
-    if resource.seller?
-      seller_home_path
-    elsif resource.buyer?
-      buyer_home_path
-    else
-      super(resource)
-    end
+  def after_sign_up_path_for(_resource)
+    users_home_path
   end
 
-  def after_update_path_for(resource)
-    if resource.admin?
-      admin_dashboard_path
-    elsif resource.seller?
-      seller_home_path
-    elsif resource.buyer?
-      buyer_home_path
-    else
-      super(resource)
-    end
+  def after_update_path_for(_resource)
+    users_home_path
   end
 end

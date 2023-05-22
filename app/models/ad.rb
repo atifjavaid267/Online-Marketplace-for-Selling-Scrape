@@ -27,7 +27,7 @@ class Ad < ApplicationRecord
 
   private
 
-  def check_associated_bids
+  def check_associated_bids # dependent restrict with
     return unless bids.any?
 
     errors.add(:base, 'There are bids, Ad cannot be destroyed')

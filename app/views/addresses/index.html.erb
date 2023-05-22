@@ -6,7 +6,7 @@
         <h1 class="text-center font-bold">You added no Address Yet!</h1>
       </div>
       <div class="flex flex-row justify-center">
-        <% if can? :new, Address%>
+        <% if can? :new, Address %>
         <div>
           <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline" %>
         </div>
@@ -17,9 +17,9 @@
 <% else %>
   <% if can? :new, Address %>
     <div class="flex justify-end mt-2 mr-2">
-      <%= link_to "Add Address", new_address_path, class: " text-blue-600 hover:font-semibold mt-2 px-4 rounded"%>
+      <%= link_to "Add Address", new_address_path, class: "text-blue-600 hover:font-semibold mt-2 px-4 rounded"%>
     </div>
-  <%end%>
+  <% 2end %>
   <div class="py-5">
     <table class="w-full table-auto">
       <thead>
@@ -48,7 +48,7 @@
               <td class="px-4 py-2"><%= link_to "Edit", edit_address_path(address), class: "bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded" %></td>
             <% end %>
             <% if can? :destroy, Address%>
-              <td class="px-4 py-2"><%= button_to "Delete", address, data: { confirm: "Are you sure to delete address?", turbo_confirm: "Are you sure to delete address?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
+              <td class="px-4 py-2"><%= link_to "Delete", address, data: { confirm: "Are you sure to delete address?", turbo_confirm: "Are you sure to delete address?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
             <% end %>
             </tr>
             <% counter = counter + 1 %>

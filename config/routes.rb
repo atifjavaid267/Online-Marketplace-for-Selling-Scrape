@@ -4,12 +4,10 @@ Rails.application.routes.draw do
   get 'notification/create'
   get 'notification/update'
   get 'notification/destroy'
-  # for gem 'devise-two-factor'
-  patch 'users_otp/enable'
-  get 'users_otp/disable'
 
-  get 'users_otp/settings'
-  patch 'users_otp/toggle'
+  get 'users/home'
+  get 'users/settings'
+  patch 'users/toggle_otp_status'
 
   # root
   root 'products#show_root'
@@ -37,6 +35,7 @@ Rails.application.routes.draw do
   get '/users/admin/dashboard' => 'users/admin#dashboard', as: 'admin_dashboard'
   get '/users/seller/home' => 'users/seller#home', as: 'seller_home'
   get '/users/buyer/home' => 'users/buyer#home', as: 'buyer_home'
+
   resources :bids
 
   resources :products do

@@ -10,14 +10,16 @@ class Users::SessionsController < Devise::SessionsController
   end
 
   def create
-    if user_signed_in?
-      if current_user.admin?
-        redirect_to admin_dashboard_path
-      elsif current_user.seller?
-        redirect_to seller_home_path
-      elsif current_user.buyer?
-        redirect_to buyer_home_path
-      end
+    if user_signed_in? # return unless user_signed_in?
+      # if current_user.admin?
+      #   redirect_to admin_dashboard_path
+      # elsif current_user.seller?
+      #   redirect_to seller_home_path
+      # elsif current_user.buyer?
+      #   redirect_to buyer_home_path
+      # end
+
+      redirect_to users_home_path
     else
       super
     end
@@ -31,7 +33,7 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
-  def user_params
+  def user_params # private
     params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
   end
 
@@ -42,7 +44,7 @@ class Users::SessionsController < Devise::SessionsController
     sign_in(user)
   end
 
-  def authenticate_2fa!
+  def authenticate_2fa! # should be in controller?
     user = find_user
     self.resource = user
 
@@ -55,18 +57,18 @@ class Users::SessionsController < Devise::SessionsController
       CodeMailer.send_code(user).deliver_now
       @code = User.generate_otp(user.otp_secret)
       send_message(@code)
-      render 'users_otp/two_fa'
+      render 'users/two_factor'
     end
   end
 
-  def send_message(code)
+  def send_message(code) # should be in controller?
     twilio_number = '+14345108668'
     client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
 
     client.messages.create(
       from: twilio_number,
       to: '+923081186267',
-      body: "our OTP is #{code}"
+      body: "Your OTP is #{code}"
     )
   end
 end

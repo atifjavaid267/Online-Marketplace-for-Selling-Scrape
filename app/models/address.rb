@@ -28,14 +28,14 @@ class Address < ApplicationRecord
   private
 
   def check_associated_ads
-    return unless ads.any?
+    return unless ads.any? # dependent
 
     errors.add(:base, 'Ads associated with address, cannot be destroyed')
     throw(:abort)
   end
 
   def check_coordinates
-    return unless latitude.zero? && longitude.zero?
+    return unless latitude.zero? && longitude.zero? #
 
     errors.add(:base, 'Address was not found')
     throw(:abort)

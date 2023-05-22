@@ -21,7 +21,7 @@
             <%= form.file_field :ad_images, multiple: true, direct_upload: true, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
           </div>
 
-          <% if @addresses == nil || @addresses.empty? %>
+          <% if @addresses.empty? %>
             <div class="text-center mt-4">
               <h2 class="text-lg font-medium mb-2">No address available</h2>
               <p class="text-sm text-gray-600">First Add your address then add product</p>
