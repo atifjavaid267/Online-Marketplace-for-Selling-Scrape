@@ -1,6 +1,6 @@
 class Ad < ApplicationRecord
   has_many_attached :ad_images
-  has_many :bids
+  has_many :bids, dependent: :restrict_with_error
   belongs_to :product
   belongs_to :user
   belongs_to :address
@@ -12,8 +12,6 @@ class Ad < ApplicationRecord
   validates :description, presence: true
   validates :ad_images, presence: true
 
-  before_destroy :check_associated_bids
-
   scope :published, -> { where(status: true) }
   scope :unpublished, -> { where(status: false) }
 
@@ -23,14 +21,5 @@ class Ad < ApplicationRecord
 
   def unpublished!
     update_attribute(:status, false)
-  end
-
-  private
-
-  def check_associated_bids # dependent restrict with
-    return unless bids.any?
-
-    errors.add(:base, 'There are bids, Ad cannot be destroyed')
-    throw(:abort)
   end
 end
