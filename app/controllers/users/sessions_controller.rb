@@ -25,10 +25,6 @@ class Users::SessionsController < Devise::SessionsController
     end
   end
 
-  def user_params # private
-    params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
-  end
-
   def auth_with_2fa(user)
     return unless user.validate_and_consume_otp!(user_params[:otp_attempt])
 
@@ -62,5 +58,11 @@ class Users::SessionsController < Devise::SessionsController
       to: '+923081186267',
       body: "Your OTP is #{code}"
     )
+  end
+
+  private
+
+  def user_params
+    params.fetch(:user, {}).permit(:password, :otp_attempt, :email, :remember_me)
   end
 end
