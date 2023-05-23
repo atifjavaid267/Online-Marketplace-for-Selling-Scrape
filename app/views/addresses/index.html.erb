@@ -48,7 +48,7 @@
               <td class="px-4 py-2"><%= link_to "Edit", edit_address_path(address), class: "bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded" %></td>
             <% end %>
             <% if can? :destroy, Address%>
-              <td class="px-4 py-2"><%= link_to "Delete", address, data: { confirm: "Are you sure to delete address?", turbo_confirm: "Are you sure to delete address?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
+              <td class="px-4 py-2"><%= link_to "Delete", address, data: { confirm: "Are you sure to delete address?"}, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
             <% end %>
             </tr>
             <% counter = counter + 1 %>

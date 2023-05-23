@@ -48,11 +48,11 @@ class OrdersController < ApplicationController
   end
 
   def cancel
-    flash[:alert] = if @order.update_attribute(:status, 'cancelled')
-                      'Order Cancelled.'
-                    else
-                      @order.errors.full_messages.join(', ')
-                    end
+    if @order.update_attribute(:status, 'cancelled')
+      flash[:notice] = 'Order Cancelled.'
+    else
+      flash[:alert] = @order.errors.full_messages.join(', ')
+    end
     redirect_to @order
   end
 
