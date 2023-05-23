@@ -23,19 +23,8 @@ class OrdersController < ApplicationController
   def show; end
 
   def index
+    @orders = @orders.status(params[:status]) if params[:status]
     @orders = @orders.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-  end
-
-  def show_pending
-    @orders = @orders.pending.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-  end
-
-  def show_successful
-    @orders = @orders.successful.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-  end
-
-  def show_cancelled
-    @orders = @orders.cancelled.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def confirm

@@ -2,8 +2,8 @@
 
 # Ads Controller
 class AdsController < ApplicationController
-  load_and_authorize_resource # :product
-  # load_and_authorize_resource through: :product
+  load_and_authorize_resource :product
+  load_and_authorize_resource :ad, through: :product
   before_action :authenticate_user!
   before_action :store_location, only: %i[new index archives]
 
@@ -29,6 +29,7 @@ class AdsController < ApplicationController
   def create
     @ad.user_id = current_user.id
     @ad.product_id = params[:product_id]
+    # byebug
 
     # byebug
     if @ad.save

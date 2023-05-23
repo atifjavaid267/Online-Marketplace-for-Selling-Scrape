@@ -56,11 +56,6 @@ Rails.application.routes.draw do
     end
   end
   resources :orders do
-    collection do
-      get :show_pending
-      get :show_successful
-      get :show_cancelled
-    end
     member do
       post :confirm
       post :cancel

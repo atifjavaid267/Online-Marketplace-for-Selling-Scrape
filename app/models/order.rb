@@ -8,6 +8,8 @@ class Order < ApplicationRecord
   validates :pickup_time, presence: true
   validate :pickup_time_cannot_be_in_the_past
 
+  scope :status, ->(status_param) { where(status: status_param) }
+
   scope :pending, -> { where(status: 'pending') }
   scope :successful, -> { where(status: 'successful') }
   scope :cancelled, -> { where(status: 'cancelled') }

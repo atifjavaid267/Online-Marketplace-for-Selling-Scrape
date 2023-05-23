@@ -35,18 +35,12 @@
           <br>
 					<% if can? :index, Order %>
            	<%= link_to "View All Orders", orders_path, class: "text-blue-500 hover:text-blue-700" %>
-          <% end %>
-					<br>
-					<% if can? :show_pending, Order %>
-           	<%= link_to "View Pending Orders", show_pending_orders_path, class: "text-blue-500 hover:text-blue-700" %>
-          <% end %>
-          <br>
-					<% if can? :show_successful, Order %>
-           	<%= link_to "View Successful Orders", show_successful_orders_path, class: "text-blue-500 hover:text-blue-700" %>
-          <% end %>
-          <br>
-					<% if can? :show_cancelled, Order %>
-           	<%= link_to "View Cancelled Orders", show_cancelled_orders_path, class: "text-blue-500 hover:text-blue-700" %>
+					  <br>
+           	<%= link_to "View Pending Orders", orders_path(status: "pending"), class: "text-blue-500 hover:text-blue-700" %>
+            <br>
+           	<%= link_to "View Successful Orders", orders_path(status: 'successful'), class: "text-blue-500 hover:text-blue-700" %>
+            <br>
+           	<%= link_to "View Cancelled Orders", orders_path(status: 'cancelled'), class: "text-blue-500 hover:text-blue-700" %>
           <% end %>
 				</div>
 				<% if current_user.seller? %>
