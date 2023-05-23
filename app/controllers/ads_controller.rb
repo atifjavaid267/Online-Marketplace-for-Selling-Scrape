@@ -5,7 +5,7 @@ class AdsController < ApplicationController
   load_and_authorize_resource # :product
   # load_and_authorize_resource :ad, through: :product
   before_action :authenticate_user!
-  before_action :store_location, only: %i[new index archives]
+  before_action :store_location, only: %i[new index]
 
   def index
     @ads = @ads.status(params[:status]) if params[:status]
