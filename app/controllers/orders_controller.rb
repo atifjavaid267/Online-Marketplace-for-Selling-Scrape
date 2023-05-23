@@ -23,19 +23,19 @@ class OrdersController < ApplicationController
   def show; end
 
   def index
-    @orders = @orders.paginate(page: params[:page], per_page: 10)
+    @orders = @orders.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def show_pending
-    @orders = @orders.pending.paginate(page: params[:page], per_page: 10)
+    @orders = @orders.pending.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def show_successful
-    @orders = @orders.successful.paginate(page: params[:page], per_page: 10)
+    @orders = @orders.successful.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def show_cancelled
-    @orders = @orders.cancelled.paginate(page: params[:page], per_page: 10)
+    @orders = @orders.cancelled.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def confirm

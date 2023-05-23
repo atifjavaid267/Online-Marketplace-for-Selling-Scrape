@@ -8,11 +8,11 @@ class AdsController < ApplicationController
   before_action :store_location, only: %i[new index archives]
 
   def index
-    @ads = @ads.published.paginate(page: params[:page], per_page: 10)
+    @ads = @ads.published.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def archives
-    @archive_ads = @ads.unpublished.paginate(page: params[:page], per_page: 10)
+    @archive_ads = @ads.unpublished.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def show; end
@@ -41,7 +41,7 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: 10)
+    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def edit

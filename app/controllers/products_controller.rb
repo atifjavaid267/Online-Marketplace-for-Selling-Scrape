@@ -3,23 +3,21 @@
 # Product Controller
 class ProductsController < ApplicationController
   load_and_authorize_resource except: [:show_root]
-
-  # load_resource :user
-  # load_and_authorize_resource :product, through: :user, except: [:show_root]
-  # before_action :authenticate_user!, except: %i[show_root]
+  before_action :authenticate_user!, except: %i[show_root]
   before_action :store_location, only: %i[index archives]
 
   def index
-    # byebug
-    @products = @products.published.paginate(page: params[:page], per_page: 10)
+    @products = @products.published.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+  end
+
+  def archives
+    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def new; end
 
   def create
     @product.user_id = current_user.id
-
-    byebug
 
     if @product.save
       flash[:notice] = 'Product created successfully.'
@@ -61,12 +59,8 @@ class ProductsController < ApplicationController
     redirect_to stored_location
   end
 
-  def archives
-    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: 10)
-  end
-
   def show_root
-    @products = Product.published.paginate(page: params[:page], per_page: 4)
+    @products = Product.published.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   private

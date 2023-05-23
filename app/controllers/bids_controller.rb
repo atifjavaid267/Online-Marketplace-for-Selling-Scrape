@@ -30,11 +30,11 @@ class BidsController < ApplicationController
   end
 
   def index
-    @bids = @bids.paginate(page: params[:page], per_page: 10)
+    @bids = @bids.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def view_bids
-    @bids = @ad.bids.paginate(page: params[:page], per_page: 10)
+    @bids = @ad.bids.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   private
