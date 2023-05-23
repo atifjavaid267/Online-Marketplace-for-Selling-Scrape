@@ -8,7 +8,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   def create
-    existing_user = User.find_by_email(sign_up_params[:email])
+    existing_user = User.find_by(email: sign_up_params[:email])
     if existing_user
       flash[:alert] = "This email is already registered as #{existing_user.role}"
       redirect_to new_user_registration_path
