@@ -6,6 +6,5 @@ class Product < ApplicationRecord
   validates :name, presence: true
   validates :description, presence: true
 
-  scope :published, -> { where(status: true) }
-  scope :unpublished, -> { where(status: false) }
+  scope :status, ->(status_param) { where(status: status_param) }
 end

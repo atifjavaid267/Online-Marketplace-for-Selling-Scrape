@@ -7,12 +7,13 @@ class ProductsController < ApplicationController
   before_action :store_location, only: %i[index archives]
 
   def index
-    @products = @products.published.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @products = @products.status(params[:status]) if params[:status]
+    @products = @products.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
-  def archives
-    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-  end
+  # def archives
+  #   @archive_products = @products.unpublished.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+  # end
 
   def new; end
 
@@ -60,7 +61,7 @@ class ProductsController < ApplicationController
   end
 
   def show_root
-    @products = Product.published.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @products = Product.status(true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   private

@@ -3,24 +3,17 @@ class Ability
 
   def initialize(user)
     user ||= User.new
-
-    # can :read, Product
-    # can :manage, Product
-    # can :manage, Ad
-
     can [:show_root], Product
-    can :manage, User
 
     # byebug
     if user.admin?
-      can %i[new create show index edit update destroy toggle_status archives], Product
+      can %i[new create show index edit update destroy toggle_status], Product
       can %i[index show destroy archives view_bids toggle_status], Ad
-      can %i[index show show_pending show_successful show_cancelled], Order
+      can %i[index show], Order
 
     elsif user.seller?
 
-      can %i[index], Product
-      can %i[show], Product, status: true
+      can %i[index show], Product, status: true
 
       can %i[index], Address, user_id: user.id
       can %i[new create], Address
@@ -30,13 +23,13 @@ class Ability
       can %i[index archives show edit update destroy], Ad, user_id: user.id
 
       can %i[new create confirm cancel], Order
-      can %i[index show show_pending show_successful show_cancelled], Order, bid: { ad: { user_id: user.id } }
+      can %i[index show], Order, bid: { ad: { user_id: user.id } }
 
       can %i[show new create], Message
 
     elsif user.buyer?
 
-      can %i[index], Product
+      can %i[index], Product, status: true
 
       can %i[index], Ad
       can %i[show], Ad, status: true
@@ -44,7 +37,7 @@ class Ability
       can %i[new create], Bid
       can %i[index], Bid, user_id: user.id
 
-      can %i[index show show_pending show_successful show_cancelled], Order, bid: { user_id: user.id }
+      can %i[index show], Order, bid: { user_id: user.id }
       can %i[show new create], Message
 
     end

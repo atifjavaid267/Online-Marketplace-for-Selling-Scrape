@@ -6,11 +6,11 @@
           <h2 class="text-xl font-semibold mb-4">PRODUCTS</h2>
           <hr> <br>
           <% if can? :index, Product%>
-            <%= link_to "View Products", products_path, class: "text-blue-500 hover:text-blue-700" %>
-          <% end %>
-					<br>
-					<% if can? :archives, Product %>
-						<%= link_to "View Archive Products", archives_products_path, class: "text-blue-500 hover:text-blue-700" %>
+            <%= link_to "View Products", products_path(status: true), class: "text-blue-500 hover:text-blue-700" %>
+            <br>
+            <% if current_user.admin? %>
+						  <%= link_to "View Archive Products", products_path(status: false), class: "text-blue-500 hover:text-blue-700" %>
+					  <% end %>
 					<% end %>
 					<br>
 					<% if can? :new, Product %>
