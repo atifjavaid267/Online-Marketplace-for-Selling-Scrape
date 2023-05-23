@@ -8,8 +8,7 @@ class AdsController < ApplicationController
   before_action :store_location, only: %i[new index]
 
   def index
-    @ads = @ads.status(params[:status]) if params[:status]
-    @ads = @ads.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @ads = @ads.status(params[:status] || true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def show; end
@@ -74,7 +73,7 @@ class AdsController < ApplicationController
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end
-    redirect_to stored_location
+    redirect_to ads_path(status: true)
   end
 
   private

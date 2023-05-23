@@ -7,8 +7,7 @@ class ProductsController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
-    @products = @products.status(params[:status]) if params[:status]
-    @products = @products.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @products = @products.status(params[:status] || true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def new; end
@@ -53,7 +52,7 @@ class ProductsController < ApplicationController
     else
       flash[:alert] = @product.errors.full_messages.join(', ')
     end
-    redirect_to stored_location
+    redirect_to products_path(status: true)
   end
 
   def show_root
