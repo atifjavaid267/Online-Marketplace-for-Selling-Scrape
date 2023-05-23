@@ -2,17 +2,14 @@
 
 # Ads Controller
 class AdsController < ApplicationController
-  load_and_authorize_resource :product
-  load_and_authorize_resource :ad, through: :product
+  load_and_authorize_resource # :product
+  # load_and_authorize_resource :ad, through: :product
   before_action :authenticate_user!
   before_action :store_location, only: %i[new index archives]
 
   def index
-    @ads = @ads.published.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-  end
-
-  def archives
-    @archive_ads = @ads.unpublished.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @ads = @ads.status(params[:status]) if params[:status]
+    @ads = @ads.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def show; end

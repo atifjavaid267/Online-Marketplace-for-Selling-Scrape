@@ -8,7 +8,7 @@ class Ability
     # byebug
     if user.admin?
       can %i[new create show index edit update destroy toggle_status], Product
-      can %i[index show destroy archives view_bids toggle_status], Ad
+      can %i[index show destroy view_bids toggle_status], Ad
       can %i[index show], Order
 
     elsif user.seller?
@@ -20,7 +20,7 @@ class Ability
       can %i[edit update destroy], Address, user_id: user.id
 
       can %i[new create toggle_status view_bids], Ad
-      can %i[index archives show edit update destroy], Ad, user_id: user.id
+      can %i[index show edit update destroy], Ad, user_id: user.id
 
       can %i[new create confirm cancel], Order
       can %i[index show], Order, bid: { ad: { user_id: user.id } }
@@ -31,8 +31,7 @@ class Ability
 
       can %i[index], Product, status: true
 
-      can %i[index], Ad
-      can %i[show], Ad, status: true
+      can %i[index show], Ad, status: true
 
       can %i[new create], Bid
       can %i[index], Bid, user_id: user.id

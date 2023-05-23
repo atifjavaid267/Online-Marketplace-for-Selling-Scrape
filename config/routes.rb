@@ -21,7 +21,6 @@ Rails.application.routes.draw do
   post '/otp', to: 'sessions#submit_otp', as: :otp_create_path
   resource :two_factor_authentication
 
-  # devise_for :users
   devise_scope :user do
     get '/users/sign_out' => 'devise/sessions#destroy'
   end
@@ -40,7 +39,6 @@ Rails.application.routes.draw do
       post :toggle_status
     end
     collection do
-      get 'archives' => 'products#archives'
       get 'show_root' => 'products#show_root'
     end
   end
@@ -50,9 +48,6 @@ Rails.application.routes.draw do
     get 'view_bids', on: :member
     member do
       post :toggle_status
-    end
-    collection do
-      get 'archives' => 'ads#archives'
     end
   end
   resources :orders do

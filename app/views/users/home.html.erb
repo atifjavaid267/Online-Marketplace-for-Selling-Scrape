@@ -22,11 +22,11 @@
           <hr>
           <br>
 					<% if can? :index, Ad %>
-            <%= link_to "View All Ads", ads_path, class: "text-blue-500 hover:text-blue-700" %>
-          <% end %>
-					<br>
-					<% if can? :archives, Ad %>
-            <%= link_to "View Archive Ads", archives_ads_path, class: "text-blue-500 hover:text-blue-700" %>
+            <%= link_to "View All Ads", ads_path(status: true), class: "text-blue-500 hover:text-blue-700" %>
+					  <br>
+					  <% unless current_user.buyer? %>
+              <%= link_to "View Archive Ads", ads_path(status: false), class: "text-blue-500 hover:text-blue-700" %>
+            <% end %>
           <% end %>
         </div>
 				<div class="w-full h-60 bg-black rounded-lg shadow-lg p-6 pr-16 mx-5">
