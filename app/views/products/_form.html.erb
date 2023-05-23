@@ -11,7 +11,7 @@
           </div>
           <div class="form-group mb-4">
             <%= form.label :product_image, class: "font-bold mb-2 block" %>
-            <%= form.file_field :product_image, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
+            <%= form.file_field :product_image, accept: "image/*", class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
           </div>
           <div class="actions flex justify-center">
             <%= form.submit "Submit",  class: "bg-blue-500 hover:bg-blue-700 text-white    font-bold py-2 px-4 rounded" %>

@@ -21,7 +21,7 @@ class BidsController < ApplicationController
                                      { ad_id: @bid.ad_id, price: @bid.price, buyer_id: @bid.user_id,
                                        buyer_name: @bid.user.first_name })
         format.json { render :show, status: :created, location: @bid }
-        format.html { redirect_to buyer_home_path }
+        format.html { redirect_to users_home_path }
       end
     else
       flash[:alert] = @bid.errors.full_messages.join(', ')

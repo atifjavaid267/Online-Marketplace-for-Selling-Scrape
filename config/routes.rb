@@ -32,10 +32,6 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  get '/users/admin/dashboard' => 'users/admin#dashboard', as: 'admin_dashboard'
-  get '/users/seller/home' => 'users/seller#home', as: 'seller_home'
-  get '/users/buyer/home' => 'users/buyer#home', as: 'buyer_home'
-
   resources :bids
 
   resources :products do
