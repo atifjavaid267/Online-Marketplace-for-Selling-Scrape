@@ -38,7 +38,7 @@ class MessagesController < ApplicationController
     message_content = @message.content
     sender_name = User.find(sender_id).first_name
 
-    count = Notification.already_existing(sender_id, receiver_id)
+    count = Notification.new_notification(sender_id, receiver_id)
 
     ActionCable.server.broadcast("notifications_#{receiver_id}", {
                                    count:,

@@ -1,11 +1,12 @@
 class Notification < ApplicationRecord
-  def self.already_existing(sender_id, receiver_id)
-    notification = Notification.find_by(sender_id:, receiver_id:)
-    if notification.nil?
-      notification = Notification.create(sender_id:, receiver_id:)
+  def self.new_notification(sender_id, receiver_id)
+    notification = Notification.find_or_initialize_by(sender_id:,
+                                                      receiver_id:)
+    if notification.new_record?
+      notification.save
     else
-      count = notification.count + 1
-      notification.update(count:, read: false)
+      notification.increment!(:count)
+      notification.update(read: false)
     end
     notification.count
   end
