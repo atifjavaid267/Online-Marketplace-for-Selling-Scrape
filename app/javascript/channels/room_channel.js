@@ -47,20 +47,17 @@ document.addEventListener("turbolinks:load", () => {
           inputField.value = "";
         }
 
-        if (parseInt(countElement.innerHTML) === 0) {
+      
+        if (countElement && parseInt(countElement.innerHTML) === 0) {
           const notificationDropdown = document.getElementById(
             "notification-dropdown"
           );
-          notificationDropdown.innerHTML = "";
+          if (notificationDropdown) {
+            notificationDropdown.innerHTML = "";
+          }
         }
       },
     }
   );
 
-  if (parseInt(countElement.innerHTML) === 0) {
-    const notificationDropdown = document.getElementById(
-      "notification-dropdown"
-    );
-    notificationDropdown.innerHTML = "";
-  }
 });

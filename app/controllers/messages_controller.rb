@@ -11,6 +11,19 @@ class MessagesController < ApplicationController
   def new
     @order = Order.find(params[:order_id].to_i)
     @message = Message.new(order_id: @order.id)
+
+    @second_id = current_user.buyer? ? @order.bid.ad.user_id : @order.bid.user_id
+
+    notification = Notification.where(receiver_id: current_user.id, sender_id: @second_id).first
+    if notification
+      notification.count = 0
+      notification.read = true
+      notification.save
+    end
+
+    @messages = Message.where(
+      "(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", current_user.id, @second_id, @second_id, current_user.id
+    )
   end
 
   def create
