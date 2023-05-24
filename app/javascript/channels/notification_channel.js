@@ -3,7 +3,7 @@ import consumer from "./consumer";
 document.addEventListener("turbolinks:load", () => {
   const userDiv = document.getElementById("user");
   const current_user_id = userDiv.getAttribute("data-user-id");
-  const countElement = document.getElementById("count");
+  const countElement = document.getElementById("notification-count");
   const notificationDropdown = document.getElementById("notification-dropdown");
 
   const storedCount = localStorage.getItem("count") || 0;
