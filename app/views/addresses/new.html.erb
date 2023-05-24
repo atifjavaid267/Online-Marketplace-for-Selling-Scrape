@@ -6,15 +6,12 @@
         <%= form_with(model: @address, local: true) do |form| %>
           <div class="field ">
             <div class="card bg-white p-4 rounded-lg shadow-md">
-              <div class="form-group mb-4">
-                <%= form.label :street1, class: "font-bold mb-2 block" %>
-                <%= form.text_field :street1, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-              </div>
 
               <div class="form-group mb-4">
-                <%= form.label :street2, class: "font-bold mb-2 block" %>
-                <%= form.text_field :street2, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
+                <%= form.label :full_address, class: "font-bold mb-2 block" %>
+                <%= form.text_field :full_address, id: "address_full_address", class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
               </div>
+
 
               <div class="form-group mb-4">
                 <%= form.label :city, class: "font-bold mb-2 block" %>
@@ -31,7 +28,8 @@
                 <%= form.text_field :zip_code, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
               </div>
 
-              <%= form.hidden_field :user_id, value: @address.user_id %>
+              <%= form.hidden_field :latitude, id: "latitude" %>
+              <%= form.hidden_field :longitude, id: "longitude" %>
 
               <div class="flex-col my-2">
                 <div>
@@ -55,6 +53,7 @@ var geocoder;
 var map;
 var marker;
 var input = document.getElementById('pac-input');
+var fullAddressInput = document.getElementById('address_full_address');
 
 function initMap() {
   map = new google.maps.Map(document.getElementById('map'), {
@@ -101,11 +100,8 @@ function initMap() {
     var zip_code = "";
     for (var i = 0; i < address_components.length; i++) {
       var component = address_components[i];
-      if (component.types.includes("street_number")) {
-        street_number = component.long_name;
-      } else if (component.types.includes("route")) {
-        route = component.long_name;
-      } else if (component.types.includes("locality")) {
+    
+       if (component.types.includes("locality")) {
         city = component.long_name;
       } else if (component.types.includes("administrative_area_level_1")) {
         state = component.long_name;
@@ -113,43 +109,47 @@ function initMap() {
         zip_code = component.long_name;
       }
     }
-    document.getElementById("address_street1").value = street_number + " " + route;
+
+    
     document.getElementById("address_city").value = city;
     document.getElementById("address_state").value = state;
     document.getElementById("address_zip_code").value = zip_code;
 
     var address = {
-      street1: street_number + " " + route,
+     
       city: city,
       state: state,
       zip_code: zip_code
     };
 
-
-    document.getElementById("address_street2").value = "";
+   fullAddressInput.value = place.formatted_address;
+   
     document.getElementById("map").focus();
     console.log(address);
 
   });
 }
+
 function geocodeLatLng(latlng) {
   geocoder.geocode({ 'location': latlng }, function(results, status) {
     if (status === 'OK') {
       if (results[0]) {
 
+        var latitude = results[0].geometry.location.lat();
+        var longitude = results[0].geometry.location.lng();
+
         var address_components = results[0].address_components;
-        var street_number = "";
+      
         var route = "";
         var city = "";
         var state = "";
         var zip_code = "";
+        var full_address = results[0].formatted_address; 
+
         for (var i = 0; i < address_components.length; i++) {
           var component = address_components[i];
-          if (component.types.includes("street_number")) {
-            street_number = component.long_name;
-          } else if (component.types.includes("route")) {
-            route = component.long_name;
-          } else if (component.types.includes("locality")) {
+         
+          if (component.types.includes("locality")) {
             city = component.long_name;
           } else if (component.types.includes("administrative_area_level_1")) {
             state = component.long_name;
@@ -157,7 +157,11 @@ function geocodeLatLng(latlng) {
             zip_code = component.long_name;
           }
         }
-        document.getElementById("address_street1").value = street_number + " " + route;
+
+        document.getElementById('latitude').value = latitude;
+        document.getElementById('longitude').value = longitude;
+        fullAddressInput.value = full_address;
+        
         document.getElementById("address_city").value = city;
         document.getElementById("address_state").value = state;
         document.getElementById("address_zip_code").value = zip_code;
@@ -168,9 +172,8 @@ function geocodeLatLng(latlng) {
           state: state,
           zip_code: zip_code
         };
-
-        document.getElementById("address_street2").value = "";
         console.log(address);
+        fullAddressInput.value = full_address;
 
       } else {
         window.alert('No results found');
