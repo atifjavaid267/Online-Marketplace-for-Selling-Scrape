@@ -21,10 +21,6 @@ class ApplicationController < ActionController::Base
     session[:stored_location]
   end
 
-  # def load_and_authorize_resource
-  #   authorize! params[:action].to_sym, current_user
-  # end
-
   def configure_permitted_parameters
     devise_parameter_sanitizer.permit(:sign_in, keys: [:otp_attempt])
 

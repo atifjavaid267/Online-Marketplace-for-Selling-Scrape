@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = @orders.status(params[:status]) if params[:status]
-    @orders = @orders.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @orders = @orders.order(created_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def confirm

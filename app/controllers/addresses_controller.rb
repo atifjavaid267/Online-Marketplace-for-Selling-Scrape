@@ -7,6 +7,7 @@ class AddressesController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
+    params[:page] = '1' if params[:page].nil?
     @addresses = @addresses.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 

@@ -11,13 +11,7 @@
           <p class="text-lg"> Your Bid Amount: </span><%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %> </p>
         </div>
         <div class="flex justify-between flex-row text-left">
-            <% if bid.status == "pending" %>
-                <h3 class="font-bold pr-10 py-6 mx-12 text-blue-600"> Pending</h3>
-            <% elsif bid.status == "successful" %>
-                <h3 class="font-bold pr-10 py-6 mx-7 text-green-600"> Successful</h3>
-            <% elsif bid.status == "failed" %>
-                <h3 class="font-bold pr-10 py-6 mx-16 text-red-600"> Failed</h3>
-            <%end%>
+          <h3 class="font-bold pr-10 py-6 mx-16 "> <%= bid.status.capitalize %></h3>
         </div>
       </div>
     <% end %>
