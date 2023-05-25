@@ -10,11 +10,11 @@ class AddressesController < ApplicationController
     @addresses = @addresses.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
-  def new
-    @address.user_id = current_user.id
-  end
+  def new; end
 
   def create
+    @address.user_id = current_user.id
+
     if @address.save
       flash[:notice] = 'Address was successfully created.'
       redirect_to stored_location

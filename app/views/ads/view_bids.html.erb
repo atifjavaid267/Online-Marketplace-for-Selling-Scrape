@@ -1,9 +1,8 @@
-
 <% if @bids.empty? %>
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Bid Found!' } %>
 <% else %>
   <br>
-  <div id = <%= "bids-container-" + @ad.id.to_s %> class="grid gap-4 md:grid-cols-2 xl:grid-cols-2" style="margin-left: 10px; margin-right: 10px;">
+  <div id = <%= "bids-container-" + @ad.id.to_s %> class="grid gap-4 md:grid-cols-2 xl:grid-cols-2 mx-10">
     <% @bids.each do |bid| %>
       <div class="flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
@@ -20,7 +19,7 @@
   </div>
   <br>
   <div class = "pb-20 flex flex-row items-center justify-center">
-    <%= will_paginate @bids, class:"bg-gray-300 rounded py-3 px-5"%>
+    <%= will_paginate @bids, class:"bg-gray-300 rounded py-3 px-5" %>
   </div>
   <br>
 <%end%>

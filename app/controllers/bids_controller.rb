@@ -29,7 +29,7 @@ class BidsController < ApplicationController
   end
 
   def index
-    @bids = @bids.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @bids = @bids.order(created_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def view_bids

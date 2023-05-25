@@ -1,21 +1,20 @@
 <%= render 'devise/shared/back' %>
-
 <div class="m-10">
-  <%if @order.pending? %>
+  <% if @order.pending? %>
     <div class="flex flex-row items-center justify-center mt-10">
-      <h3 class="font-bold text-blue-600 ml-1">Order is Pending!</h3> <br>
+      <h3 class="font-bold text-blue-600 ml-1">Order is Pending!</h3>
+      <br>
     </div>
   <% elsif @order.successful? %>
     <div class="flex flex-row items-center justify-center mt-10">
       <h3 class="font-bold text-green-600 ml-1">Order has been Completed!</h3>
     </div>
-  <% elsif @order.cancelled?%>
+  <% elsif @order.cancelled? %>
     <div class="flex flex-row items-center justify-center mt-10">
       <h3 class="font-bold text-red-600 ml-1">Order has been Cancelled!</h3>
     </div>
   <% end %>
 </div>
-
 <div class="flex flex-row items-center justify-center">
   <div class="flex flex-col items-start space-y-12 mx-10">
     <h4 class="font-semibold text-lg">Order Amount:</h4>
@@ -23,12 +22,11 @@
     <% unless current_user.buyer? %>
       <h4 class="font-semibold text-lg">Buyer Name:</h4>
       <p class="text-gray-700 mb-6"><%= "#{@order.bid.user.first_name} #{@order.bid.user.last_name}" %></p>
-    <%end%>
-
+    <% end %>
     <% unless current_user.seller? %>
       <h4 class="font-semibold text-lg">Seller Name:</h4>
-      <p class="text-gray-700 mb-6"><%= "#{@order.bid.ad.user.first_name} #{@order.bid.ad.user.last_name}"%></p>
-    <%end%>
+      <p class="text-gray-700 mb-6"><%= "#{@order.bid.ad.user.first_name} #{@order.bid.ad.user.last_name}" %></p>
+    <% end %>
     <h4 class="font-semibold text-lg">Pickup Date & Time:</h4>
     <p class="text-gray-700 mb-6"><%= @order.pickup_time.strftime('%d %B %Y | %I:%M:%S %p')%></p>
   </div>
@@ -36,32 +34,28 @@
     <h4 class="font-semibold text-lg">Address:</h4>
     <% address = @order.bid.ad.address %>
     <p class="text-gray-700 mb-10"><%= [address.street1, address.street2, address.city, address.state, address.zip_code].reject(&:nil?).reject(&:empty?).join(', ') %></p>
-
     <div id = "map" class = "w-80 h-80" ></div>
     <div id = "data" data-lat = <%= address.latitude %> data-lon = <%= address.longitude %>>
     </div>
   </div>
 </div>
-
 <div class="flex flex-row items-center justify-center mt-10 mb-2">
-    <%if @order.pending? %>
-      <% if can? :confirm, Order%>
-        <div class="mx-1">
-          <%= button_to "Complete", confirm_order_path(@order), data: { confirm: "Are you sure to complete order?"},  class: "bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
-        </div>
-      <% end %>
-      <% if can? :cancel, Order%>
-        <div>
-          <%= button_to "Cancel", cancel_order_path(@order), data: { confirm: "Are you sure to cancel order?"},  class: "bg-red-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"%>
-        </div>
-      <%end%>
+  <% if @order.pending? %>
+    <% if can? :confirm, Order %>
+      <div class="mx-1">
+        <%= button_to "Complete", confirm_order_path(@order), data: { confirm: "Are you sure to complete order?"},  class: "bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
+      </div>
     <% end %>
-    <% if can? :new, Message %>
+    <% if can? :cancel, Order %>
+      <div>
+        <%= button_to "Cancel", cancel_order_path(@order), data: { confirm: "Are you sure to cancel order?"},  class: "bg-red-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"%>
+      </div>
+    <%end%>
+  <% end %>
+  <% if can? :new, Message %>
     <%= link_to "Message", new_message_path(order_id: @order.id), class: "bg-green-500 text-white px-6 py-2  ml-1 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
   <% end %>
 </div>
-
-
 <script>
   function initMap() {
     const mapDiv = document.getElementById('data')
@@ -81,8 +75,5 @@
     });
   }
 </script>
-
 <script defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj6Z33I3_Uir3GBpjPtIlRAQsCADP8Ew0&libraries=visualization&callback=initMap">
-</script>
-
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj6Z33I3_Uir3GBpjPtIlRAQsCADP8Ew0&libraries=visualization&callback=initMap"></script>

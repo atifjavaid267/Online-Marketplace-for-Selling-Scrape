@@ -6,24 +6,24 @@
       <div class="col-span-1 flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
           <p class="text-lg font-bold"><%= "Order - #{@orders.count + 1 - counter}" %></p>
-          <%unless current_user.seller?%>
+          <% unless current_user.seller? %>
             <p class="text-lg font-semibold">Seller Name: <span class="text-gray-600"><%= "#{order.bid.ad.user.first_name} #{order.bid.ad.user.last_name}" %> </span></p>
-          <%end%>
-          <%unless current_user.buyer?%>
+          <% end %>
+          <% unless current_user.buyer? %>
             <p class="text-lg font-semibold">Buyer Name: <span class="text-gray-600"><%= "#{order.bid.user.first_name } #{order.bid.user.last_name }" %> </span></p>
-          <%end%>
+          <% end %>
         </div>
         <div class="flex justify-between flex-row items-center">
-          <%if order.status=="pending"%>
+          <% if order.status=="pending" %>
             <h3 class="font-bold px-10 py-6 mx-2 text-blue-600"> <%= "Order #{order.status.capitalize}" %></h3>
-          <%elsif order.status=="successful"%>
+          <% elsif order.status=="successful" %>
             <h3 class="font-bold px-10 py-6 mx-2 text-green-600"> Order Successful</h3>
-          <%elsif order.status=="cancelled"%>
+          <% elsif order.status=="cancelled" %>
             <h3 class="font-bold px-10 py-6 mx-2 text-red-600"> Order Cancelled</h3>
           <% end %>
           <% if can? :show, Order %>
             <%= link_to "View", order_path(order), class: "px-4 py-2 font-bold bg-blue-500 text-white rounded-lg hover:bg-blue-600" %>
-          <%end%>
+          <% end %>
         </div>
       </div>
     <% end %>

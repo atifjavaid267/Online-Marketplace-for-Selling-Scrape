@@ -8,22 +8,20 @@
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-
     <script>
-        var i = 0;
-        var txt = 'We offer a streamlined solution for users to sell their meticulously curated products obtained through web scraping. With our user-friendly interface, interested buyers can easily peruse and purchase these unique offerings.';
-        var speed = 50;
+      var i = 0;
+      var txt = 'We offer a streamlined solution for users to sell their meticulously curated products obtained through web scraping. With our user-friendly interface, interested buyers can easily peruse and purchase these unique offerings.';
+      var speed = 50;
 
-        function typeWriter() {
-          if (i < txt.length) {
-            document.getElementById("home_description").innerHTML += txt.charAt(i);
-            i++;
-            setTimeout(typeWriter, speed);
-          }
+      function typeWriter() {
+        if (i < txt.length) {
+          document.getElementById("home_description").innerHTML += txt.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
         }
+      }
     </script>
   </head>
-
   <body>
     <% if user_signed_in? %>
       <div class="fixed w-full top-0 z-10">

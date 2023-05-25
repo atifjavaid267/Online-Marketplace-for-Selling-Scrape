@@ -1,19 +1,21 @@
-      <%= form_with(model: @product, local: true) do |form| %>
-        <div class="field ">
-          <div class="card bg-white p-4 rounded-lg shadow-md">
-          <div class="form-group mb-4">
-            <%= form.label :name, class: "font-bold mb-2 block" %>
-            <%= form.text_field :name, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="form-group mb-4">
-            <%= form.label :description, class: "font-bold mb-2 block" %>
-            <%= form.text_field :description, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="form-group mb-4">
-            <%= form.label :product_image, class: "font-bold mb-2 block" %>
-            <%= form.file_field :product_image, accept: "image/*", class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="actions flex justify-center">
-            <%= form.submit "Submit",  class: "bg-blue-500 hover:bg-blue-700 text-white    font-bold py-2 px-4 rounded" %>
-          </div>
-      <% end %>
+<%= form_with(model: @product, local: true) do |form| %>
+  <div class="field ">
+    <div class="card bg-white p-4 rounded-lg shadow-md">
+      <div class="form-group mb-4">
+        <%= form.label :name, class: "font-bold mb-2 block" %>
+        <%= form.text_field :name, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
+      </div>
+      <div class="form-group mb-4">
+        <%= form.label :description, class: "font-bold mb-2 block" %>
+        <%= form.text_field :description, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
+      </div>
+      <div class="form-group mb-4">
+        <%= form.label :product_image, class: "font-bold mb-2 block" %>
+        <%= form.file_field :product_image, accept: "image/*", class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
+      </div>
+      <div class="actions flex justify-center">
+        <%= form.submit "Submit",  class: "bg-blue-500 hover:bg-blue-700 text-white    font-bold py-2 px-4 rounded" %>
+      </div>
+    </div>
+  </div>
+<% end %>
