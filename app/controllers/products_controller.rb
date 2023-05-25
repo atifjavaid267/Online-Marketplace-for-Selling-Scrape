@@ -7,7 +7,8 @@ class ProductsController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
-    @products = @products.status(params[:status] || true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @products = @products.status(params[:status] || true).order(updated_at: :desc).paginate(page: params[:page],
+                                                                                            per_page: RECORDS_PER_PAGE)
   end
 
   def new; end

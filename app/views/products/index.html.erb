@@ -7,9 +7,7 @@
     </div>
   <%end%>
   <div class="grid grid-cols-2 gap-4 m-5">
-    <% page = params[:page].to_i==1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
-    <% counter = (page * @products.limit_value) + 1 %>
-    <% @products.each do |product| %>
+    <% @products.each.with_index(@products.offset+1) do |product, counter| %>
       <div class="border p-4 rounded-lg flex w-full">
         <div class="w-1/2">
           <div>
@@ -41,7 +39,6 @@
         </div>
         </div>
       </div>
-      <% counter = counter + 1%>
     <% end %>
   </div>
   <div class = "flex flex-row items-center justify-center">

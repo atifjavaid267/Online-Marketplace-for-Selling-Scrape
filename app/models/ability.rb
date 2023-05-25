@@ -29,7 +29,7 @@ class Ability
 
     elsif user.buyer?
 
-      can %i[index], Product, status: true
+      can %i[index show], Product, status: true
 
       can %i[index show], Ad, status: true
 

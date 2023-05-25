@@ -2,9 +2,7 @@
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Ad Found!' } %>
 <% else %>
   <div class="grid grid-cols-2 gap-4 m-5">
-    <% page = params[:page].to_i ==1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
-    <% counter = (page * @ads.limit_value) + 1 %>
-    <% @ads.each do |ad| %>
+    <% @ads.each.with_index(@ads.offset+1) do |ad, counter| %>
       <div class="border p-4 rounded-lg flex w-full">
         <div class="w-1/2">
           <div>
@@ -39,7 +37,6 @@
         </div>
         </div>
       </div>
-    <% counter = counter + 1 %>
     <% end %>
   </div>
   <br>

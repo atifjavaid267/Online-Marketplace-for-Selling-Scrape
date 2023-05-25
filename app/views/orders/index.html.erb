@@ -2,9 +2,7 @@
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Order Found!' } %>
 <% else %>
   <div class="grid gap-4 grid-cols-2 mx-4 my-2 mt-6">
-    <% page = params[:page].to_i==1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
-    <% counter = (page * @orders.limit_value) + 1 %>
-    <% @orders.each do |order| %>
+    <% @orders.each.with_index(@orders.offset+1) do |order, counter| %>
       <div class="col-span-1 flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
           <p class="text-lg font-bold"><%= "Order - #{@orders.count + 1 - counter}" %></p>
@@ -28,7 +26,6 @@
           <%end%>
         </div>
       </div>
-      <% counter += 1 %>
     <% end %>
   </div>
   <div class = "pb-10 flex flex-row items-center justify-center">

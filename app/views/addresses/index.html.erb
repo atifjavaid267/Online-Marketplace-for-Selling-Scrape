@@ -34,7 +34,7 @@
         </tr>
       </thead>
       <tbody>
-        <% @addresses.each.with_index(1+@addresses.limit_value*(params[:page].to_i-1)) do |address, counter| %>
+        <% @addresses.each.with_index(@addresses.offset+1) do |address, counter| %>
           <tr class="<%= cycle('bg-white', 'bg-gray-100') %>">
             <td class="px-4 py-2"><%= counter %></td>
             <td class="px-4 py-2"><%= address.street1 %></td>
@@ -54,6 +54,6 @@
     </table>
   </div>
   <div class = "pb-10 flex flex-row items-center justify-center">
-      <%= will_paginate @adresses, class:"bg-gray-300 rounded py-3 px-5" %>
+    <%= will_paginate @adresses, class:"bg-gray-300 rounded py-3 px-5" %>
   </div>
 <% end %>
