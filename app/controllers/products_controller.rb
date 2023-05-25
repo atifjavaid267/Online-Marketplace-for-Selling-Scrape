@@ -2,8 +2,8 @@
 
 # Product Controller
 class ProductsController < ApplicationController
-  load_and_authorize_resource except: [:show_root]
-  before_action :authenticate_user!, except: %i[show_root]
+  load_and_authorize_resource
+  before_action :authenticate_user!
   before_action :store_location, only: %i[index]
 
   def index
@@ -53,10 +53,6 @@ class ProductsController < ApplicationController
       flash[:alert] = @product.errors.full_messages.join(', ')
     end
     redirect_to products_path(status: true)
-  end
-
-  def show_root
-    @products = Product.status(true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   private

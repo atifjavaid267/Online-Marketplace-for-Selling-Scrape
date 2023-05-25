@@ -2,10 +2,14 @@
 
 # Users Controller
 class UsersController < ApplicationController
-  before_action :authenticate_user!
+  before_action :authenticate_user!, except: [:show_root]
   before_action :store_location, only: %i[otp_setting]
 
   def home; end
+
+  def show_root
+    @products = Product.status(true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+  end
 
   def otp_setting; end
 

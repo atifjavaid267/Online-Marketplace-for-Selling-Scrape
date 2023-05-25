@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   patch 'users/toggle_otp_status'
 
   # root
-  root 'products#show_root'
+  root 'users#show_root'
 
   resources :messages, only: %i[create show new]
   mount ActionCable.server => '/cable'
