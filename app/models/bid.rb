@@ -1,7 +1,7 @@
 class Bid < ApplicationRecord
   belongs_to :ad
   belongs_to :user
-  has_one    :order
+  has_one :order
 
   validates :price, numericality: { greater_than_or_equal_to: 1 }
 

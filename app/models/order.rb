@@ -10,12 +10,8 @@ class Order < ApplicationRecord
 
   scope :status, ->(status_param) { where(status: status_param) }
 
-  scope :pending, -> { where(status: 'pending') }
-  scope :successful, -> { where(status: 'successful') }
-  scope :cancelled, -> { where(status: 'cancelled') }
-
   def pending?
-    status == 'pending' # status enum
+    status == 'pending'
   end
 
   def successful?
@@ -41,8 +37,7 @@ class Order < ApplicationRecord
 
   def change_bids_status_for_confirm_order
     ad = bid.ad
-    #  ad.bids.where.not(id: bid.id).update_all(status: 'failed', price: -1)
-    ad.bids.where.not(id: bid.id).update_all(status: 'failed')
+    ad.bids.where.not(id: bid.id).update(status: 'failed')
   end
 
   def change_bids_status_for_cancel_order
