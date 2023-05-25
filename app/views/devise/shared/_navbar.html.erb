@@ -1,4 +1,3 @@
-
 <nav class="bg-gray-800">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
@@ -24,40 +23,39 @@
         <% if user_signed_in? %>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <%= link_to "Home", users_home_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+              <%= link_to "Home", users_home_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
             </div>
           </div>
 
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
               <%if can? :index, Product %>
-                <%= link_to "Products", products_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
-              <%end%>
+                <%= link_to "Products", products_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
+              <% end %>
             </div>
           </div>
 
           <% if can? :index, Order %>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
-                <%= link_to "Orders", orders_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+                <%= link_to "Orders", orders_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
               </div>
             </div>
           <% end %>
 
           <% if can? :index, Bid %>
-
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
-                <%= link_to "Bids", bids_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
+                <%= link_to "Bids", bids_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
               </div>
             </div>
           <% end %>
-        <%end%>
+        <% end %>
       </div>
 
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
         <% if user_signed_in? %>
-          <% unless current_user.admin?%>
+          <% unless current_user.admin? %>
 
           <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
             <span class="sr-only text-white">View notifications</span>
@@ -67,9 +65,8 @@
             </svg>
             <div class="hidden bg-white rounded-lg hover:font-semibold shadow-lg text-gray-700 mt-3 absolute right-0" id="notification-dropdown"></div>
           </button>
-        <%end%>
+        <% end %>
 
-        <!-- Profile dropdown -->
         <div class="relative inline-block text-left ml-5">
           <div>
             <button type="button" class="inline-flex w-full justify-center gap-x-1.5 bg-gray-800 px-3 py-2 hover:bg-gray-600 rounded-lg text-white shadow-sm" id="menu-button" aria-expanded="false" aria-haspopup="true">
@@ -88,7 +85,7 @@
             </div>
           </div>
         </div>
-        <%elsif%>
+        <% elsif %>
         <div class="relative ml-3">
           <%= link_to "Sign in", new_user_session_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
         </div>
@@ -98,7 +95,7 @@
         <div class="relative ml-3">
           <%= link_to "Sign up", new_user_registration_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
         </div>
-        <%end%>
+        <% end %>
       </div>
     </div>
   </div>
@@ -112,7 +109,6 @@
 <script>
   var menuButton = document.querySelector('#menu-button');
   var menu = document.querySelector('#menu');
-
 
   document.addEventListener('click', (event) => {
     if (!menu.contains(event.target) && event.target !== menuButton) {
