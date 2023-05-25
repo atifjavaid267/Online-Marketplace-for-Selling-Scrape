@@ -17,7 +17,7 @@
         </div>
         <div class="flex justify-between flex-row items-center">
           <%if order.status=="pending"%>
-            <h3 class="font-bold px-10 py-6 mx-2 text-blue-600"> <%= "Order #{order.status.Capitalize}" %></h3>
+            <h3 class="font-bold px-10 py-6 mx-2 text-blue-600"> <%= "Order #{order.status.capitalize}" %></h3>
           <%elsif order.status=="successful"%>
             <h3 class="font-bold px-10 py-6 mx-2 text-green-600"> Order Successful</h3>
           <%elsif order.status=="cancelled"%>

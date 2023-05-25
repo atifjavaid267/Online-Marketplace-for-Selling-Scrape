@@ -44,8 +44,8 @@ Rails.application.routes.draw do
 
   resources :ads, except: %i[new create] do
     resources :bids, only: %i[new create]
-    get 'view_bids', on: :member
     member do
+      get :view_bids
       post :toggle_status
     end
   end
