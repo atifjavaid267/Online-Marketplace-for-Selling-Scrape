@@ -2,9 +2,9 @@
 
 # Ads Controller
 class AdsController < ApplicationController
-  load_and_authorize_resource :product
-  load_and_authorize_resource through: :product
-  skip_load_and_authorize_resource only: %i[index show]
+  load_and_authorize_resource # :product
+  # load_and_authorize_resource through: :product
+  # skip_load_and_authorize_resource  only: %i[index show]
 
   before_action :authenticate_user!
   before_action :store_location, only: %i[new index]
