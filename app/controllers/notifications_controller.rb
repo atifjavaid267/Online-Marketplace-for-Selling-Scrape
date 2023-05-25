@@ -5,7 +5,10 @@ class NotificationsController < ApplicationController
   load_and_authorize_resource
 
   def create
-    return unless @notification.save
+    if @notification.save
+    else
+    flash[:error] = @notification.errors.full_messages.join(', ')
+    end
   end
 
   def update

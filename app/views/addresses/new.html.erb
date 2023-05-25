@@ -1,3 +1,7 @@
+<%# <div data-controller="hello" data-target="hello.output">
+  <!-- Content goes here -->
+</div> %>
+
 <div class="bg-cover h-full bg-background_img">
   <div class = "pt-5 mx-12" style="display: flex; justify-content: center; align-items: center;">
     <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
@@ -167,7 +171,6 @@ function geocodeLatLng(latlng) {
         document.getElementById("address_zip_code").value = zip_code;
 
         var address = {
-          street1: street_number + " " + route,
           city: city,
           state: state,
           zip_code: zip_code

@@ -10,8 +10,5 @@ class Message < ApplicationRecord
   end
 
 
-  # def self.retrieve_messages(first_id, second_id)
-  #   where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)",
-  #         first_id, second_id, second_id, first_id)
-  # end
+  
 end
