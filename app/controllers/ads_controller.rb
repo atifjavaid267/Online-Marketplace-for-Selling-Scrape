@@ -2,9 +2,9 @@
 
 # Ads Controller
 class AdsController < ApplicationController
-  load_and_authorize_resource # :product
-  # load_and_authorize_resource through: :product
-  # skip_load_and_authorize_resource  only: %i[index show]
+  load_and_authorize_resource :product, only: %i[new create]
+  load_and_authorize_resource through: :product, only: %i[new create]
+  load_and_authorize_resource except: %i[new create]
 
   before_action :authenticate_user!
   before_action :store_location, only: %i[new index]
@@ -16,8 +16,6 @@ class AdsController < ApplicationController
   def show; end
 
   def new
-    @ad.user_id = current_user.id
-    @ad.product_id = params[:product_id].to_i
     @addresses = {}
     current_user.addresses.each do |a|
       @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
@@ -26,8 +24,6 @@ class AdsController < ApplicationController
 
   def create
     @ad.user_id = current_user.id
-    # @ad.product_id = params[:product_id]
-    # byebug
     if @ad.save
       flash[:notice] = 'Ad was successfully created'
       redirect_to @ad
@@ -73,7 +69,7 @@ class AdsController < ApplicationController
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end
-    redirect_to product_ads_path(status: true)
+    redirect_to ads_path(status: true)
   end
 
   private
