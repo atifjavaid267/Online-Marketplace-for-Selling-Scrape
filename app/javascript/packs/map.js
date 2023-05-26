@@ -27,7 +27,6 @@ function initMap() {
   });
 
   geocoder = new google.maps.Geocoder();
-  debugger;
   var autocomplete = new google.maps.places.Autocomplete(input);
   autocomplete.bindTo("bounds", map);
 
@@ -128,6 +127,12 @@ function initMap() {
     });
   }
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (typeof google !== "undefined") {
+    google.maps.event.addDomListener(window, "load", loadMap);
+  }
+});
 
 window.initMap = initMap;
 

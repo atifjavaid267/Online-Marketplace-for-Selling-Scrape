@@ -11,7 +11,7 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
       <%= javascript_pack_tag 'map','data-turbolinks-track': 'reload' %>
 
-    <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyC3JUhLERQ9GxZnC4OHjA_AzieuJlcW6Is&libraries=places&callback=initMap", defer: true %>
+    <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyC3JUhLERQ9GxZnC4OHjA_AzieuJlcW6Is&libraries=places&callback=initMap", defer: true, async: true %>
    
     
     
