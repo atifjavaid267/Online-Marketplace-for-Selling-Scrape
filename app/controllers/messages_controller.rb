@@ -46,8 +46,6 @@ class MessagesController < ApplicationController
                                    order_id: @order.id,
                                    timestamp: Time.zone.now.strftime('%I:%M %p')
                                  })
-
-    puts @message.errors.full_messages
   end
 
   private

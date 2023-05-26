@@ -2,13 +2,14 @@
 
 # Order Controller
 class OrdersController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :bid, only: %i[new create]
+  load_and_authorize_resource :order, through: :bid, singleton: true, only: %i[new create]
+  load_and_authorize_resource except: %i[new create]
+
   before_action :authenticate_user!
   before_action :store_location, only: %i[new]
 
-  def new
-    @order.bid_id = params[:bid_id]
-  end
+  def new; end
 
   def create
     if @order.save

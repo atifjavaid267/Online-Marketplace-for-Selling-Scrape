@@ -15,7 +15,7 @@ consumer.subscriptions.create("BidsChannel", {
       <div class="flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
           <p class="text-gray-600 font-bold">
-            <span class="font-bold"> Bid Amount: </span>${price}
+            <span class="font-bold"> Bid Amount: Rs. </span>${" " + price}
           </p>
           <p class="text-lg">Buyer Name: ${buyer_name}</p>
         </div>
