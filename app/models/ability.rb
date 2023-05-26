@@ -3,9 +3,9 @@ class Ability
 
   def initialize(user)
     user ||= User.new
+
     can [:show_root], Product
 
-    # byebug
     if user.admin?
       can %i[new create show index edit update destroy toggle_status], Product
       can %i[index show destroy view_bids toggle_status], Ad
@@ -15,9 +15,8 @@ class Ability
 
       can %i[index show], Product, status: true
 
-      can %i[index], Address, user_id: user.id
       can %i[new create], Address
-      can %i[edit update destroy], Address, user_id: user.id
+      can %i[index edit update destroy], Address, user_id: user.id
 
       can %i[new create toggle_status view_bids], Ad
       can %i[index show edit update destroy], Ad, user_id: user.id
@@ -38,7 +37,6 @@ class Ability
 
       can %i[index show], Order, bid: { user_id: user.id }
       can %i[show new create], Message
-
     end
   end
 end

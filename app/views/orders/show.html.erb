@@ -1,19 +1,8 @@
 <%= render 'devise/shared/back' %>
 <div class="m-10">
-  <% if @order.pending? %>
-    <div class="flex flex-row items-center justify-center mt-10">
-      <h3 class="font-bold text-blue-600 ml-1">Order is Pending!</h3>
-      <br>
-    </div>
-  <% elsif @order.successful? %>
-    <div class="flex flex-row items-center justify-center mt-10">
-      <h3 class="font-bold text-green-600 ml-1">Order has been Completed!</h3>
-    </div>
-  <% elsif @order.cancelled? %>
-    <div class="flex flex-row items-center justify-center mt-10">
-      <h3 class="font-bold text-red-600 ml-1">Order has been Cancelled!</h3>
-    </div>
-  <% end %>
+  <div class="flex flex-row items-center justify-center mt-10">
+    <h3 class="font-bold <%= order_status_css(@order.status) %> ml-1"> <%= "Order #{@order.status.capitalize}!" %> </h3>
+  </div>
 </div>
 <div class="flex flex-col md-flex-col lg:flex-row xl:flex-row 2xl:flex-row items-center justify-center">
   <div class="flex flex-col items-start space-y-12 mx-10">
