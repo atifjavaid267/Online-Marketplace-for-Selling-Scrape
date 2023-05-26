@@ -15,7 +15,7 @@
     </div>
   <% end %>
 </div>
-<div class="flex flex-row items-center justify-center">
+<div class="flex flex-col md-flex-col lg:flex-row xl:flex-row 2xl:flex-row items-center justify-center">
   <div class="flex flex-col items-start space-y-12 mx-10">
     <h4 class="font-semibold text-lg">Order Amount:</h4>
     <p class="text-gray-700 mb-6"><%= "Rs. #{@order.bid.price}" %></p>
@@ -30,7 +30,7 @@
     <h4 class="font-semibold text-lg">Pickup Date & Time:</h4>
     <p class="text-gray-700 mb-6"><%= @order.pickup_time.strftime('%d %B %Y | %I:%M:%S %p')%></p>
   </div>
-  <div class="mx-10">
+  <div class="mx-10 sm:mt-10 md-mt-10">
     <h4 class="font-semibold text-lg">Address:</h4>
     <% address = @order.bid.ad.address %>
     <p class="text-gray-700 mb-10"><%= [address.street1, address.street2, address.city, address.state, address.zip_code].reject(&:nil?).reject(&:empty?).join(', ') %></p>

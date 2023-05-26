@@ -9,6 +9,7 @@ class ProductsController < ApplicationController
   def index
     @products = @products.status(params[:status] || true).order(updated_at: :desc).paginate(page: params[:page],
                                                                                             per_page: RECORDS_PER_PAGE)
+    @products = @products.includes([product_image_attachment: :blob])
   end
 
   def new; end

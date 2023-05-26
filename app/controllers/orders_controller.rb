@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
   def index
     @orders = @orders.status(params[:status]) if params[:status]
     @orders = @orders.order(created_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @orders = @orders.includes(bid: { user: {}, ad: :user }).references(:users)
   end
 
   def confirm

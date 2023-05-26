@@ -84,3 +84,5 @@ gem "twilio-ruby", "~> 5.76"
 gem "erb-formatter"
 
 gem 'htmlbeautifier'
+
+gem "bullet", "~> 7.0"

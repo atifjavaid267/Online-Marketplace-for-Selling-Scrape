@@ -11,6 +11,7 @@ class AdsController < ApplicationController
 
   def index
     @ads = @ads.status(params[:status] || true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @ads = @ads.includes([:product], [:ad_images_attachments])
   end
 
   def show; end
@@ -35,6 +36,7 @@ class AdsController < ApplicationController
 
   def view_bids
     @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @bids = @bids.includes([:user])
   end
 
   def edit

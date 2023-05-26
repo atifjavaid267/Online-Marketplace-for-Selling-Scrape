@@ -9,6 +9,7 @@ class UsersController < ApplicationController
 
   def show_root
     @products = Product.status(true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @products = @products.includes([product_image_attachment: :blob])
   end
 
   def otp_setting; end
