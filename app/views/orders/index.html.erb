@@ -14,13 +14,7 @@
           <% end %>
         </div>
         <div class="flex justify-between flex-row items-center">
-          <% if order.status=="pending" %>
-            <h3 class="font-bold px-10 py-6 mx-2 text-blue-600"> <%= "Order #{order.status.capitalize}" %> </h3>
-          <% elsif order.status=="successful" %>
-            <h3 class="font-bold px-10 py-6 mx-2 text-green-600"> <%= "Order #{order.status.capitalize}" %> </h3>
-          <% elsif order.status=="cancelled" %>
-            <h3 class="font-bold px-10 py-6 mx-2 text-red-600"> <%= "Order #{order.status.capitalize}" %> </h3>
-          <% end %>
+          <h3 class="font-bold px-10 py-6 mx-2 <%= order_status_css(order.status) %>"> <%= "Order #{order.status.capitalize}" %> </h3>
           <% if can? :show, Order %>
             <%= link_to "View", order_path(order), class: "px-4 py-2 font-bold bg-blue-500 text-white rounded-lg hover:bg-blue-600" %>
           <% end %>
