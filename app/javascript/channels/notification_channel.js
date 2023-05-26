@@ -30,49 +30,6 @@ document.addEventListener("turbolinks:load", () => {
     notificationDropdown.appendChild(notificationMessage);
   }
 
-  const handleNotification = (data) => {
-    console.log(data);
-    const senderId = data.sender_id;
-    const senderName = data.sender_name;
-    const orderID = data.order_id;
-
-    const messageCount = messageCounts[senderId] || 0;
-    const existingMessage = document.getElementById(`notification-${senderId}`);
-
-    if (existingMessage) {
-      existingMessage.textContent = `${senderName} sent you ${
-        messageCount + 1
-      } messages`;
-    } else {
-      const notificationMessage = document.createElement("div");
-      notificationMessage.textContent = `${senderName} sent you a message`;
-      notificationMessage.classList.add("p-2", "text-black");
-      notificationMessage.id = `notification-${senderId}`;
-      notificationMessage.addEventListener("click", () => {
-        const messageURL = `/messages/new?order_id=${orderID}&user_id=${current_user_id}`;
-        window.location.href = messageURL;
-      });
-      notificationDropdown.appendChild(notificationMessage);
-    }
-
-    messageCounts[senderId] = messageCount + 1;
-    notificationMessages[senderId] = {
-      senderName,
-      messageCount: messageCount + 1,
-      orderID,
-    };
-
-    const notifications = {
-      messageCounts,
-      notificationMessages,
-    };
-    localStorage.setItem("notifications", JSON.stringify(notifications));
-
-    const newCount = parseInt(countElement.innerHTML) + 1;
-    localStorage.setItem("count", newCount);
-    countElement.innerHTML = newCount;
-  };
-
   consumer.subscriptions.create(
     { channel: "NotificationChannel", user_id: current_user_id },
     {
@@ -82,18 +39,11 @@ document.addEventListener("turbolinks:load", () => {
 
       disconnected() {},
 
-      // received(data) {
-      // handleNotification(data);
       received(data) {
+        console.log(data);
         const senderId = data.sender_id;
         const senderName = data.sender_name;
         const orderID = data.order_id;
-
-        const storedNotifications =
-          JSON.parse(localStorage.getItem("notifications")) || {};
-        const messageCounts = storedNotifications.messageCounts || {};
-        const notificationMessages =
-          storedNotifications.notificationMessages || {};
 
         const messageCount = messageCounts[senderId] || 0;
         const existingMessage = document.getElementById(
@@ -129,8 +79,7 @@ document.addEventListener("turbolinks:load", () => {
         };
         localStorage.setItem("notifications", JSON.stringify(notifications));
 
-        const storedCount = parseInt(localStorage.getItem("count")) || 0;
-        const newCount = storedCount + 1;
+        const newCount = parseInt(countElement.innerHTML) + 1;
         localStorage.setItem("count", newCount);
         countElement.innerHTML = newCount;
       },
