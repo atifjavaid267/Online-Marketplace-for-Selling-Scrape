@@ -7,7 +7,7 @@
       <div class="flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
           <p class="text-gray-600 font-bold"> Bid Amount: <%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %></p>
-          <p class="text-lg">Buyer Name: <%= "#{bid.user.first_name}" " #{bid.user.last_name}"%></p>
+          <p class="text-lg">Buyer Name: <%= bid.user.full_name %></p>
         </div>
         <div>
           <% if can? :new, Order %>

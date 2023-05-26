@@ -29,6 +29,10 @@ class User < ApplicationRecord
     role == 'buyer'
   end
 
+  def full_name
+    "#{first_name} #{last_name}"
+  end
+
   def self.generate_otp_secret
     ROTP::Base32.random_base32
   end
