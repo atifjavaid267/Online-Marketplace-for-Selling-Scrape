@@ -2,8 +2,8 @@
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Product Available!' } %>
 <% else %>
   <% if can? :new, Product %>
-    <div class="flex md:justify-end mb-1 mt-2 mr-2">
-      <%= link_to "Add Product", new_product_path, class: " text-blue-600 hover:font-semibold mt-2 px-4 rounded" %>
+    <div class="flex justify-start pl-2 md:justify-end mb-1 mt-2 mr-2">
+      <%= link_to "Add Product", new_product_path, class: "text-blue-600 hover:font-semibold mt-6 sm:mt-2 px-4 rounded" %>
     </div>
   <% end %>
   <div class="grid lg:grid-cols-2 gap-4 m-5">
