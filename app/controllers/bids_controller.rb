@@ -30,7 +30,7 @@ class BidsController < ApplicationController
 
   def index
     @bids = @bids.order(created_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-    @bids = @bids.includes([:ad])
+    @bids = @bids.includes([ad: :product])
   end
 
   private
