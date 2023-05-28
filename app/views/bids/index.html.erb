@@ -1,7 +1,7 @@
 <% if @bids.empty? %>
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Bid Found!' } %>
 <% else %>
-  <div class="grid grid-cols-2 gap-4 items-center p-4 border rounded-md shadow-md mt-2">
+  <div class="grid lg:grid-cols-2 gap-4 items-center p-4 border rounded-md shadow-md mt-2">
     <% @bids.each do |bid| %>
       <div class="flex justify-between p-4 border rounded-md shadow-md mt-2">
         <div>
