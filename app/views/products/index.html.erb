@@ -1,4 +1,4 @@
-<%if @products.empty? %>
+<% if @products.empty? %>
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Product Available!' } %>
 <% else %>
   <% if can? :new, Product %>
