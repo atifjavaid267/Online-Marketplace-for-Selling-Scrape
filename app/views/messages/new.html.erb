@@ -30,12 +30,6 @@
     <% end %>
     <div class=" pt-2 flex fixed bottom-0 w-full p-4 bg-white rounded-lg w-100">
       <%= form_for Message.new, url:messages_path, remote: true do |f| %>
-        <%= f.hidden_field :sender_id, value: current_user.id %>
-        <% if current_user.seller? %>
-          <%= f.hidden_field :receiver_id, value: @order.bid.user_id %>
-        <% else %>
-          <%= f.hidden_field :receiver_id, value: @order.bid.ad.user_id %>
-        <% end %>
         <%= f.hidden_field :order_id, value: @order.id %>
         <div class="flex flex-row w-full">
           <%= f.text_field :content, required: true, placeholder: "Enter your message",  :maxlength=>"110", class: "flex-1 mr-2 border-2 border-gray-300 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" %>
