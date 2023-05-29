@@ -128,12 +128,5 @@ function initMap() {
   }
 }
 
-document.addEventListener("DOMContentLoaded", function () {
-  if (typeof google !== "undefined") {
-    google.maps.event.addDomListener(window, "load", loadMap);
-  }
-});
-
 window.initMap = initMap;
 
-// window.geocodeLatLng(latlng) = geocodeLatLng(latlng)

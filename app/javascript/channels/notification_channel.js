@@ -14,15 +14,16 @@ document.addEventListener("turbolinks:load", () => {
   const messageCounts = storedNotifications.messageCounts || {};
   const notificationMessages = storedNotifications.notificationMessages || {};
 
-  for (const senderId in messageCounts) {
-    const senderName = notificationMessages[senderId].senderName;
-    const messageCount = messageCounts[senderId];
-    const orderID = notificationMessages[senderId].orderID;
+  for (const pairId in messageCounts) {
+    const senderId = pairId.split("-")[0];
+    const senderName = notificationMessages[pairId].senderName;
+    const messageCount = messageCounts[pairId];
+    const orderID = notificationMessages[pairId].orderID;
 
     const notificationMessage = document.createElement("div");
     notificationMessage.textContent = `${senderName} sent you ${messageCount} messages`;
     notificationMessage.classList.add("p-2", "text-black");
-    notificationMessage.id = `notification-${senderId}`;
+    notificationMessage.id = `notification-${pairId}`;
     notificationMessage.addEventListener("click", () => {
       const messageURL = `/messages/new?order_id=${orderID}&user_id=${current_user_id}`;
       window.location.href = messageURL;
@@ -30,58 +31,64 @@ document.addEventListener("turbolinks:load", () => {
     notificationDropdown.appendChild(notificationMessage);
   }
 
+  const handleNotification = (data) => {
+    console.log(data);
+    const senderId = data.sender_id;
+    const receiverId = data.receiver_id;
+    const senderName = data.sender_name;
+    const orderID = data.order_id;
+
+    const pairId = `${senderId}-${receiverId}`;
+    const existingMessage = document.getElementById(`notification-${pairId}`);
+
+    if (existingMessage) {
+      const messageCount = messageCounts[pairId];
+      existingMessage.textContent = `${senderName} sent you ${
+        messageCount + 1
+      } messages`;
+      messageCounts[pairId] += 1;
+    } else {
+      const notificationMessage = document.createElement("div");
+      notificationMessage.textContent = `${senderName} sent you a message`;
+      notificationMessage.classList.add("p-2", "text-black");
+      notificationMessage.id = `notification-${pairId}`;
+      notificationMessage.addEventListener("click", () => {
+        const messageURL = `/messages/new?order_id=${orderID}&user_id=${current_user_id}`;
+        window.location.href = messageURL;
+      });
+      notificationDropdown.appendChild(notificationMessage);
+      messageCounts[pairId] = 1;
+    }
+
+    notificationMessages[pairId] = {
+      senderName,
+      messageCount: messageCounts[pairId],
+      orderID,
+    };
+
+    const notifications = {
+      messageCounts,
+      notificationMessages,
+    };
+    localStorage.setItem("notifications", JSON.stringify(notifications));
+
+    const newCount = Object.values(messageCounts).reduce(
+      (total, count) => total + count,
+      0
+    );
+    localStorage.setItem("count", newCount);
+    countElement.innerHTML = newCount;
+  };
+
   consumer.subscriptions.create(
     { channel: "NotificationChannel", user_id: current_user_id },
     {
       connected() {
         console.log(`Connected to the NotificationsChannel ${current_user_id}`);
       },
-
       disconnected() {},
-
       received(data) {
-        console.log(data);
-        const senderId = data.sender_id;
-        const senderName = data.sender_name;
-        const orderID = data.order_id;
-
-        const messageCount = messageCounts[senderId] || 0;
-        const existingMessage = document.getElementById(
-          `notification-${senderId}`
-        );
-
-        if (existingMessage) {
-          existingMessage.textContent = `${senderName} sent you ${
-            messageCount + 1
-          } messages`;
-        } else {
-          const notificationMessage = document.createElement("div");
-          notificationMessage.textContent = `${senderName} sent you a message`;
-          notificationMessage.classList.add("p-2", "text-black");
-          notificationMessage.id = `notification-${senderId}`;
-          notificationMessage.addEventListener("click", () => {
-            const messageURL = `/messages/new?order_id=${orderID}&user_id=${current_user_id}`;
-            window.location.href = messageURL;
-          });
-          notificationDropdown.appendChild(notificationMessage);
-        }
-
-        messageCounts[senderId] = messageCount + 1;
-        notificationMessages[senderId] = {
-          senderName,
-          messageCount: messageCount + 1,
-          orderID,
-        };
-
-        const notifications = {
-          messageCounts,
-          notificationMessages,
-        };
-        localStorage.setItem("notifications", JSON.stringify(notifications));
-
-        const newCount = parseInt(countElement.innerHTML) + 1;
-        localStorage.setItem("count", newCount);
-        countElement.innerHTML = newCount;
+        handleNotification(data);
       },
     }
   );
