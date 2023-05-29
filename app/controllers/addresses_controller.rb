@@ -7,7 +7,7 @@ class AddressesController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
-    @addresses = @addresses.order(updated_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @addresses = @addresses.recently_updated.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def new; end

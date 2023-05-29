@@ -6,6 +6,8 @@ class Address < ApplicationRecord
   validates :user_id, presence: true
   before_save :check_coordinates
 
+  scope :recently_updated, -> { order(updated_at: :desc) }
+
   after_validation :geocode, if: lambda { |obj|
     obj.street1.present? || obj.street2.present? || obj.city.present? || obj.state.present? || obj.zip_code.present? || obj.full_address.present?
   }
@@ -33,4 +35,3 @@ class Address < ApplicationRecord
     end
   end
 end
-
