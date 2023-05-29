@@ -10,8 +10,6 @@ class User < ApplicationRecord
   validates :last_name, format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
   validates :role, presence: true
 
-  # ROLES = %w[admin seller buyer].freeze
-
   has_many :products
   has_many :ads
   has_many :addresses

@@ -1,26 +1,23 @@
-
 <% first_id = current_user.id %>
 <% if current_user.buyer? %>
   <% second_id = @order&.bid&.ad&.user_id %>
 <% else %>
   <% second_id = @order&.bid&.user_id %>
 <% end %>
-
 <% noti = Notification.where(receiver_id: current_user.id, sender_id: second_id ).first %>
 <% if noti %>
   <% noti.count = 0 %>
   <% noti.read = true %>
   <% noti.save %>
 <% end %>
-
 <% messages = Message.where("(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", first_id, second_id, second_id, first_id) %>
-<div id="chat-room" class = "pb-16">
+<div id="chat-room" class="pb-16">
   <div id="messages">
     <% unless messages.length.zero? %>
       <% last_date = messages.first.created_at.strftime("%B %d, %Y") %>
       <div class= "mb-5 pb-5">
         <div class="flex justify-center text-center mt-15">
-        <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
+          <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
         </div>
         <% messages.each do |message| %>
           <% if last_date != message.created_at.strftime("%B %d, %Y") %>
@@ -29,7 +26,6 @@
               <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
             </div>
           <%end%>
-
           <div id = "user", data-user-id = <%= @current_user_id %>></div>
           <%if current_user.id == message.sender_id %>
             <div class="message text-right mr-5 mt-5">
@@ -62,7 +58,6 @@
     </div>
   </div>
 </div>
-
 <script>
   document.addEventListener("turbolinks:load", () => {
     if (window.location.pathname === "/messages/new") {

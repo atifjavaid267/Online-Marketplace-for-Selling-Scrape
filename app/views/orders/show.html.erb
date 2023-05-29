@@ -23,7 +23,7 @@
     <h4 class="font-semibold text-lg">Address:</h4>
     <% address = @order.bid.ad.address %>
     <p class="text-gray-700 mb-10"><%= [address.street1, address.street2, address.city, address.state, address.zip_code].reject(&:nil?).reject(&:empty?).join(', ') %></p>
-    <div id = "map" class = "w-80 h-80" ></div>
+    <div id = "map" class="w-80 h-80" ></div>
     <div id = "data" data-lat = <%= address.latitude %> data-lon = <%= address.longitude %>>
     </div>
   </div>

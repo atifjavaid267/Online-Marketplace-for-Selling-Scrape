@@ -1,8 +1,8 @@
 <% if @addresses.empty? %>
-  <%= render 'devise/shared/back'%>
+  <%= render 'devise/shared/back' %>
   <div class="bg-cover bg-no-repeat h-screen bg-background_img">
-    <div class = "pt-28">
-      <div class ="bg-gray-800" style="border: 2px; margin-top: 100px; margin-right: 100px; margin-left: 100px; margin-bottom: 50px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
+    <div class="pt-28">
+      <div class="bg-gray-800" style="border: 2px; margin-top: 100px; margin-right: 100px; margin-left: 100px; margin-bottom: 50px; padding: 40px; border-radius: 10px; color: white; opacity: 0.95;">
         <h1 class="text-center font-bold">You added no Address Yet!</h1>
       </div>
       <div class="flex flex-row justify-center">
@@ -53,7 +53,7 @@
       </tbody>
     </table>
   </div>
-  <div class = "pb-10 flex flex-col items-center justify-center">
+  <div class="pb-10 flex flex-col items-center justify-center">
     <%= will_paginate @adresses, class:"bg-gray-300 rounded py-3 px-5" %>
   </div>
 <% end %>
