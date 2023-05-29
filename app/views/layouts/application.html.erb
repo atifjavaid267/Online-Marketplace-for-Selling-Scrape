@@ -6,38 +6,30 @@
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-      <%= javascript_pack_tag 'map' %>
-
+    <%= javascript_pack_tag 'map' %>
     <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap", defer: true, async: true %>
-   
-    
-    
-
     <script>
-        var i = 0;
-        var txt = 'We offer a streamlined solution for users to sell their meticulously curated products obtained through web scraping. With our user-friendly interface, interested buyers can easily peruse and purchase these unique offerings.';
-        var speed = 50;
+      var i = 0;
+      var txt = 'We offer a streamlined solution for users to sell their meticulously curated products obtained through web scraping. With our user-friendly interface, interested buyers can easily peruse and purchase these unique offerings.';
+      var speed = 50;
 
-        function typeWriter() {
-          if (i < txt.length) {
-            document.getElementById("home_description").innerHTML += txt.charAt(i);
-            i++;
-            setTimeout(typeWriter, speed);
-          }
+      function typeWriter() {
+        if (i < txt.length) {
+          document.getElementById("home_description").innerHTML += txt.charAt(i);
+          i++;
+          setTimeout(typeWriter, speed);
         }
+      }
     </script>
   </head>
-
   <% if current_user %>
     <% current_user_id = current_user.id %>
   <% else %>
     <% current_user_id = 'x' %>
   <% end %>
   <div id = "user", data-user-id = <%= current_user_id %>></div>
-
   <body>
     <% if user_signed_in? %>
       <div class="fixed w-full top-0 z-10">
@@ -46,7 +38,6 @@
       <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8 relative flex h-16 bg-gray-800"></div>
     <% end %>
     <%= render "shared/flashes" %>
-
     <%= yield %>
   </body>
 </html>

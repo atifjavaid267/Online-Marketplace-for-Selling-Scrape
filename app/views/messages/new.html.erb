@@ -1,27 +1,26 @@
-<div id="chat-room" class = "pb-16">
+<div id="chat-room" class="pb-16">
   <div id="messages">
     <% unless @messages.length.zero? %>
       <% last_date = @messages.first.created_at.strftime("%B %d, %Y") %>
       <div class= "mb-5 pb-5">
         <div class="flex justify-center text-center mt-15">
-        <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
+          <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
         </div>
         <% @messages.each do |message| %>
           <% if last_date != message.created_at.strftime("%B %d, %Y") %>
-            <% last_date = message.created_at.strftime("%B %d, %Y")%>
+            <% last_date = message.created_at.strftime("%B %d, %Y") %>
             <div class="flex justify-center text-center">
               <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
             </div>
-          <%end%>
-
+          <% end %>
           <div id = "user", data-user-id = <%= @current_user_id %>></div>
-          <%if current_user.id == message.sender_id %>
+          <% if current_user.id == message.sender_id %>
             <div class="message text-right mr-5 mt-5">
               <span class="time text-xs text-gray-500"><%= message.created_at.strftime("%I:%M %p") %></span>
               <span class="content bg-blue-600 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
             </div>
           <% else %>
-            <div class="message  text-left ml-5 mt-5">
+            <div class="message text-left ml-5 mt-5">
               <span class="content bg-gray-500 rounded-full px-3 py-2 m-1 text-white text-lg"><%= message.content %></span>
               <span class="time text-xs text-gray-500"><%= message.created_at.strftime("%I:%M %p") %></span>
             </div>
@@ -46,6 +45,4 @@
     </div>
   </div>
 </div>
-
 <%= javascript_pack_tag 'message' %>
-

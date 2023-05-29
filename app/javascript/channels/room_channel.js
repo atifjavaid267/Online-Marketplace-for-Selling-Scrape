@@ -1,7 +1,4 @@
-
-
 import consumer from "./consumer";
-
 document.addEventListener("turbolinks:load", () => {
   const countElement = document.getElementById("count");
   const messagesContainer = document.getElementById("messages");
