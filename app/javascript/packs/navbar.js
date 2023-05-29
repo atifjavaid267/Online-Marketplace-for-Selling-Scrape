@@ -11,14 +11,6 @@ notificationBell.addEventListener("mouseenter", () => {
   notificationDropdown.classList.remove("hidden");
 });
 
-
-
-
-
-
-
-
-
 notificationDropdown.addEventListener("mouseleave", () => {
   notificationDropdown.classList.add("hidden");
 });
