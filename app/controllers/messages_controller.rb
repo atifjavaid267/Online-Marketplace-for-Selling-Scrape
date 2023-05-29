@@ -11,6 +11,19 @@ class MessagesController < ApplicationController
   def new
     @order = Order.find(params[:order_id].to_i)
     @message = Message.new(order_id: @order.id)
+
+    @second_id = current_user.buyer? ? @order.bid.ad.user_id : @order.bid.user_id
+
+    notification = Notification.where(receiver_id: current_user.id, sender_id: @second_id).first
+    if notification
+      notification.count = 0
+      notification.read = true
+      notification.save
+    end
+
+    @messages = Message.where(
+      "(sender_id = ? AND receiver_id = ?) OR (sender_id = ? AND receiver_id = ?)", current_user.id, @second_id, @second_id, current_user.id
+    )
   end
 
   def create
@@ -25,7 +38,7 @@ class MessagesController < ApplicationController
     message_content = @message.content
     sender_name = User.find(sender_id).first_name
 
-    count = Notification.already_existing(sender_id, receiver_id)
+    count = Notification.new_notification(sender_id, receiver_id)
 
     ActionCable.server.broadcast("notifications_#{receiver_id}", {
                                    count:,
@@ -46,8 +59,6 @@ class MessagesController < ApplicationController
                                    order_id: @order.id,
                                    timestamp: Time.zone.now.strftime('%I:%M %p')
                                  })
-
-    puts @message.errors.full_messages
   end
 
   private

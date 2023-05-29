@@ -9,11 +9,10 @@ class AddressesController < ApplicationController
     @addresses = @addresses.paginate(page: params[:page], per_page: 10)
   end
 
-  def new
-    @address.user_id = current_user.id
-  end
+  def new; end
 
   def create
+    @address.user_id = current_user.id
     if @address.save
       flash[:notice] = 'Address was successfully created.'
       redirect_to addresses_path
@@ -47,6 +46,7 @@ class AddressesController < ApplicationController
   private
 
   def address_params
-    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code)
+    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code,
+                                    :full_address)
   end
 end
