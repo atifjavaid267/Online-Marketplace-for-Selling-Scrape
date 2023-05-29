@@ -16,7 +16,7 @@
     <% if @ad.ad_images.attached? %>
       <div class="mt-5">
         <% @ad.ad_images.each do |image| %>
-          <%= image_tag image, class:"w-40 h-40" %>
+          <%= image_tag image, class: "w-40 h-40" %>
         <% end %>
       </div>
     <% end %>
