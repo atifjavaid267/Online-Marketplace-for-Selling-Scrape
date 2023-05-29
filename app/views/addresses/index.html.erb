@@ -17,7 +17,7 @@
 <% else %>
   <% if can? :new, Address %>
     <div class="flex justify-end mt-2 mr-2">
-      <%= link_to "Add Address", new_address_path, class: " text-blue-600 hover:font-semibold mt-2 px-4 rounded"%>
+      <%= link_to "Add Address", new_address_path, class: "text-blue-600 hover:font-semibold mt-2 px-4 rounded"%>
     </div>
   <% end %>
   <div class="py-5">
@@ -29,15 +29,13 @@
           <th class="px-4 py-3">City</th>
           <th class="px-4 py-3">State</th>
           <th class="px-4 py-3">Zip Code</th>
-          <th class="px-4 py-3" colspan="2">Actions</th>
+          <th class="px-4 py-3" colspan="2"></th>
         </tr>
       </thead>
       <tbody>
-        <% page = params[:page].to_i == 1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
-        <% counter = (page * @addresses.limit_value) + 1 %>
-        <% @addresses.each do |address| %>
+        <% @addresses.each.with_index(@addresses.offset+1) do |address, counter| %>
           <tr class="<%= cycle('bg-white', 'bg-gray-100') %>">
-            <td class="px-4 py-2"><%= counter %></td>
+            <td class="px-4 py-3"><%= counter %></td>    
             <td class="px-4 py-2"><%= address.full_address %></td>
             <td class="px-4 py-2"><%= address.city %></td>
             <td class="px-4 py-2"><%= address.state %></td>
@@ -46,15 +44,15 @@
               <td class="px-4 py-2"><%= link_to "Edit", edit_address_path(address), class: "bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded" %></td>
             <% end %>
             <% if can? :destroy, Address %>
-              <td class="px-4 py-2"><%= button_to "Delete", address, data: { confirm: "Are you sure to delete address?", turbo_confirm: "Are you sure to delete address?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
+
+              <td class="px-4 py-2"><%= link_to "Delete", address, data: { confirm: "Are you sure to delete address?"}, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white  py-2 px-3 rounded" %></td>
             <% end %>
           </tr>
-          <% counter = counter + 1 %>
         <% end %>
       </tbody>
     </table>
   </div>
-  <div class="pb-10 flex flex-row items-center justify-center">
+  <div class="pb-10 flex flex-col items-center justify-center">
     <%= will_paginate @adresses, class:"bg-gray-300 rounded py-3 px-5" %>
   </div>
 <% end %>

@@ -1,8 +1,8 @@
 <body onload="typeWriter()">
   <% unless user_signed_in? %>
-  <div>
-    <%= render 'devise/shared/navbar' %>
-  </div>
+    <div>
+      <%= render 'devise/shared/navbar' %>
+    </div>
   <% end %>
   <div class="bg-gray-800 h-screen">
     <div class="bg-gray-800">
@@ -11,10 +11,8 @@
         </div>
       </div>
     </div>
-
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-background_img">
       <div class="px-4 py-6 sm:px-0">
-
         <div class="mx-32 rounded-lg h-96 flex items-center bg-black bg-opacity-20 backdrop-blur-lg drop-shadow-lg flex-col justify-center">
           <div class="ml-10">
             <h1 class="text-3xl font-bold text-black sm:text-4xl">Online Marketplace for Selling Scrape</h1>
@@ -27,28 +25,27 @@
       </div>
     </div>
   </div>
-
   <% unless @products.nil? || @products.empty? %>
     <hr>
-    <div class="bg-cover bg-no-repeat h-screen bg-background_img" >
+    <div class="bg-cover bg-no-repeat h-full bg-background_img" >
       <div class="pt-5">
         <div class="grid grid-cols-2 gap-4">
           <% @products.each do |product| %>
             <div class="p-4 rounded-lg bg-gray-800 text-white opacity-95 flex items-center mx-16 mt-10">
               <div class="flex-grow">
-                <span class="font-bold">Product Name:</span> <br> <span> <%= product.name %> </span><br>
+                <span class="font-bold">Product Name:</span> <br>
+                <span> <%= product.name %> </span><br>
               </div>
               <div class="flex-none ml-4">
-                <%= image_tag product.product_image, class: "w-25 h-20 object-cover rounded-lg shadow-md", style: "height: 150px; width: 180px;" %>
+                <%= image_tag product.product_image, class: "w-25 h-20 object-cover rounded-lg shadow-md h-36 w-36" %>
               </div>
             </div>
           <% end %>
         </div>
       </div>
-      <div class = "pb-20 flex flex-row items-center justify-center mt-14">
-        <%= will_paginate @products, class:"bg-gray-500 rounded py-3 px-4"%>
+      <div class="pb-20 flex flex-row items-center justify-center mt-14">
+        <%= will_paginate @products, class:"bg-gray-500 rounded py-3 px-4" %>
       </div>
     </div>
   <% end %>
 </body>
-

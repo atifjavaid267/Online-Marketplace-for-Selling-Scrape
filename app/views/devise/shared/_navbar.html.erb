@@ -21,41 +21,30 @@
         <% if user_signed_in? %>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <% if current_user.admin? %>
-                <%= link_to "Dashboard", admin_dashboard_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
-              <% elsif current_user.seller? %>
-                <%= link_to "Dashboard", seller_home_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg"%>
-              <% elsif current_user.buyer? %>
-                <%= link_to "Home", buyer_home_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
-              <% end %>
+              <%= link_to "Home", users_home_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
             </div>
           </div>
           <div class="hidden sm:ml-6 sm:block">
             <div class="flex space-x-4">
-              <% if current_user.admin? || current_user.seller? %>
-                <%= link_to "Products", products_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
+              <%if can? :index, Product %>
+                <%= link_to "Products", products_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
               <% end %>
             </div>
           </div>
           <% if can? :index, Order %>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
-                <%= link_to "Orders", orders_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
+                <%= link_to "Orders", orders_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
               </div>
             </div>
           <% end %>
           <% if can? :index, Bid %>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
-                <%= link_to "Bids", bids_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
+                <%= link_to "Bids", bids_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
               </div>
             </div>
           <% end %>
-        <% elsif %>
-          <div class="hidden sm:ml-6 sm:block">
-            <div class="flex space-x-4">
-            </div>
-          </div>
         <% end %>
       </div>
       <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
@@ -82,20 +71,20 @@
             <div class="absolute right-0 z-10 mt-2 w-36 origin-top-right border-gray-300 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="menu">
               <div class="py-1" role="none">
                 <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "Edit Profile", edit_user_registration_path %></span>
-                <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "OTP Setting", users_otp_settings_path %></span>
+                <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "OTP Setting", users_otp_setting_path %></span>
                 <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"> <%= link_to "Sign Out", destroy_user_session_path %> </span>
               </div>
             </div>
           </div>
         <% elsif %>
           <div class="relative ml-3">
-            <%= link_to "Sign In", new_user_session_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
+            <%= link_to "Sign in", new_user_session_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
           </div>
           <div class="relative ml-3">
             <span class="text-white">|</span>
           </div>
           <div class="relative ml-3">
-            <%= link_to "Sign Up", new_user_registration_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
+            <%= link_to "Sign up", new_user_registration_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
           </div>
         <% end %>
       </div>
@@ -106,4 +95,5 @@
     </div>
   </div>
 </nav>
+
 <%= javascript_pack_tag 'navbar' %>

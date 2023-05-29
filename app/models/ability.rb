@@ -7,37 +7,38 @@ class Ability
     can [:show_root], Product
 
     if user.admin?
-      can %i[new create show index edit update destroy toggle_status archives], Product
-      can %i[index show destroy archives view_bids toggle_status], Ad
-      can %i[index show show_pending show_successful show_cancelled], Order
+      can %i[new create show index edit update destroy toggle_status], Product
+      can %i[index show destroy view_bids toggle_status], Ad
+      can %i[index show], Order
 
     elsif user.seller?
 
-      can %i[index], Product
-      can %i[show], Product, status: true
+      can %i[index show], Product, status: true
 
-      can %i[index], Address, user_id: user.id
       can %i[new create], Address
-      can %i[edit update destroy], Address, user_id: user.id
+      can %i[index edit update destroy], Address, user_id: user.id
 
       can %i[new create toggle_status view_bids], Ad
-      can %i[index archives show edit update destroy], Ad, user_id: user.id
+      can %i[index show edit update destroy], Ad, user_id: user.id
 
       can %i[new create confirm cancel], Order
-      can %i[index show show_pending show_successful show_cancelled], Order, bid: { ad: { user_id: user.id } }
+      can %i[index show], Order, bid: { ad: { user_id: user.id } }
 
       can %i[show new create], Message
 
+      can %i[show], Bid, ad: { user_id: user.id }
+
     elsif user.buyer?
-      can %i[index], Ad
-      can %i[show], Ad, status: true
+
+      can %i[index show], Product, status: true
+
+      can %i[index show], Ad, status: true
 
       can %i[new create], Bid
       can %i[index], Bid, user_id: user.id
 
       can %i[index show], Order, bid: { user_id: user.id }
       can %i[show new create], Message
-
     end
   end
 end

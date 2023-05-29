@@ -1,6 +1,15 @@
 require 'active_support/core_ext/integer/time'
 
 Rails.application.configure do
+  config.after_initialize do
+    Bullet.enable        = true
+    Bullet.alert         = true
+    Bullet.bullet_logger = true
+    Bullet.console       = true
+    Bullet.rails_logger  = true
+    Bullet.add_footer    = true
+  end
+
   config.hosts << 'e7b7-202-163-113-223.ngrok-free.app'
 
   config.action_mailer.delivery_method = :letter_opener

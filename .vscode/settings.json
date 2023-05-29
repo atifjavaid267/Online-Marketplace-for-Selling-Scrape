@@ -1,0 +1,5 @@
+{
+    "terminal.integrated.commandsToSkipShell": [
+        "\"ruby.rubocop.onSave\": true, \"editor.formatOnSaveTimeout\": 5000, \"editor.formatOnSave\": true, \"files.associations\": {     \"*.erb\": \"erb\" },"
+    ]
+}

@@ -2,46 +2,52 @@
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Product Available!' } %>
 <% else %>
   <% if can? :new, Product %>
-    <div class="flex justify-end mb-1 mt-2 mr-2">
-      <%= link_to "Add Product", new_product_path, class: " text-blue-600 hover:font-semibold mt-2 px-4 rounded"%>
+    <div class="flex justify-start pl-2 md:justify-end mb-1 mt-2 mr-2">
+      <%= link_to "Add Product", new_product_path, class: "text-blue-600 hover:font-semibold mt-6 sm:mt-2 px-4 rounded" %>
     </div>
-  <%end%>
-  <div class="grid grid-cols-2 gap-4 m-5">
-    <% page = params[:page].to_i==1 || params[:page].to_i == 0? 0 : params[:page].to_i-1 %>
-    <% counter = (page * @products.limit_value) + 1 %>
-    <% @products.each do |product| %>
+  <% end %>
+  <div class="grid lg:grid-cols-2 gap-4 m-5">
+    <% @products.each.with_index(@products.offset+1) do |product, counter| %>
       <div class="border p-4 rounded-lg flex w-full">
         <div class="w-1/2">
           <div>
-            <h4 class="font-bold mb-2"><%="Product - #{sprintf('%02d', counter)}"%></h4>
+            <h4 class="font-bold mb-2"><%= "Product - #{counter}" %></h4>
             <span class="font-semibold">Product Name:</span> <%= product.name %> <br>
           </div>
           <br>
-          <div class="flex space-x-4">
+          <div class="sm:flex sm:flex-row flex-col sm:space-x-2">
             <% if can? :show, Product %>
-              <%= link_to "View", product, class: "mt-2 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+              <div>
+                <%= link_to "View", product, class: "mt-2 bg-blue-500 text-white px-8 sm:px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+              </div>
             <% end %>
             <% if can? :toggle_status, Product %>
-              <%= button_to "Unpublish", toggle_status_product_path(product), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-gray-500 text-white px-3 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out" %>
+              <div class="my-4 sm:my-0">
+                <% if product.status %>
+                  <%= link_to "Unpublish", toggle_status_product_path(product), data: { confirm: "Are you sure to unpublish ad?"}, method: :post, class: "mt-2 bg-gray-500 text-white px-3 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out" %>
+                <% else %>
+                  <%= link_to "Publish", toggle_status_product_path(product), data: { confirm: "Are you sure to publish ad?"}, method: :post, class: "mt-2 bg-green-500 text-white px-6 sm:px-3 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
+                <% end %>
+              </div>
             <% end %>
             <% if can? :destroy, Product %>
-              <%= button_to "Delete", product, data: { confirm: "Are you sure to delete ad?", turbo_confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+              <div>
+                <%= link_to "Delete", product, data: { confirm: "Are you sure to delete product?"}, method: :delete, class: "mt-2 bg-red-500 text-white px-7 sm:px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+              </div>
             <% end %>
           </div>
         </div>
-        <div class="flex justify-center w-1/2">
+        <div class="flex justify-end sm:justify-center w-1/2">
           <div class="flex flex-col justify-center">
-          <% if product.product_image.attached? %>
-            <%= image_tag product.product_image, class: "w-32 h-28 object-cover rounded-lg shadow-md"%>
-          <% end %>
-        </div>
+            <% if product.product_image.attached? %>
+              <%= image_tag product.product_image, class: "w-32 h-28 object-cover rounded-lg shadow-md" %>
+            <% end %>
+          </div>
         </div>
       </div>
-      <% counter = counter + 1%>
     <% end %>
   </div>
-  <div class = "flex flex-row items-center justify-center">
-    <%= will_paginate @products, class:"bg-gray-300 rounded py-3 px-5 my-2"%>
+  <div class="flex flex-row items-center justify-center">
+    <%= will_paginate @products, class:"bg-gray-300 rounded py-3 px-5 my-2" %>
   </div>
 <% end %>
-

@@ -1,41 +1,11 @@
-
 <div class="bg-cover h-full bg-background_img">
-  <%= render 'devise/shared/back'%>
-  <div class = "pt-5 mx-12" style="display: flex; justify-content: center; align-items: center;">
-  <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
-    <div class="flex flex-col items-center justify-between space-y-5 ">
-      <h3 class="font-bold">Update Address</h3>
-
-      <%= form_with(model: @address, local: true) do |form| %>
-        <div class="field ">
-          <div class="card bg-white p-4 rounded-lg shadow-md">
-          <div class="form-group mb-4">
-            <%= form.label :street1, class: "font-bold mb-2 block" %>
-            <%= form.text_field :street1, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="form-group mb-4">
-            <%= form.label :street2, class: "font-bold mb-2 block" %>
-            <%= form.text_field :street2, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-
-          <div class="form-group mb-4">
-            <%= form.label :city, class: "font-bold mb-2 block" %>
-            <%= form.text_field :city, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="form-group mb-4">
-            <%= form.label :state, class: "font-bold mb-2 block" %>
-            <%= form.text_field :state, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="form-group mb-4">
-            <%= form.label :zip_code, class: "font-bold mb-2 block" %>
-            <%= form.text_field :zip_code, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
-          </div>
-          <div class="flex flex-ROW justify-center">
-            <div class="actions">
-              <%= form.submit "Update", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-            </div>
-          </div>
-      <% end %>
+  <%= render 'devise/shared/back' %>
+  <div class="pt-5 mx-12 flex justify-center items-center">
+    <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
+      <div class="flex flex-col items-center justify-between space-y-5 ">
+        <h3 class="font-bold">Update Address</h3>
+        <%= render 'form' %>
+      </div>
     </div>
   </div>
 </div>

@@ -8,9 +8,7 @@ class Order < ApplicationRecord
   validates :pickup_time, presence: true
   validate :pickup_time_cannot_be_in_the_past
 
-  scope :pending, -> { where(status: 'pending') }
-  scope :successful, -> { where(status: 'successful') }
-  scope :cancelled, -> { where(status: 'cancelled') }
+  scope :status, ->(status_param) { where(status: status_param) }
 
   def pending?
     status == 'pending'
@@ -39,7 +37,7 @@ class Order < ApplicationRecord
 
   def change_bids_status_for_confirm_order
     ad = bid.ad
-    ad.bids.where.not(id: bid.id).update_all(status: 'failed')
+    ad.bids.where.not(id: bid.id).update(status: 'failed')
   end
 
   def change_bids_status_for_cancel_order

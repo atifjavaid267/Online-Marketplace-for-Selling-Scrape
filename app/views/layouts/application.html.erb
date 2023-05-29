@@ -26,8 +26,6 @@
   </head>
   <% if current_user %>
     <% current_user_id = current_user.id %>
-  <% else %>
-    <% current_user_id = 'x' %>
   <% end %>
   <div id = "user", data-user-id = <%= current_user_id %>></div>
   <body>

@@ -4,9 +4,10 @@
 class AddressesController < ApplicationController
   load_and_authorize_resource
   before_action :authenticate_user!
+  before_action :store_location, only: %i[index]
 
   def index
-    @addresses = @addresses.paginate(page: params[:page], per_page: 10)
+    @addresses = @addresses.order(updated_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   def new; end
@@ -15,7 +16,7 @@ class AddressesController < ApplicationController
     @address.user_id = current_user.id
     if @address.save
       flash[:notice] = 'Address was successfully created.'
-      redirect_to addresses_path
+      redirect_to stored_location
     else
       flash[:alert] = @address.errors.full_messages.join(', ')
       render :new

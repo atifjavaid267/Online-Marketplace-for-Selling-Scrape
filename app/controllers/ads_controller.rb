@@ -2,45 +2,48 @@
 
 # Ads Controller
 class AdsController < ApplicationController
-  load_and_authorize_resource
+  load_and_authorize_resource :product, only: %i[new create]
+  load_and_authorize_resource through: :product, only: %i[new create]
+  load_and_authorize_resource except: %i[new create]
+
   before_action :authenticate_user!
-  before_action :store_location, only: %i[new index archives]
+  before_action :store_location, only: %i[new index]
 
   def index
-    @ads = @ads.published.paginate(page: params[:page], per_page: 10)
-  end
-
-  def archives
-    @archive_ads = @ads.unpublished.paginate(page: params[:page], per_page: 10)
+    @ads = @ads.status(params[:status] || true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @ads = @ads.includes([:product], [:ad_images_attachments])
   end
 
   def show; end
 
   def new
-    @ad.user_id = current_user.id
-    @ad.product_id = params[:product_id]
-    @addresses = current_user.addresses
+    @addresses = {}
+    current_user.addresses.each do |a|
+      @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
+    end
   end
 
   def create
     @ad.user_id = current_user.id
-    @addresses = current_user.addresses
-
     if @ad.save
       flash[:notice] = 'Ad was successfully created'
       redirect_to @ad
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
-      redirect stored_location
+      render :new
     end
   end
 
   def view_bids
-    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: 10)
+    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @bids = @bids.includes([:user])
   end
 
   def edit
-    @addresses = current_user.addresses
+    @addresses = {}
+    current_user.addresses.each do |a|
+      @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
+    end
   end
 
   def update
@@ -56,11 +59,10 @@ class AdsController < ApplicationController
   def destroy
     if @ad.destroy
       flash[:notice] = 'Ad deleted successfully.'
-      redirect_to stored_location
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
-      redirect_to stored_location
     end
+    redirect_to stored_location
   end
 
   def toggle_status
@@ -69,7 +71,7 @@ class AdsController < ApplicationController
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end
-    redirect_to stored_location
+    redirect_to ads_path(status: true)
   end
 
   private

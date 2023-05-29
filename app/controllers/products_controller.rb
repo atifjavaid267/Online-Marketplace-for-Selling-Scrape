@@ -3,11 +3,13 @@
 # Product Controller
 class ProductsController < ApplicationController
   load_and_authorize_resource
-  before_action :authenticate_user!, except: %i[show_root]
-  before_action :store_location, only: %i[index archives]
+  before_action :authenticate_user!
+  before_action :store_location, only: %i[index]
 
   def index
-    @products = @products.published.paginate(page: params[:page], per_page: 10)
+    @products = @products.status(params[:status] || true).order(updated_at: :desc).paginate(page: params[:page],
+                                                                                            per_page: RECORDS_PER_PAGE)
+    @products = @products.includes([product_image_attachment: :blob])
   end
 
   def new; end
@@ -52,15 +54,7 @@ class ProductsController < ApplicationController
     else
       flash[:alert] = @product.errors.full_messages.join(', ')
     end
-    redirect_to stored_location
-  end
-
-  def archives
-    @archive_products = @products.unpublished.paginate(page: params[:page], per_page: 10)
-  end
-
-  def show_root
-    @products = Product.published.paginate(page: params[:page], per_page: 4)
+    redirect_to products_path(status: true)
   end
 
   private

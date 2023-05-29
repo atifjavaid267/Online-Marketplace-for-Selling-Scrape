@@ -1,11 +1,9 @@
 class Address < ApplicationRecord
-  has_many :ads
+  has_many :ads, dependent: :restrict_with_error
   belongs_to :user
 
   geocoded_by :complete_address
   validates :user_id, presence: true
-
-  before_destroy :check_associated_ads
   before_save :check_coordinates
 
   after_validation :geocode, if: lambda { |obj|
@@ -33,13 +31,6 @@ class Address < ApplicationRecord
     else
       errors.add(:base, 'Address was not found')
     end
-  end
-
-  def check_associated_ads
-    return unless ads.any?
-
-    errors.add(:base, 'Ads associated with address, cannot be destroyed')
-    throw(:abort)
   end
 end
 
