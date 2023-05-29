@@ -17,7 +17,7 @@
       <p class="text-gray-700 mb-6"><%= @order.bid.ad.user.full_name %></p>
     <% end %>
     <h4 class="font-semibold text-lg">Pickup Date & Time:</h4>
-    <p class="text-gray-700 mb-6"><%= @order.pickup_time.strftime('%d %B %Y | %I:%M:%S %p')%></p>
+    <p class="text-gray-700 mb-6"><%= @order.pickup_time.strftime('%d %B %Y | %I:%M:%S %p') %></p>
   </div>
   <div class="mx-10 sm:mt-10 mt-10 md-mt-0">
     <h4 class="font-semibold text-lg">Address:</h4>
@@ -32,12 +32,12 @@
   <% if @order.pending? %>
     <% if can? :confirm, Order %>
       <div class="mx-1">
-        <%= button_to "Complete", confirm_order_path(@order), data: { confirm: "Are you sure to complete order?"},  class: "bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out"%>
+        <%= button_to "Complete", confirm_order_path(@order), data: { confirm: "Are you sure to complete order?"},  class: "bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
       </div>
     <% end %>
     <% if can? :cancel, Order %>
       <div>
-        <%= button_to "Cancel", cancel_order_path(@order), data: { confirm: "Are you sure to cancel order?"},  class: "bg-red-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out"%>
+        <%= button_to "Cancel", cancel_order_path(@order), data: { confirm: "Are you sure to cancel order?"},  class: "bg-red-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out" %>
       </div>
     <% end %>
   <% end %>
@@ -45,24 +45,3 @@
     <%= link_to "Message", new_message_path(order_id: @order.id), class: "bg-green-500 text-white px-6 py-2  ml-1 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
   <% end %>
 </div>
-<script>
-  function initMap() {
-    const mapDiv = document.getElementById('data')
-    const lat = mapDiv.getAttribute('data-lat')
-    const lon = mapDiv.getAttribute('data-lon')
-  // var center = {lat: lat, lng: lon};
-    const center = new google.maps.LatLng(lat, lon);
-
-    var map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 8,
-      center: center
-    });
-
-    var marker = new google.maps.Marker({
-      position: center,
-      map: map
-    });
-  }
-</script>
-<script defer
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBj6Z33I3_Uir3GBpjPtIlRAQsCADP8Ew0&libraries=visualization&callback=initMap"></script>

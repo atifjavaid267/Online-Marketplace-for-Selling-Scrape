@@ -1,11 +1,15 @@
-console.log("Hello, checking console!")
+console.log("Hello, checking console!");
 
-import { Application } from "@hotwired/stimulus"
+import { Application } from "stimulus";
 
-const application = Application.start()
+// Additional code for your application
+// ...
+
+import { Application } from "@hotwired/stimulus";
+const application = Application.start();
 
 // Configure Stimulus development experience
-application.debug = false
-window.Stimulus   = application
+application.debug = false;
+window.Stimulus = application;
 
-export { application }
+export { application };

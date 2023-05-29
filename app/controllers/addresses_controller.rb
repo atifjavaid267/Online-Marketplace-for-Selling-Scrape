@@ -14,7 +14,6 @@ class AddressesController < ApplicationController
 
   def create
     @address.user_id = current_user.id
-
     if @address.save
       flash[:notice] = 'Address was successfully created.'
       redirect_to stored_location
@@ -48,6 +47,7 @@ class AddressesController < ApplicationController
   private
 
   def address_params
-    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code)
+    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code,
+                                    :full_address)
   end
 end
