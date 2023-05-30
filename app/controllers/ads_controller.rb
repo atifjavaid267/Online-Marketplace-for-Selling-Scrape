@@ -10,7 +10,7 @@ class AdsController < ApplicationController
   before_action :store_location, only: %i[new index]
 
   def index
-    @ads = @ads.status(params[:status] || true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @ads = @ads.archived(params[:archived] || false).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
     @ads = @ads.includes([:product], [:ad_images_attachments])
   end
 
@@ -65,13 +65,13 @@ class AdsController < ApplicationController
     redirect_to stored_location
   end
 
-  def toggle_status
-    if @ad.update_attribute(:status, !@ad.status)
-      flash[:notice] = @ad.status == true ? 'Ad Published' : 'Ad Unpublished'
+  def toggle_archived
+    if @ad.update_attribute(:archived, !@ad.archived)
+      flash[:notice] = @ad.archived ? 'Ad Unpublished' : 'Ad Published'
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end
-    redirect_to ads_path(status: true)
+    redirect_to ads_path(archived: false)
   end
 
   private

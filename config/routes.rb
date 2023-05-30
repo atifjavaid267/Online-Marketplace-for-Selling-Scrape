@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     resources :bids, only: %i[new create]
     member do
       get :view_bids
-      post :toggle_status
+      post :toggle_archived
     end
   end
 
