@@ -9,7 +9,7 @@ class Address < ApplicationRecord
   before_save :check_coordinates
 
   after_validation :geocode, if: lambda { |obj|
-    obj.street1.present? || obj.street2.present? || obj.city.present? || obj.state.present? || obj.zip_code.present? || obj.full_address.present?
+   obj.city.present? || obj.state.present? || obj.zip_code.present? || obj.full_address.present?
   }
 
   def complete_address

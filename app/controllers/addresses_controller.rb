@@ -8,7 +8,12 @@ class AddressesController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
+<<<<<<< Updated upstream
     @addresses = paginate_records(@addresses.recently_updated)
+=======
+    @addresses = @addresses.recently_updated.paginate(page: params[:page],
+                                                      per_page: RECORDS_PER_PAGE)
+>>>>>>> Stashed changes
   end
 
   def new; end
@@ -48,7 +53,7 @@ class AddressesController < ApplicationController
   private
 
   def address_params
-    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code,
+    params.require(:address).permit(:user_id, :city, :state, :zip_code,
                                     :full_address)
   end
 end

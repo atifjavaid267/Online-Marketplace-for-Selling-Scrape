@@ -6,8 +6,10 @@ class User < ApplicationRecord
   devise :registerable, :recoverable, :rememberable, :validatable, :two_factor_authenticatable
 
   validates :phone_no, format: { with: /\A\+923|03\d{9}\z/ }
-  validates :first_name, format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
-  validates :last_name, format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
+  validates :first_name,
+            format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
+  validates :last_name,
+            format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
   validates :role, presence: true
 
   has_many :products

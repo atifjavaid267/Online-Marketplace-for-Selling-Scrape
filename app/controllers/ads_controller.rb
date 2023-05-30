@@ -8,7 +8,7 @@ class AdsController < ApplicationController
   load_and_authorize_resource except: %i[new create]
 
   before_action :authenticate_user!
-  before_action :store_location, only: %i[new index]
+  before_action :store_location, only: %i[new edit index]
 
   def index
     @ads = paginate_records(@ads.includes([:product], [:ad_images_attachments]).by_archived(params[:archived] || false))
@@ -17,10 +17,7 @@ class AdsController < ApplicationController
   def show; end
 
   def new
-    @addresses = {}
-    current_user.addresses.each do |a|
-      @addresses[a.full_address] = a.id
-    end
+      @addresses = current_user.addresses.pluck(:full_address, :id)
   end
 
   def create
@@ -39,10 +36,7 @@ class AdsController < ApplicationController
   end
 
   def edit
-    @addresses = {}
-    current_user.addresses.each do |a|
-      @addresses[a.full_address] = a.id
-    end
+    @addresses = current_user.addresses.pluck(:full_address, :id)
   end
 
   def update
