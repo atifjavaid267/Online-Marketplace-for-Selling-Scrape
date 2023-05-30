@@ -17,17 +17,7 @@ class User < ApplicationRecord
   has_many :addresses
   has_many :bids
 
-  def admin?
-    role == 'admin'
-  end
-
-  def seller?
-    role == 'seller'
-  end
-
-  def buyer?
-    role == 'buyer'
-  end
+  enum role: { admin: 0, seller: 1, buyer: 2 }
 
   def full_name
     "#{first_name} #{last_name}"

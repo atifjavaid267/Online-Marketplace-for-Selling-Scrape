@@ -30,12 +30,8 @@
         <%= f.label :password_confirmation %><br />
         <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" %>
       </div>
-      <div class="relative my-4" data-te-input-wrapper-init>
-        <%= f.radio_button :role, "seller" %>
-        <%= label_tag :seller, "Register as Seller" %>
-        <br>
-        <%= f.radio_button :role, "buyer" %>
-        <%= label_tag :buyer, "Register as Buyer" %>
+      <div class="relative my-4 bg-gray-800">
+        <%= f.select :role, options_for_select([['Register as Seller', "seller"], ['Register as Buyer', "buyer"]]), {}, class: 'form-control bg-gray-900 w-full' %>
       </div>
       <div class="actions">
         <button class="w-full rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-800">Sign up</button>

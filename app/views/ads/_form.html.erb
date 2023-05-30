@@ -15,9 +15,9 @@
       </div>
       <% if @addresses.empty? %>
         <div class="text-center mt-4">
-          <h2 class="text-lg font-medium mb-2">No address available</h2>
-          <p class="text-sm text-gray-600">First Add your address then add product</p>
-          <%= link_to "Add Address", new_address_path, class: "inline-block bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
+          <h2 class="text-lg font-medium mb-2 text-red-600">No address available</h2>
+          <p class="text-sm text-gray-600">First add your address then create ad</p>
+          <%= link_to "Add Address", new_address_path, class: "inline-block bg-blue-500 hover:bg-blue-600 text-white mt-2 py-2 px-4 rounded focus:outline-none focus:shadow-outline" %>
         </div>
       <% else %>
         <div class="form-group mb-4">
