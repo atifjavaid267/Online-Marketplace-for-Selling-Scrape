@@ -22,7 +22,7 @@
   <div class="mx-10 sm:mt-10 mt-10 md-mt-0">
     <h4 class="font-semibold text-lg">Address:</h4>
     <% address = @order.bid.ad.address %>
-    <p class="text-gray-700 mb-10"><%= [address.street1, address.street2, address.city, address.state, address.zip_code].reject(&:nil?).reject(&:empty?).join(', ') %></p>
+    <p class="text-gray-700 mb-10"><%= address.full_address %></p>
     <div id = "map" class="w-80 h-80" ></div>
     <div id = "data" data-lat = <%= address.latitude %> data-lon = <%= address.longitude %>>
     </div>
@@ -45,3 +45,5 @@
     <%= link_to "Message", new_message_path(order_id: @order.id), class: "bg-green-500 text-white px-6 py-2  ml-1 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
   <% end %>
 </div>
+<%= javascript_pack_tag 'map' %>
+<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap", defer: true %>

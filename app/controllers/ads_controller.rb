@@ -10,7 +10,9 @@ class AdsController < ApplicationController
   before_action :store_location, only: %i[new index]
 
   def index
-    @ads = @ads.by_archived(params[:archived] || false).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @ads = @ads.by_archived(params[:archived] || false).paginate(page: params[:page],
+                                                                 per_page: RECORDS_PER_PAGE)
+
     @ads = @ads.includes([:product], [:ad_images_attachments])
   end
 
@@ -19,7 +21,7 @@ class AdsController < ApplicationController
   def new
     @addresses = {}
     current_user.addresses.each do |a|
-      @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
+      @addresses[a.full_address] = a.id
     end
   end
 
@@ -35,14 +37,15 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page],
+                                                          per_page: RECORDS_PER_PAGE)
     @bids = @bids.includes([:user])
   end
 
   def edit
     @addresses = {}
     current_user.addresses.each do |a|
-      @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
+      @addresses[a.full_address] = a.id
     end
   end
 
