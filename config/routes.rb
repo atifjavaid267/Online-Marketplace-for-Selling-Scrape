@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'users#show_root'
+  root 'users#root'
 
   get 'notification/index'
   get 'notification/show'
@@ -37,7 +37,7 @@ Rails.application.routes.draw do
       post :toggle_archived
     end
     collection do
-      get 'show_root' => 'products#show_root'
+      get 'root' => 'products#root'
     end
   end
   resources :addresses
