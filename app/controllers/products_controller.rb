@@ -2,14 +2,13 @@
 
 # Product Controller
 class ProductsController < ApplicationController
+  include Pagination
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :store_location, only: %i[index]
 
   def index
-    @products = @products.includes([product_image_attachment: :blob]).by_archived(params[:archived] || false).recently_updated.paginate(
-      page: params[:page], per_page: RECORDS_PER_PAGE
-    )
+    @products = paginate_records(@products.includes([product_image_attachment: :blob]).by_archived(params[:archived] || false).recently_updated)
   end
 
   def new; end

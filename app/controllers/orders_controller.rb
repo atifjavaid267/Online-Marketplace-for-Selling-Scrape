@@ -2,6 +2,8 @@
 
 # Order Controller
 class OrdersController < ApplicationController
+  include Pagination
+
   load_and_authorize_resource :bid, only: %i[new create]
   load_and_authorize_resource :order, through: :bid, singleton: true, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
@@ -25,9 +27,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = @orders.status(params[:status]) if params[:status]
-    @orders = @orders.includes(bid: { user: {}, ad: :user }).references(:users).recently_updated.paginate(
-      page: params[:page], per_page: RECORDS_PER_PAGE
-    )
+    @orders = paginate_records(@orders.includes(bid: { user: {}, ad: :user }).references(:users).recently_updated)
   end
 
   def confirm
