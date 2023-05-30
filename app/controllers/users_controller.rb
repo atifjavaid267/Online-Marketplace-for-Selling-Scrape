@@ -8,8 +8,8 @@ class UsersController < ApplicationController
   def home; end
 
   def show_root
-    @products = Product.by_archived(false).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-    @products = @products.includes([product_image_attachment: :blob])
+    @products = Product.includes([product_image_attachment: :blob]).by_archived(false).paginate(page: params[:page],
+                                                                                                per_page: RECORDS_PER_PAGE)
   end
 
   def otp_setting; end

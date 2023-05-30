@@ -25,8 +25,9 @@ class OrdersController < ApplicationController
 
   def index
     @orders = @orders.status(params[:status]) if params[:status]
-    @orders = @orders.recently_updated.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-    @orders = @orders.includes(bid: { user: {}, ad: :user }).references(:users)
+    @orders = @orders.includes(bid: { user: {}, ad: :user }).references(:users).recently_updated.paginate(
+      page: params[:page], per_page: RECORDS_PER_PAGE
+    )
   end
 
   def confirm

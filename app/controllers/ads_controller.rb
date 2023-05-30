@@ -10,10 +10,8 @@ class AdsController < ApplicationController
   before_action :store_location, only: %i[new index]
 
   def index
-    @ads = @ads.by_archived(params[:archived] || false).paginate(page: params[:page],
-                                                                 per_page: RECORDS_PER_PAGE)
-
-    @ads = @ads.includes([:product], [:ad_images_attachments])
+    @ads = @ads.includes([:product], [:ad_images_attachments]).by_archived(params[:archived] || false).paginate(page: params[:page],
+                                                                                                                per_page: RECORDS_PER_PAGE)
   end
 
   def show; end
@@ -37,9 +35,8 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page],
-                                                          per_page: RECORDS_PER_PAGE)
-    @bids = @bids.includes([:user])
+    @bids = @ad.bids.includes([:user]).pending.order(price: :desc).paginate(page: params[:page],
+                                                                            per_page: RECORDS_PER_PAGE)
   end
 
   def edit

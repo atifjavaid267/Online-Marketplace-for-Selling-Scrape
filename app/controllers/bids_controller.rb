@@ -29,8 +29,7 @@ class BidsController < ApplicationController
   end
 
   def index
-    @bids = @bids.recently_updated.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-    @bids = @bids.includes([ad: :product])
+    @bids = @bids.includes([ad: :product]).recently_updated.paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
   end
 
   private
