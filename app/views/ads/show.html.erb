@@ -5,7 +5,7 @@
       <h4 class="font-semibold text-lg">Name:</h4>
       <p class="text-gray-700 mb-6"><%= @ad.product.name %></p>
       <h4 class="font-semibold text-lg">Price:</h4>
-      <p class="text-gray-700 mb-6"><%= @ad.price %></p>
+      <p class="text-gray-700 mb-6"><%= number_to_currency(@ad.price, unit: "Rs", format: "%u. %n") %></p>
       <h4 class="font-semibold text-lg">Description:</h4>
       <p class="text-gray-700 mb-10"><%= @ad.description %></p>
       <h4 class="font-semibold text-lg">Address:</h4>
