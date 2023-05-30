@@ -8,12 +8,7 @@ class AddressesController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
-<<<<<<< Updated upstream
     @addresses = paginate_records(@addresses.recently_updated)
-=======
-    @addresses = @addresses.recently_updated.paginate(page: params[:page],
-                                                      per_page: RECORDS_PER_PAGE)
->>>>>>> Stashed changes
   end
 
   def new; end
