@@ -12,7 +12,7 @@ class Ad < ApplicationRecord
   validates :description, presence: true
   validates :ad_images, presence: true
 
-  scope :archived, ->(status) { where(archived: status) }
+  scope :by_archived, ->(status) { where(archived: status) }
 
   def published!
     update_attribute(:archived, false)

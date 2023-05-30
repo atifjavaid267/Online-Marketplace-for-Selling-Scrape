@@ -10,7 +10,7 @@ class AdsController < ApplicationController
   before_action :store_location, only: %i[new index]
 
   def index
-    @ads = @ads.archived(params[:archived] || false).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @ads = @ads.by_archived(params[:archived] || false).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
     @ads = @ads.includes([:product], [:ad_images_attachments])
   end
 
