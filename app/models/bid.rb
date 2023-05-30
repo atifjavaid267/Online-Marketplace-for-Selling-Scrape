@@ -1,4 +1,5 @@
 class Bid < ApplicationRecord
+  include Sort
   belongs_to :ad
   belongs_to :user
   has_one :order

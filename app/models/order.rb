@@ -1,4 +1,5 @@
 class Order < ApplicationRecord
+  include Sort
   belongs_to :bid
   has_many :messages
 

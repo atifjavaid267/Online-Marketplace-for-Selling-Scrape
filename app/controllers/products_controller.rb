@@ -7,8 +7,8 @@ class ProductsController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
-    @products = @products.includes([product_image_attachment: :blob]).by_archived(params[:archived] || false).order(updated_at: :desc).paginate(page: params[:page],
-                                                                                                                                                per_page: RECORDS_PER_PAGE)
+    @products = @products.includes([product_image_attachment: :blob]).by_archived(params[:archived] || false).recently_updated.paginate(page: params[:page],
+                                                                                                                                        per_page: RECORDS_PER_PAGE)
   end
 
   def new; end

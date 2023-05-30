@@ -1,12 +1,12 @@
 class Address < ApplicationRecord
+  include Sort
+
   has_many :ads, dependent: :restrict_with_error
   belongs_to :user
 
   geocoded_by :complete_address
   validates :user_id, presence: true
   before_save :check_coordinates
-
-  scope :recently_updated, -> { order(updated_at: :desc) }
 
   after_validation :geocode, if: lambda { |obj|
     obj.street1.present? || obj.street2.present? || obj.city.present? || obj.state.present? || obj.zip_code.present? || obj.full_address.present?
