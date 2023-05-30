@@ -11,17 +11,7 @@ class Order < ApplicationRecord
 
   scope :status, ->(status_param) { where(status: status_param) }
 
-  def pending?
-    status == 'pending'
-  end
-
-  def successful?
-    status == 'successful'
-  end
-
-  def cancelled?
-    status == 'cancelled'
-  end
+  enum status: { pending: 0, successful: 1, cancelled: 2 }
 
   private
 

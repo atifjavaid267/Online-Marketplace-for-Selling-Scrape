@@ -8,11 +8,5 @@ class Bid < ApplicationRecord
 
   scope :pending, -> { where(status: 'pending') }
 
-  def successful!
-    update_attribute(:status, 'successful')
-  end
-
-  def failed!
-    update_attribute(:status, 'failed')
-  end
+  enum status: { pending: 0, successful: 1, failed: 2 }
 end
