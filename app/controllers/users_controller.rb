@@ -2,15 +2,9 @@
 
 # Users Controller
 class UsersController < ApplicationController
-<<<<<<< Updated upstream
   include Pagination
-
   before_action :authenticate_user!, except: [:root]
-  before_action :store_location, only: %i[otp_setting]
-=======
-  before_action :authenticate_user!, except: [:show_root]
   before_action :store_location, only: %i[otp_setting home]
->>>>>>> Stashed changes
 
   def home; end
 
