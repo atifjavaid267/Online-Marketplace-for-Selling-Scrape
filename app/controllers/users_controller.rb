@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def home; end
 
   def show_root
-    @products = Product.status(true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @products = Product.by_archived(false).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
     @products = @products.includes([product_image_attachment: :blob])
   end
 

@@ -34,7 +34,7 @@ Rails.application.routes.draw do
   resources :products do
     resources :ads, only: %i[new create]
     member do
-      post :toggle_status
+      post :toggle_archived
     end
     collection do
       get 'show_root' => 'products#show_root'

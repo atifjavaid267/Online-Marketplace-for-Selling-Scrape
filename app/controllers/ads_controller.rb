@@ -71,7 +71,7 @@ class AdsController < ApplicationController
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end
-    redirect_to ads_path(archived: false)
+    redirect_to ads_path
   end
 
   private

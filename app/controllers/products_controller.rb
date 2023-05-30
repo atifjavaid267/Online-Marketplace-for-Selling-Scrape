@@ -7,9 +7,8 @@ class ProductsController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
-    @products = @products.status(params[:status] || true).order(updated_at: :desc).paginate(page: params[:page],
-                                                                                            per_page: RECORDS_PER_PAGE)
-    @products = @products.includes([product_image_attachment: :blob])
+    @products = @products.includes([product_image_attachment: :blob]).by_archived(params[:archived] || false).order(updated_at: :desc).paginate(page: params[:page],
+                                                                                                                                                per_page: RECORDS_PER_PAGE)
   end
 
   def new; end
@@ -48,13 +47,13 @@ class ProductsController < ApplicationController
     redirect_to stored_location
   end
 
-  def toggle_status
-    if @product.update_attribute(:status, !@product.status)
-      flash[:notice] = @product.status == true ? 'Product Published' : 'Product Unpublished'
+  def toggle_archived
+    if @product.update_attribute(:archived, !@product.archived?)
+      flash[:notice] = @product.archived ? 'Product Unpublished' : 'Product Published'
     else
       flash[:alert] = @product.errors.full_messages.join(', ')
     end
-    redirect_to products_path(status: true)
+    redirect_to products_path
   end
 
   private

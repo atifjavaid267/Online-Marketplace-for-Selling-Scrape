@@ -21,13 +21,9 @@
                 <%= link_to "View", product, class: "mt-2 bg-blue-500 text-white px-8 sm:px-4 py-2 rounded-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
               </div>
             <% end %>
-            <% if can? :toggle_status, Product %>
+            <% if can? :toggle_archived, Product %>
               <div class="my-4 sm:my-0">
-                <% if product.status %>
-                  <%= link_to "Unpublish", toggle_status_product_path(product), data: { confirm: "Are you sure to unpublish product?"}, method: :post, class: "mt-2 bg-gray-500 text-white px-3 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out" %>
-                <% else %>
-                  <%= link_to "Publish", toggle_status_product_path(product), data: { confirm: "Are you sure to publish product?"}, method: :post, class: "mt-2 bg-green-500 text-white px-6 sm:px-3 py-2 rounded-md hover:bg-green-600 transition duration-300 ease-in-out" %>
-                <% end %>
+                <%= link_to product.archived ? "Publish" : "Unpublish", toggle_archived_product_path(product), data: { confirm: product.archived ? "Are you sure to publish product?" : "Are you sure to unpublish product?"}, method: :post, class: "mt-2 bg-gray-500 text-white px-3 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out" %>
               </div>
             <% end %>
             <% if can? :destroy, Product %>
