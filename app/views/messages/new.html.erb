@@ -32,7 +32,7 @@
       <%= form_for Message.new, url:messages_path, remote: true do |f| %>
         <%= f.hidden_field :order_id, value: @order.id %>
         <div class="flex flex-row w-full">
-          <%= f.text_field :content, required: true, placeholder: "Enter your message",  :maxlength=>"110", class: "flex-1 mr-2 border-2 border-gray-300 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" %>
+          <%= f.text_field :content, required: true, placeholder: "Enter your message", :maxlength=>"110", class: "flex-1 mr-2 border-2 border-gray-300 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" %>
           <%= f.submit "Send", class: "ml-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg" %>
         </div>
       <% end %>
