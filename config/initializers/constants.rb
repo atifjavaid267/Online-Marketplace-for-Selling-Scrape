@@ -1,3 +1,3 @@
 # config/initializers/constants.rb
 
-RECORDS_PER_PAGE = 10
+RECORDS_PER_PAGE = 2

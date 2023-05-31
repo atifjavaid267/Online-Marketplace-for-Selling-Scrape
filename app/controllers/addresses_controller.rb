@@ -2,13 +2,12 @@
 
 # Address Controller
 class AddressesController < ApplicationController
-  include Pagination
   load_and_authorize_resource
   before_action :authenticate_user!
   before_action :store_location, only: %i[index]
 
   def index
-    @addresses = paginate_records(@addresses.recently_updated)
+    @addresses = @addresses.recently_updated.page(params[:page])
   end
 
   def new; end

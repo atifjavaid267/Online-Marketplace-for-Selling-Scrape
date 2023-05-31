@@ -2,14 +2,13 @@
 
 # Users Controller
 class UsersController < ApplicationController
-  include Pagination
   before_action :authenticate_user!, except: [:root]
   before_action :store_location, only: %i[otp_setting home]
 
   def home; end
 
   def root
-    @products = paginate_records(Product.includes([product_image_attachment: :blob]).by_archived(false))
+    @products = Product.includes([product_image_attachment: :blob]).by_archived(false).page(params[:page])
   end
 
   def otp_setting; end

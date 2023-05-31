@@ -2,7 +2,6 @@
 
 # Bids Controller
 class BidsController < ApplicationController
-  include Pagination
   include ActionView::Helpers::NumberHelper
   load_and_authorize_resource :ad, only: %i[new create]
   load_and_authorize_resource through: :ad, only: %i[new create]
@@ -32,7 +31,7 @@ class BidsController < ApplicationController
   end
 
   def index
-    @bids = paginate_records(@bids.includes([ad: :product]).recently_updated)
+    @bids = @bids.includes([ad: :product]).recently_updated.page(params[:page])
   end
 
   private

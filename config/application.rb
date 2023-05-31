@@ -7,6 +7,8 @@ require 'active_storage/engine'
 
 require 'will_paginate/array'
 
+WillPaginate.per_page = RECORDS_PER_PAGE
+
 ActiveSupport.on_load(:active_record) do
   include ActiveStorage::Reflection::ActiveRecordExtensions
   ActiveRecord::Reflection.singleton_class.prepend(ActiveStorage::Reflection::ReflectionExtension)

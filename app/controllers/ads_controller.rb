@@ -2,7 +2,6 @@
 
 # Ads Controller
 class AdsController < ApplicationController
-  include Pagination
   load_and_authorize_resource :product, only: %i[new create]
   load_and_authorize_resource through: :product, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
@@ -11,13 +10,14 @@ class AdsController < ApplicationController
   before_action :store_location, only: %i[new edit index]
 
   def index
-    @ads = paginate_records(@ads.includes([:product], [:ad_images_attachments]).by_archived(params[:archived] || false))
+    @ads = @ads.includes([:product],
+                         [:ad_images_attachments]).by_archived(params[:archived] || false).page(params[:page])
   end
 
   def show; end
 
   def new
-      @addresses = current_user.addresses.pluck(:full_address, :id)
+    @addresses = current_user.addresses.pluck(:full_address, :id)
   end
 
   def create
@@ -32,7 +32,7 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-    @bids = paginate_records(@ad.bids.includes([:user]).pending.order(price: :desc))
+    @bids = @ad.bids.includes([:user]).pending.order(price: :desc).page(params[:page])
   end
 
   def edit
