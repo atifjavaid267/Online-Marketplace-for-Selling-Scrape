@@ -3,6 +3,9 @@ class Order < ApplicationRecord
   belongs_to :bid
   has_many :messages
 
+  belongs_to :buyer, class_name: 'User', foreign_key: 'buyer_id'
+  belongs_to :seller, class_name: 'User', foreign_key: 'seller_id'
+
   after_create :change_bids_status_for_create_order
   after_update :change_bids_status_for_confirm_order, if: :successful?
   after_update :change_bids_status_for_cancel_order, if: :cancelled?

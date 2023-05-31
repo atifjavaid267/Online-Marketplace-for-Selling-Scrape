@@ -11,7 +11,7 @@ class MessagesController < ApplicationController
   def new
     @order = Order.find(params[:order_id].to_i)
     @message = Message.new(order_id: @order.id)
-    @second_id = current_user.buyer? ? @order.bid.ad.user_id : @order.bid.user_id
+    @second_id = current_user.buyer? ? @order.seller_id : @order.buyer_id
 
     notification = Notification.where(receiver_id: current_user.id, sender_id: @second_id).first
     if notification
@@ -30,7 +30,7 @@ class MessagesController < ApplicationController
     @message = Message.new(message_params)
     @message.order_id = @order.id
     @message.sender_id = current_user.id
-    @message.receiver_id = current_user.seller? ? @order.bid.user_id : @order.bid.ad.user_id
+    @message.receiver_id = current_user.seller? ? @order.buyer_id : @order.seller_id
     return unless @message.save
 
     sender_id = @message.sender_id

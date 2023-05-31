@@ -14,6 +14,8 @@ class OrdersController < ApplicationController
   def new; end
 
   def create
+    @order.buyer_id = @bid.user_id
+    @order.seller_id = @bid.ad.user_id
     if @order.save
       flash[:notice] = 'New Order Opened.'
       redirect_to @order
