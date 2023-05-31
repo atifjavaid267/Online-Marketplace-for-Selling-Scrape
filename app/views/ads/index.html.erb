@@ -2,7 +2,7 @@
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Ad Found!' } %>
 <% else %>
   <div class="grid lg:grid-cols-2 gap-4 m-5">
-    <% @ads.each.with_index(@ads.offset+1) do |ad, counter| %>
+    <% @ads.each.with_index( @ads.offset + 1 ) do |ad, counter| %>
       <div class="border p-4 rounded-lg flex w-full">
         <div class="w-1/2">
           <div>
