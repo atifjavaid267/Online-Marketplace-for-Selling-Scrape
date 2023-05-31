@@ -32,7 +32,7 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-    @bids = @ad.bids.includes([:user]).pending.order(price: :desc).page(params[:page])
+    @bids = @ad.bids.includes([:user]).pending.desc_price.page(params[:page])
   end
 
   def edit

@@ -13,8 +13,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
       flash[:alert] = "This email is already registered as #{existing_user.role}"
       redirect_to new_user_registration_path
     else
-      # redirect_to new_user_registration_path unless seller? || buyer?
-
       super do |resource|
         if resource.valid? && resource.persisted?
           resource.update(

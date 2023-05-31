@@ -7,7 +7,7 @@
     </div>
   <% end %>
   <div class="grid lg:grid-cols-2 gap-4 m-5">
-    <% @products.each.with_index( @products.offset + 1 ) do |product, counter| %>
+    <% @products.each.with_index(@products.offset + 1) do |product, counter| %>
       <div class="border p-4 rounded-lg flex w-full">
         <div class="w-1/2">
           <div>

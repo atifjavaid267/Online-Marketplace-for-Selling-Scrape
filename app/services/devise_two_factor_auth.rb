@@ -8,7 +8,7 @@ class DeviseTwoFactorAuth
 
   def send_message
     code = User.generate_otp(@user.otp_secret)
-    CodeMailer.send_code(@user).deliver_now
+    CodeMailer.send_code(@user).deliver_later
 
     twilio_number = '+14345108668'
     client = Twilio::REST::Client.new(ENV['TWILIO_ACCOUNT_SID'], ENV['TWILIO_AUTH_TOKEN'])
