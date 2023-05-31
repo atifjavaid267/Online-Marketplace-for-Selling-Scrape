@@ -27,7 +27,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = @orders.status(params[:status]) if params[:status]
-    @orders = @orders.includes(%i[buyer seller]).references(:user).recently_updated.page(params[:page])
+    @orders = @orders.includes(%i[buyer seller]).recently_updated.page(params[:page])
   end
 
   def confirm
