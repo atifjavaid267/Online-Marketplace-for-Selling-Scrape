@@ -45,8 +45,6 @@ ActiveRecord::Schema.define(version: 2023_05_31_072644) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "street1", default: ""
-    t.string "street2", default: ""
     t.string "city", null: false
     t.string "state", null: false
     t.string "zip_code"
@@ -55,6 +53,8 @@ ActiveRecord::Schema.define(version: 2023_05_31_072644) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "full_address"
+    t.string "street1"
+    t.string "street2"
   end
 
   create_table "ads", force: :cascade do |t|
@@ -127,6 +127,14 @@ ActiveRecord::Schema.define(version: 2023_05_31_072644) do
     t.string "first_name"
     t.string "last_name"
     t.string "phone_no"
+    t.integer "second_factor_attempts_count", default: 0
+    t.string "encrypted_otp_secret_key"
+    t.string "encrypted_otp_secret_key_iv"
+    t.string "encrypted_otp_secret_key_salt"
+    t.string "direct_otp"
+    t.datetime "direct_otp_sent_at"
+    t.datetime "totp_timestamp"
+    t.string "otp"
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
@@ -143,6 +151,8 @@ ActiveRecord::Schema.define(version: 2023_05_31_072644) do
     t.string "unconfirmed_email"
     t.integer "role"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["encrypted_otp_secret_key"], name: "index_users_on_encrypted_otp_secret_key", unique: true
+    t.index ["phone_no"], name: "index_users_on_phone_no", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

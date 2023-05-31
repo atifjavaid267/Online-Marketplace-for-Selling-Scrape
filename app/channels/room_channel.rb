@@ -12,8 +12,4 @@ class RoomChannel < ApplicationCable::Channel
     ActionCable.server.broadcast "room_channel_#{params[:room_id]}", html:,
                                                                      content: message.content
   end
-
-  def render_message(message)
-    ApplicationController.render.render(partial: 'messages/message', locals: { message: })
-  end
 end
