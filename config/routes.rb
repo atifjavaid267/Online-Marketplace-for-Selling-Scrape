@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'users/otp_setting'
   patch 'users/toggle_otp_status'
 
-  resources :messages, only: %i[create show new]
+  resources :messages, only: %i[show]
   mount ActionCable.server => '/cable'
 
   get 'otp/create'
@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   end
 
   resources :orders, except: %i[new create] do
+    resources :messages, only: %i[new create]
     member do
       post :confirm
       post :cancel

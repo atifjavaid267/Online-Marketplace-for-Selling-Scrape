@@ -42,7 +42,7 @@
     <% end %>
   <% end %>
   <% if can? :new, Message %>
-    <%= link_to "Message", new_message_path(order_id: @order.id), class: "bg-green-500 text-white px-6 py-2 ml-1 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
+    <%= link_to "Message", new_order_message_path(order_id: @order.id), class: "bg-green-500 text-white px-6 py-2 ml-1 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
   <% end %>
 </div>
 <%= javascript_pack_tag 'map' %>
