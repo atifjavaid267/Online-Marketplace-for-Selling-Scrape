@@ -29,7 +29,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = @orders.status(params[:status]) if params[:status]
-    @orders = paginate_records(@orders.includes(bid: { user: {}, ad: :user }).references(:users).recently_updated)
+    @orders = paginate_records(@orders.includes(%i[buyer seller]).references(:user).recently_updated)
   end
 
   def confirm
