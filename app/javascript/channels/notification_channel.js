@@ -25,7 +25,7 @@ document.addEventListener("turbolinks:load", () => {
     notificationMessage.classList.add("p-2", "text-black");
     notificationMessage.id = `notification-${pairId}`;
     notificationMessage.addEventListener("click", () => {
-      const messageURL = `/messages/new?order_id=${orderID}&user_id=${current_user_id}`;
+      const messageURL = `/orders/${orderID}/messages/new`;
       window.location.href = messageURL;
     });
     notificationDropdown.appendChild(notificationMessage);
@@ -53,7 +53,8 @@ document.addEventListener("turbolinks:load", () => {
       notificationMessage.classList.add("p-2", "text-black");
       notificationMessage.id = `notification-${pairId}`;
       notificationMessage.addEventListener("click", () => {
-        const messageURL = `/messages/new?order_id=${orderID}&user_id=${current_user_id}`;
+        const messageURL = `/orders/${orderID}/messages/new`;
+
         window.location.href = messageURL;
       });
       notificationDropdown.appendChild(notificationMessage);

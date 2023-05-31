@@ -57,7 +57,7 @@ document.addEventListener("turbolinks:load", () => {
     }
   );
 
-  if (window.location.pathname === "/messages/new") {
+  if (window.location.pathname === `/orders/${orderID}/messages/new`) {
     const countElement = document.getElementById("notification-count");
     localStorage.setItem("count", "0");
     countElement.innerHTML = "0";
