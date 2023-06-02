@@ -5,30 +5,36 @@ document.addEventListener("turbolinks:load", () => {
   const current_user_id = userDiv.getAttribute("data-user-id");
   const countElement = document.getElementById("notification-count");
   const notificationDropdown = document.getElementById("notification-dropdown");
-
   const storedCount = localStorage.getItem("count") || 0;
   countElement.innerHTML = storedCount;
-
-  const storedNotifications =
-    JSON.parse(localStorage.getItem("notifications")) || {};
+  const storedNotifications = JSON.parse(localStorage.getItem("notifications")) || {};
   const messageCounts = storedNotifications.messageCounts || {};
   const notificationMessages = storedNotifications.notificationMessages || {};
 
-  for (const pairId in messageCounts) {
-    const senderId = pairId.split("-")[0];
-    const senderName = notificationMessages[pairId].senderName;
-    const messageCount = messageCounts[pairId];
-    const orderID = notificationMessages[pairId].orderID;
+  if (window.location.pathname.includes("/messages/new")) {
+    localStorage.setItem("count", "0");
+    countElement.innerHTML = "0";
+    notificationDropdown.innerHTML = "";
+    localStorage.setItem("notifications", JSON.stringify({ messageCounts: {}, notificationMessages: {} })
+    );
+  }
+  else {
+    for (const pairId in messageCounts) {
+      const senderId = pairId.split("-")[0];
+      const senderName = notificationMessages[pairId].senderName;
+      const messageCount = messageCounts[pairId];
+      const orderID = notificationMessages[pairId].orderID;
 
-    const notificationMessage = document.createElement("div");
-    notificationMessage.textContent = `${senderName} sent you ${messageCount} messages`;
-    notificationMessage.classList.add("p-2", "text-black");
-    notificationMessage.id = `notification-${pairId}`;
-    notificationMessage.addEventListener("click", () => {
-      const messageURL = `/messages/new?order_id=${orderID}&user_id=${current_user_id}`;
-      window.location.href = messageURL;
-    });
-    notificationDropdown.appendChild(notificationMessage);
+      const notificationMessage = document.createElement("div");
+      notificationMessage.textContent = `${senderName} sent you ${messageCount} messages`;
+      notificationMessage.classList.add("p-2", "text-black");
+      notificationMessage.id = `notification-${pairId}`;
+      notificationMessage.addEventListener("click", () => {
+        const messageURL = `/orders/${orderID}/messages/new`;
+        window.location.href = messageURL;
+      });
+      notificationDropdown.appendChild(notificationMessage);
+    }
   }
 
   const handleNotification = (data) => {
@@ -53,7 +59,8 @@ document.addEventListener("turbolinks:load", () => {
       notificationMessage.classList.add("p-2", "text-black");
       notificationMessage.id = `notification-${pairId}`;
       notificationMessage.addEventListener("click", () => {
-        const messageURL = `/messages/new?order_id=${orderID}&user_id=${current_user_id}`;
+        const messageURL = `/orders/${orderID}/messages/new`;
+
         window.location.href = messageURL;
       });
       notificationDropdown.appendChild(notificationMessage);
@@ -72,10 +79,7 @@ document.addEventListener("turbolinks:load", () => {
     };
     localStorage.setItem("notifications", JSON.stringify(notifications));
 
-    const newCount = Object.values(messageCounts).reduce(
-      (total, count) => total + count,
-      0
-    );
+    const newCount = Object.values(messageCounts).reduce((total, count) => total + count, 0);
     localStorage.setItem("count", newCount);
     countElement.innerHTML = newCount;
   };

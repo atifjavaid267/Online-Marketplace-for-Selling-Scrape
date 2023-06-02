@@ -10,7 +10,7 @@
             <%= link_to "View Products", products_path, class: "text-blue-500 hover:text-blue-700" %>
             <br>
             <% if current_user.admin? %>
-              <%= link_to "View Archive Products", products_path(status: false), class: "text-blue-500 hover:text-blue-700" %>
+              <%= link_to "View Archive Products", products_path(archived: true), class: "text-blue-500 hover:text-blue-700" %>
             <% end %>
           <% end %>
           <br>
@@ -26,7 +26,7 @@
             <%= link_to "View All Ads", ads_path, class: "text-blue-500 hover:text-blue-700" %>
             <br>
             <% unless current_user.buyer? %>
-              <%= link_to "View Archive Ads", ads_path(status: false), class: "text-blue-500 hover:text-blue-700" %>
+              <%= link_to "View Archive Ads", ads_path(archived: true), class: "text-blue-500 hover:text-blue-700" %>
             <% end %>
           <% end %>
         </div>

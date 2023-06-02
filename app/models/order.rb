@@ -1,6 +1,10 @@
 class Order < ApplicationRecord
+  include Sort
   belongs_to :bid
   has_many :messages
+
+  belongs_to :buyer, class_name: 'User', foreign_key: 'buyer_id'
+  belongs_to :seller, class_name: 'User', foreign_key: 'seller_id'
 
   after_create :change_bids_status_for_create_order
   after_update :change_bids_status_for_confirm_order, if: :successful?
@@ -8,19 +12,9 @@ class Order < ApplicationRecord
   validates :pickup_time, presence: true
   validate :pickup_time_cannot_be_in_the_past
 
+  enum status: { pending: 0, successful: 1, cancelled: 2 }
+
   scope :status, ->(status_param) { where(status: status_param) }
-
-  def pending?
-    status == 'pending'
-  end
-
-  def successful?
-    status == 'successful'
-  end
-
-  def cancelled?
-    status == 'cancelled'
-  end
 
   private
 

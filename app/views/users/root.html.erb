@@ -25,9 +25,9 @@
       </div>
     </div>
   </div>
-  <% unless @products.nil? || @products.empty? %>
+  <% unless @products.empty? %>
     <hr>
-    <div class="bg-cover bg-no-repeat h-full bg-background_img" >
+    <div class="bg-cover bg-no-repeat h-full bg-background_img">
       <div class="pt-5">
         <div class="grid md:grid-cols-2 gap-4">
           <% @products.each do |product| %>
@@ -44,7 +44,7 @@
         </div>
       </div>
       <div class="pb-20 flex flex-row items-center justify-center mt-14">
-        <%= will_paginate @products, class:"bg-gray-500 rounded py-3 px-4" %>
+        <%= will_paginate @products, class: "bg-gray-500 rounded py-3 px-4" %>
       </div>
     </div>
   <% end %>

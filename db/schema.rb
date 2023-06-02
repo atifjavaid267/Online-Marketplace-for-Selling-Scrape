@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_05_29_080436) do
+ActiveRecord::Schema.define(version: 2023_05_31_072644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -45,8 +45,6 @@ ActiveRecord::Schema.define(version: 2023_05_29_080436) do
 
   create_table "addresses", force: :cascade do |t|
     t.integer "user_id", null: false
-    t.string "street1", default: ""
-    t.string "street2", default: ""
     t.string "city", null: false
     t.string "state", null: false
     t.string "zip_code"
@@ -55,6 +53,8 @@ ActiveRecord::Schema.define(version: 2023_05_29_080436) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.string "full_address"
+    t.string "street1"
+    t.string "street2"
   end
 
   create_table "ads", force: :cascade do |t|
@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2023_05_29_080436) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
-    t.boolean "status", default: true
+    t.boolean "archived", default: false
   end
 
   create_table "bids", force: :cascade do |t|
@@ -74,7 +74,7 @@ ActiveRecord::Schema.define(version: 2023_05_29_080436) do
     t.decimal "price", precision: 12, scale: 2, null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.string "status", default: "pending"
+    t.integer "status", default: 0
   end
 
   create_table "messages", force: :cascade do |t|
@@ -100,9 +100,11 @@ ActiveRecord::Schema.define(version: 2023_05_29_080436) do
   create_table "orders", force: :cascade do |t|
     t.integer "bid_id", null: false
     t.datetime "pickup_time"
-    t.string "status", default: "pending"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status", default: 0
+    t.integer "seller_id", null: false
+    t.integer "buyer_id", null: false
   end
 
   create_table "products", force: :cascade do |t|
@@ -111,7 +113,7 @@ ActiveRecord::Schema.define(version: 2023_05_29_080436) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "status", default: true
+    t.boolean "archived", default: false
   end
 
   create_table "users", force: :cascade do |t|
@@ -124,8 +126,15 @@ ActiveRecord::Schema.define(version: 2023_05_29_080436) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
     t.string "last_name"
-    t.string "role"
     t.string "phone_no"
+    t.integer "second_factor_attempts_count", default: 0
+    t.string "encrypted_otp_secret_key"
+    t.string "encrypted_otp_secret_key_iv"
+    t.string "encrypted_otp_secret_key_salt"
+    t.string "direct_otp"
+    t.datetime "direct_otp_sent_at"
+    t.datetime "totp_timestamp"
+    t.string "otp"
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
     t.string "encrypted_otp_secret_salt"
@@ -140,7 +149,10 @@ ActiveRecord::Schema.define(version: 2023_05_29_080436) do
     t.datetime "confirmed_at"
     t.datetime "confirmation_sent_at"
     t.string "unconfirmed_email"
+    t.integer "role"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["encrypted_otp_secret_key"], name: "index_users_on_encrypted_otp_secret_key", unique: true
+    t.index ["phone_no"], name: "index_users_on_phone_no", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

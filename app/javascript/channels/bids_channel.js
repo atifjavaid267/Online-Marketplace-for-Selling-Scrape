@@ -9,13 +9,13 @@ consumer.subscriptions.create("BidsChannel", {
   },
   received(data) {
     console.log("received data:", data);
-    const { ad_id, price, buyer_id, buyer_name } = data;
+    const { ad_id, price, buyer_name } = data;
     const bidsContainer = document.getElementById(`bids-container-${ad_id}`);
     const html = `
       <div class="flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
           <p class="text-gray-600 font-bold">
-            <span class="font-bold"> Bid Amount: Rs. </span>${" " + price}
+            <span class="font-bold"> Bid Amount: </span>${price}
           </p>
           <p class="text-lg">Buyer Name: ${buyer_name}</p>
         </div>

@@ -2,6 +2,7 @@
 
 # Bids Controller
 class BidsController < ApplicationController
+  include ActionView::Helpers::NumberHelper
   load_and_authorize_resource :ad, only: %i[new create]
   load_and_authorize_resource through: :ad, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
@@ -17,7 +18,8 @@ class BidsController < ApplicationController
       respond_to do |format|
         flash[:notice] = 'Bid was created successfully.'
         ActionCable.server.broadcast('bids_channel',
-                                     { ad_id: @bid.ad_id, price: @bid.price, buyer_id: @bid.user_id,
+                                     { ad_id: @bid.ad_id,
+                                       price: number_to_currency(@bid.price, unit: 'Rs', format: '%u. %n'),
                                        buyer_name: @bid.user.full_name })
         format.json { render :show, status: :created, location: @bid }
         format.html { redirect_to ads_path }
@@ -29,8 +31,7 @@ class BidsController < ApplicationController
   end
 
   def index
-    @bids = @bids.order(created_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-    @bids = @bids.includes([ad: :product])
+    @bids = @bids.includes([ad: :product]).recently_updated.page(params[:page])
   end
 
   private

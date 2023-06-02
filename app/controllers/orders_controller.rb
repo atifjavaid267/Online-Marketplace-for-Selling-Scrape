@@ -12,6 +12,8 @@ class OrdersController < ApplicationController
   def new; end
 
   def create
+    @order.buyer_id = @bid.user_id
+    @order.seller_id = @bid.ad.user_id
     if @order.save
       flash[:notice] = 'New Order Opened.'
       redirect_to @order
@@ -25,8 +27,7 @@ class OrdersController < ApplicationController
 
   def index
     @orders = @orders.status(params[:status]) if params[:status]
-    @orders = @orders.order(created_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-    @orders = @orders.includes(bid: { user: {}, ad: :user }).references(:users)
+    @orders = @orders.includes(%i[buyer seller]).recently_updated.page(params[:page])
   end
 
   def confirm

@@ -7,7 +7,7 @@ class AddressesController < ApplicationController
   before_action :store_location, only: %i[index]
 
   def index
-    @addresses = @addresses.order(updated_at: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
+    @addresses = @addresses.recently_updated.page(params[:page])
   end
 
   def new; end
@@ -47,7 +47,7 @@ class AddressesController < ApplicationController
   private
 
   def address_params
-    params.require(:address).permit(:user_id, :street1, :street2, :city, :state, :zip_code,
+    params.require(:address).permit(:user_id, :city, :state, :zip_code,
                                     :full_address)
   end
 end

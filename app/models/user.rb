@@ -1,4 +1,8 @@
 class User < ApplicationRecord
+  has_many :products
+  has_many :ads
+  has_many :addresses
+  has_many :bids
   has_many :received_messages, class_name: 'Message', foreign_key: 'receiver_id'
   has_many :sent_messages, class_name: 'Message', foreign_key: 'sender_id'
 
@@ -10,22 +14,7 @@ class User < ApplicationRecord
   validates :last_name, format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }
   validates :role, presence: true
 
-  has_many :products
-  has_many :ads
-  has_many :addresses
-  has_many :bids
-
-  def admin?
-    role == 'admin'
-  end
-
-  def seller?
-    role == 'seller'
-  end
-
-  def buyer?
-    role == 'buyer'
-  end
+  enum role: { admin: 0, seller: 1, buyer: 2 }
 
   def full_name
     "#{first_name} #{last_name}"

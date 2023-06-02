@@ -68,7 +68,7 @@ function initMap() {
       zip_code: zip_code,
     };
 
-    fullAddressInput.value = place.formatted_address;
+    fullAddressInput.value = input.value;
 
     document.getElementById("map").focus();
     console.log(address);
@@ -129,4 +129,3 @@ function initMap() {
 }
 
 window.initMap = initMap;
-

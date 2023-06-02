@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root 'users#show_root'
+  root 'users#root'
 
   get 'notification/index'
   get 'notification/show'
@@ -11,7 +11,7 @@ Rails.application.routes.draw do
   get 'users/otp_setting'
   patch 'users/toggle_otp_status'
 
-  resources :messages, only: %i[create show new]
+  resources :messages, only: %i[show]
   mount ActionCable.server => '/cable'
 
   get 'otp/create'
@@ -34,10 +34,10 @@ Rails.application.routes.draw do
   resources :products do
     resources :ads, only: %i[new create]
     member do
-      post :toggle_status
+      post :toggle_archived
     end
     collection do
-      get 'show_root' => 'products#show_root'
+      get 'root' => 'products#root'
     end
   end
   resources :addresses
@@ -46,7 +46,7 @@ Rails.application.routes.draw do
     resources :bids, only: %i[new create]
     member do
       get :view_bids
-      post :toggle_status
+      post :toggle_archived
     end
   end
 
@@ -55,6 +55,7 @@ Rails.application.routes.draw do
   end
 
   resources :orders, except: %i[new create] do
+    resources :messages, only: %i[new create]
     member do
       post :confirm
       post :cancel

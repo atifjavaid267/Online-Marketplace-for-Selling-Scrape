@@ -7,20 +7,17 @@ class AdsController < ApplicationController
   load_and_authorize_resource except: %i[new create]
 
   before_action :authenticate_user!
-  before_action :store_location, only: %i[new index]
+  before_action :store_location, only: %i[new edit index]
 
   def index
-    @ads = @ads.status(params[:status] || true).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-    @ads = @ads.includes([:product], [:ad_images_attachments])
+    @ads = @ads.includes([:product],
+                         [:ad_images_attachments]).by_archived(params[:archived] || false).page(params[:page])
   end
 
   def show; end
 
   def new
-    @addresses = {}
-    current_user.addresses.each do |a|
-      @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
-    end
+    @addresses = current_user.addresses.pluck(:full_address, :id)
   end
 
   def create
@@ -35,15 +32,11 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-    @bids = @ad.bids.pending.order(price: :desc).paginate(page: params[:page], per_page: RECORDS_PER_PAGE)
-    @bids = @bids.includes([:user])
+    @bids = @ad.bids.includes([:user]).pending.desc_price.page(params[:page])
   end
 
   def edit
-    @addresses = {}
-    current_user.addresses.each do |a|
-      @addresses[[a.street1, a.street2, a.city, a.state, a.zip_code].reject(&:nil?).reject(&:empty?).join(', ')] = a.id
-    end
+    @addresses = current_user.addresses.pluck(:full_address, :id)
   end
 
   def update
@@ -65,13 +58,13 @@ class AdsController < ApplicationController
     redirect_to stored_location
   end
 
-  def toggle_status
-    if @ad.update_attribute(:status, !@ad.status)
-      flash[:notice] = @ad.status == true ? 'Ad Published' : 'Ad Unpublished'
+  def toggle_archived
+    if @ad.update_attribute(:archived, !@ad.archived)
+      flash[:notice] = @ad.archived ? 'Ad Unpublished' : 'Ad Published'
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end
-    redirect_to ads_path(status: true)
+    redirect_to ads_path
   end
 
   private

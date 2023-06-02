@@ -2,16 +2,12 @@
   <%= render partial: 'shared/data_not_found', locals: { message: 'No Order Found!' } %>
 <% else %>
   <div class="grid gap-4 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-2 2xl:grid-cols-2 mx-4 my-2 mt-6">
-    <% @orders.each.with_index(@orders.offset+1) do |order, counter| %>
+    <% @orders.each.with_index(@orders.offset + 1) do |order, counter| %>
       <div class="col-span-1 flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
           <p class="text-lg font-bold"><%= "Order - #{@orders.count + 1 - counter}" %></p>
-          <% unless current_user.seller? %>
-            <p class="text-lg font-semibold">Seller Name: <span class="text-gray-600"><%= order.bid.ad.user.full_name %> </span></p>
-          <% end %>
-          <% unless current_user.buyer? %>
-            <p class="text-lg font-semibold">Buyer Name: <span class="text-gray-600"><%= order.bid.user.full_name %> </span></p>
-          <% end %>
+          <p class="text-lg font-semibold">Seller Name: <span class="text-gray-600"><%= order.seller.full_name %> </span></p>
+          <p class="text-lg font-semibold">Buyer Name: <span class="text-gray-600"><%= order.buyer.full_name %> </span></p>
         </div>
         <div class="flex justify-between flex-row items-center">
           <h3 class="font-bold px-10 py-6 mx-2 <%= order_status_css(order.status) %>"> <%= "Order #{order.status.capitalize}" %> </h3>
@@ -23,6 +19,6 @@
     <% end %>
   </div>
   <div class="pb-10 flex flex-row items-center justify-center">
-    <%= will_paginate @orders,  class: "bg-gray-300 rounded py-3 px-5" %>
+    <%= will_paginate @orders, class: "bg-gray-300 rounded py-3 px-5" %>
   </div>
 <% end %>
