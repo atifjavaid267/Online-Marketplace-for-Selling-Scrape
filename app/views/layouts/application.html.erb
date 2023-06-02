@@ -7,9 +7,9 @@
     <%= csp_meta_tag %>
     <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-   
-    <script>
+    <%# <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %> %>
+    <%= javascript_pack_tag 'typewriter' %>
+    <%# <script>
       var i = 0;
       var txt = 'We offer a streamlined solution for users to sell their meticulously curated products obtained through web scraping. With our user-friendly interface, interested buyers can easily peruse and purchase these unique offerings.';
       var speed = 50;
@@ -21,7 +21,7 @@
           setTimeout(typeWriter, speed);
         }
       }
-    </script>
+    </script> %>
   </head>
   <% if current_user %>
     <% current_user_id = current_user.id %>

@@ -17,11 +17,14 @@ class AdsController < ApplicationController
   def show; end
 
   def new
-    @addresses = current_user.addresses.pluck(:full_address, :id)
+    @ad.user_id = current_user.id
+    @ad.product_id = params[:product_id]
+    @addresses = current_user.addresses
   end
 
   def create
     @ad.user_id = current_user.id
+    @addresses = current_user.addresses
     if @ad.save
       flash[:notice] = 'Ad was successfully created'
       redirect_to @ad
@@ -36,7 +39,7 @@ class AdsController < ApplicationController
   end
 
   def edit
-    @addresses = current_user.addresses.pluck(:full_address, :id)
+    @addresses = current_user.addresses
   end
 
   def update

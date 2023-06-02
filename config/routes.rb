@@ -1,11 +1,7 @@
 Rails.application.routes.draw do
   root 'users#root'
 
-  get 'notification/index'
-  get 'notification/show'
-  get 'notification/create'
-  get 'notification/update'
-  get 'notification/destroy'
+  resources :notifiactions
 
   get 'users/home'
   get 'users/otp_setting'
