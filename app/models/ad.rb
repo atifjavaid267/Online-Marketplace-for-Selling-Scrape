@@ -5,6 +5,7 @@ class Ad < ApplicationRecord
   belongs_to :user
   belongs_to :address
 
+  validates :ad_images, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg']
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true

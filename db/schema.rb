@@ -127,6 +127,10 @@ ActiveRecord::Schema.define(version: 2023_05_31_072644) do
     t.string "first_name"
     t.string "last_name"
     t.string "phone_no"
+<<<<<<< Updated upstream
+=======
+    t.string "role"
+>>>>>>> Stashed changes
     t.string "otp"
     t.string "encrypted_otp_secret"
     t.string "encrypted_otp_secret_iv"
