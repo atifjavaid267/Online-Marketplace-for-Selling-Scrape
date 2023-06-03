@@ -1,5 +1,5 @@
 class Bid < ApplicationRecord
-  include Sort
+  include Sortable
   belongs_to :ad
   belongs_to :user
   has_one :order
@@ -7,6 +7,5 @@ class Bid < ApplicationRecord
 
   enum status: { pending: 0, successful: 1, failed: 2 }
 
-  scope :pending, -> { where(status: 'pending') }
   scope :desc_price, -> { order(price: :desc) }
 end

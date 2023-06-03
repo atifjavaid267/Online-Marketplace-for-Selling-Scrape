@@ -31,7 +31,7 @@ class OrdersController < ApplicationController
   end
 
   def confirm
-    if @order.update_attribute(:status, 'successful')
+    if @order.update(status: 'successful')
       flash[:notice] = 'Order Completed.'
     else
       flash[:alert] = @order.errors.full_messages.join(', ')
@@ -40,7 +40,7 @@ class OrdersController < ApplicationController
   end
 
   def cancel
-    if @order.update_attribute(:status, 'cancelled')
+    if @order.update(status: 'cancelled')
       flash[:notice] = 'Order Cancelled.'
     else
       flash[:alert] = @order.errors.full_messages.join(', ')

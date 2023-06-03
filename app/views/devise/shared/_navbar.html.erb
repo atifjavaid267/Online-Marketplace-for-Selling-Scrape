@@ -24,13 +24,13 @@
               <%= link_to "Home", users_home_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
             </div>
           </div>
-          <div class="hidden sm:ml-6 sm:block">
-            <div class="flex space-x-4">
-              <% if can? :index, Product %>
+          <% if can? :index, Product %>
+            <div class="hidden sm:ml-6 sm:block">
+              <div class="flex space-x-4">
                 <%= link_to "Products", products_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
-              <% end %>
+              </div>
             </div>
-          </div>
+          <% end %>
           <% if can? :index, Order %>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">
@@ -72,7 +72,7 @@
               <div class="py-1" role="none">
                 <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "Edit Profile", edit_user_registration_path %></span>
                 <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "OTP Setting", users_otp_setting_path %></span>
-                <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"> <%= link_to "Sign Out", destroy_user_session_path %> </span>
+                <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"> <%= link_to "Sign out", destroy_user_session_path %> </span>
               </div>
             </div>
           </div>

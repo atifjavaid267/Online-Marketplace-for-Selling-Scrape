@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     registrations: 'users/registrations'
   }
 
-  resources :bids
+  resources :bids, only: %i[new create index]
 
   resources :products do
     resources :ads, only: %i[new create]
@@ -36,7 +36,8 @@ Rails.application.routes.draw do
       get 'root' => 'products#root'
     end
   end
-  resources :addresses
+
+  resources :addresses, except: [:show]
 
   resources :ads, except: %i[new create] do
     resources :bids, only: %i[new create]

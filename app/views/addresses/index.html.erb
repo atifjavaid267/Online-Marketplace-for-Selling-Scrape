@@ -23,7 +23,7 @@
   <div class="py-5">
     <table class="w-full table-auto">
       <thead>
-        <tr class="bg-gray-200 text-gray-800 text-left font-bold">
+        <tr class="bg-gray-300 text-gray-800 text-left font-bold">
           <th class="px-4 py-3">No.</th>
           <th class="px-4 py-3">Full Address</th>
           <th class="px-4 py-3">City</th>
@@ -33,7 +33,7 @@
       </thead>
       <tbody>
         <% @addresses.each.with_index(@addresses.offset + 1) do |address, counter| %>
-          <tr class="<%= cycle('bg-white', 'bg-gray-100') %>">
+          <tr class="shadow-md">
             <td class="px-4 py-3"><%= counter %></td>
             <td class="px-4 py-2"><%= address.full_address %></td>
             <td class="px-4 py-2"><%= address.city %></td>
@@ -42,7 +42,7 @@
               <td class="px-4 py-2"><%= link_to "Edit", edit_address_path(address), class: "bg-green-500 hover:bg-green-700 text-white py-2 px-3 rounded" %></td>
             <% end %>
             <% if can? :destroy, Address %>
-              <td class="px-4 py-2"><%= link_to "Delete", address, data: { confirm: "Are you sure to delete address?"}, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white py-2 px-3 rounded" %></td>
+              <td class="px-4 py-2"><%= link_to "Delete", address, data: { confirm: "Are you sure to delete address?" }, method: :delete, class: "bg-red-500 hover:bg-red-700 text-white py-2 px-3 rounded" %></td>
             <% end %>
           </tr>
         <% end %>

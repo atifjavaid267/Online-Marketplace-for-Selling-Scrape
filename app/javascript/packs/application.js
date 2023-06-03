@@ -3,6 +3,8 @@ import Turbolinks from "turbolinks";
 import * as ActiveStorage from "@rails/activestorage";
 import "channels";
 import "controllers";
+import "../packs/flashes.js";
+
 
 Rails.start();
 Turbolinks.start();
@@ -13,4 +15,3 @@ window.fireMapsLoadedEvent = function () {
   document.dispatchEvent(evt);
 };
 
-import "../packs/flash_loadfile_script.js";

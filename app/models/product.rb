@@ -1,11 +1,13 @@
 class Product < ApplicationRecord
-  include Sort
-  has_one_attached :product_image
-  has_many :ads, dependent: :restrict_with_error
+  include Sortable
   belongs_to :user
+  has_many :ads, dependent: :restrict_with_error
+  has_one_attached :product_image
 
+  validates :product_image, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg']
   validates :name, presence: true
   validates :description, presence: true
 
-  scope :by_archived, ->(status) { where(archived: status) }
+  scope :archived, -> { where(archived: true) }
+  scope :unarchived, -> { where(archived: false) }
 end

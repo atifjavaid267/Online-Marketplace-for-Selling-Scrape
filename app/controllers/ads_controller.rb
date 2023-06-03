@@ -7,11 +7,11 @@ class AdsController < ApplicationController
   load_and_authorize_resource except: %i[new create]
 
   before_action :authenticate_user!
-  before_action :store_location, only: %i[new edit index]
+  before_action :store_location, only: %i[new edit index show]
 
   def index
     @ads = @ads.includes([:product],
-                         [:ad_images_attachments]).by_archived(params[:archived] || false).page(params[:page])
+                         [:ad_images_attachments]).archived.page(params[:page])
   end
 
   def show; end
@@ -62,7 +62,7 @@ class AdsController < ApplicationController
   end
 
   def toggle_archived
-    if @ad.update_attribute(:archived, !@ad.archived)
+    if @ad.update(archived: !@ad.archived)
       flash[:notice] = @ad.archived ? 'Ad Unpublished' : 'Ad Published'
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')

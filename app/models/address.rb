@@ -1,5 +1,5 @@
 class Address < ApplicationRecord
-  include Sort
+  include Sortable
 
   has_many :ads, dependent: :restrict_with_error
   belongs_to :user

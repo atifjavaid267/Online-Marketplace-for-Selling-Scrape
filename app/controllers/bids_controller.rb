@@ -7,7 +7,7 @@ class BidsController < ApplicationController
   load_and_authorize_resource through: :ad, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
   before_action :authenticate_user!
-  before_action :store_location, only: %i[new show]
+  # before_action :store_location, only: %i[new show]
 
   def new; end
 
@@ -22,11 +22,11 @@ class BidsController < ApplicationController
                                        price: number_to_currency(@bid.price, unit: 'Rs', format: '%u. %n'),
                                        buyer_name: @bid.user.full_name })
         format.json { render :show, status: :created, location: @bid }
-        format.html { redirect_to ads_path }
+        format.html { redirect_to stored_location }
       end
     else
       flash[:alert] = @bid.errors.full_messages.join(', ')
-      redirect_to stored_location
+      render :new
     end
   end
 

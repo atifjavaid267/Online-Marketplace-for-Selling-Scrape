@@ -1,5 +1,5 @@
 class Order < ApplicationRecord
-  include Sort
+  include Sortable
   belongs_to :bid
   has_many :messages
 
@@ -13,8 +13,6 @@ class Order < ApplicationRecord
   validate :pickup_time_cannot_be_in_the_past
 
   enum status: { pending: 0, successful: 1, cancelled: 2 }
-
-  scope :status, ->(status_param) { where(status: status_param) }
 
   private
 
