@@ -7,5 +7,5 @@ class Bid < ApplicationRecord
 
   enum status: { pending: 0, successful: 1, failed: 2 }
 
-  scope :sort_by_desc_price, -> { order(price: :desc) }
+  scope :sort_by_price, ->(order) { order(price: order) }
 end

@@ -22,7 +22,6 @@ class AdsController < ApplicationController
 
   def create
     @ad.user_id = current_user.id
-    @addresses = current_user.addresses
     if @ad.save
       flash[:notice] = 'Ad was successfully created'
       redirect_to @ad
@@ -33,7 +32,7 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-    @bids = @ad.bids.includes([:user]).pending.sort_by_desc_price.page(params[:page])
+    @bids = @ad.bids.includes([:user]).pending.sort_by_price('desc').page(params[:page])
   end
 
   def edit
