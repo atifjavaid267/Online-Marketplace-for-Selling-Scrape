@@ -13,7 +13,7 @@ class Notification < ApplicationRecord
 
   def self.update_notifications_and_get_messages(current_user, sender_id)
     notification = find_by(receiver_id: current_user.id, sender_id:)
-    notification.update(count: 0, read: true) & notification
+    notification.update(count: 0, read: true) if notification
 
     messages = Message.where(sender_id: [current_user.id, sender_id],
                              receiver_id: [current_user.id,
