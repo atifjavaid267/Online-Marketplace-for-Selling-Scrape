@@ -12,9 +12,7 @@ class MessagesController < ApplicationController
 
   def new
     @sender_id = current_user.buyer? ? @order.seller_id : @order.buyer_id
-
-    @notification, @messages = Notification.update_notifications_and_get_messages(current_user,
-                                                                                  @sender_id)
+    @notification, @messages = Notification.update_notifications_and_get_messages(current_user, @sender_id)
   end
 
   def create
@@ -25,7 +23,6 @@ class MessagesController < ApplicationController
     broadcaster = MessageBroadcaster.new(@message, @order)
     broadcaster.broadcast_notifications
     broadcaster.broadcast_room_channel
-    
   end
 
   private

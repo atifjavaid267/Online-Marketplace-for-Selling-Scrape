@@ -1,7 +1,9 @@
+<%= javascript_pack_tag 'map' %>
+<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap", defer: true %>
 <%= render "devise/shared/back" %>
 <div class="m-10">
   <div class="flex flex-row items-center justify-center mt-10">
-    <h3 class="font-bold <%= order_status_css(@order.status) %> ml-1"> <%= "Order #{@order.status.capitalize}!" %> </h3>
+    <h3 class="font-bold <%= order_status_color(@order.status) %> ml-1"> <%= "Order #{@order.status.capitalize}!" %> </h3>
   </div>
 </div>
 <div class="flex flex-col lg:flex-row items-center justify-center">
@@ -45,5 +47,3 @@
     <%= link_to "Message", new_order_message_path(@order), class: "bg-green-500 text-white px-6 py-2 ml-1 rounded-lg shadow-md hover:bg-green-600 transition duration-300 ease-in-out" %>
   <% end %>
 </div>
-<%= javascript_pack_tag 'map' %>
-<%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap", defer: true %>

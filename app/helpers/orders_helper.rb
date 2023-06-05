@@ -1,5 +1,5 @@
 module OrdersHelper
-  def order_status_css(status)
+  def order_status_color(status)
     case status
     when 'pending'
       'text-blue-600'

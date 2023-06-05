@@ -1,4 +1,4 @@
-<%= javascript_pack_tag 'navbar' %>
+<%= javascript_pack_tag "navbar" %>
 <nav class="bg-gray-800">
   <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
     <div class="relative flex h-16 items-center justify-between">
@@ -25,13 +25,13 @@
               <%= link_to "Home", users_home_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
             </div>
           </div>
-          <% if can? :index, Product %>
-            <div class="hidden sm:ml-6 sm:block">
-              <div class="flex space-x-4">
-                <%= link_to "Products", products_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
-              </div>
-            </div>
-          <% end %>
+        <% end %>
+        <div class="hidden sm:ml-6 sm:block">
+          <div class="flex space-x-4">
+            <%= link_to "Products", products_path, class: "py-2 px-4 hover:bg-gray-600 text-white rounded-lg" %>
+          </div>
+        </div>
+        <% if user_signed_in? %>
           <% if can? :index, Order %>
             <div class="hidden sm:ml-6 sm:block">
               <div class="flex space-x-4">

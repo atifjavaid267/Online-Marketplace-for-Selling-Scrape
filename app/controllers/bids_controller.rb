@@ -7,7 +7,6 @@ class BidsController < ApplicationController
   load_and_authorize_resource through: :ad, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
   before_action :authenticate_user!
-  # before_action :store_location, only: %i[new show]
 
   def new; end
 

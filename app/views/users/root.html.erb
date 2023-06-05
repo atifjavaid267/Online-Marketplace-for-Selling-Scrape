@@ -1,51 +1,13 @@
-<body onload="typeWriter()">
+<body onload="typeWriter()" class="bg-background_img bg-no-repeat bg-cover">
   <% unless user_signed_in? %>
-    <div>
+    <div class="fixed w-full top-0 z-10">
       <%= render "devise/shared/navbar" %>
     </div>
   <% end %>
-  <div class="hidden lg:block bg-gray-800 h-screen">
-    <div class="bg-gray-800">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div class="sm:text-center">
-        </div>
-      </div>
-    </div>
-    <div class="hidden lg:block max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-background_img">
-      <div class="px-4 py-6 sm:px-0">
-        <div class="mx-32 rounded-lg h-96 flex items-center bg-black bg-opacity-20 backdrop-blur-lg drop-shadow-lg flex-col justify-center">
-          <div class="justify-center items-center">
-            <h1 class="text-3xl font-bold text-black sm:text-4xl">Online Marketplace for Selling Scrape</h1>
-          </div>
-          <div class="mx-auto rounded-sm justify-center items-center pt-10 px-32">
-            <p id="home_description" class="mx-10">
-            </p>
-          </div>
-        </div>
-      </div>
+  <div class="flex flex-col my-auto justify-center h-screen bg-black bg-opacity-60 text-white">
+    <div class="flex flex-col mx-10 space-y-5">
+      <h1 class="text-3xl font-bold sm:text-3xl md:text-4xl lg:text-5xl xl:7xl shadow-md">Online Marketplace for Selling Scrape</h1>
+      <p id="home_description" class ="text-xs sm:text-md lg:text-lg md:w-4/5"></p>
     </div>
   </div>
-  <% unless @products.empty? %>
-    <hr>
-    <div class="bg-cover bg-no-repeat h-full bg-background_img">
-      <div class="pt-5">
-        <div class="grid md:grid-cols-2 gap-4">
-          <% @products.each do |product| %>
-            <div class="p-4 rounded-lg bg-gray-800 text-white opacity-95 flex items-center mx-16 mt-10">
-              <div class="flex-grow">
-                <span class="font-bold">Product Name:</span> <br>
-                <span><%= product.name %></span><br>
-              </div>
-              <div class="flex-none mx-2">
-                <%= image_tag product.product_image, class: "w-25 h-20 object-cover rounded-lg shadow-md h-36 w-36" %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <div class="pb-20 flex flex-row items-center justify-center mt-14">
-        <%= will_paginate @products, class: "bg-gray-500 rounded py-3 px-4" %>
-      </div>
-    </div>
-  <% end %>
 </body>

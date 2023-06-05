@@ -1,5 +1,5 @@
 module BidsHelper
-  def bids_status_css(status)
+  def bids_status_color(status)
     case status
     when 'pending'
       'text-blue-600'
