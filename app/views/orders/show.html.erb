@@ -32,12 +32,12 @@
   <% if @order.pending? %>
     <% if can? :confirm, Order %>
       <div class="mx-1">
-        <%= link_to "Complete", confirm_order_path(@order), data: { confirm: "Are you sure to complete order?" }, class: "bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
+        <%= link_to "Complete", confirm_order_path(@order), method: :post, data: { confirm: "Are you sure to complete order?" }, class: "bg-blue-500 text-white px-4 py-2 rounded-lg shadow-md hover:bg-blue-600 transition duration-300 ease-in-out" %>
       </div>
     <% end %>
     <% if can? :cancel, Order %>
       <div>
-        <%= link_to "Cancel", cancel_order_path(@order), data: { p: "Are you sure to cancel order?" }, class: "bg-red-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+        <%= link_to "Cancel", cancel_order_path(@order), method: :post, data: { confirm: "Are you sure to cancel order?" }, class: "bg-red-500 text-white px-8 py-2 rounded-lg shadow-md hover:bg-red-600 transition duration-300 ease-in-out" %>
       </div>
     <% end %>
   <% end %>
