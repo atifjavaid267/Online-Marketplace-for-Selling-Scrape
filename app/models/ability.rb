@@ -4,7 +4,7 @@ class Ability
   def initialize(user)
     user ||= User.new
 
-    can %i[index show], Product
+    can %i[index show], Product, archived: false
 
     if user.admin?
       can %i[new create show index edit update destroy toggle_archived], Product
@@ -12,8 +12,6 @@ class Ability
       can %i[index show], Order
 
     elsif user.seller?
-
-      can %i[index show], Product, archived: false
 
       can %i[new create], Address
       can %i[index edit update destroy], Address, user_id: user.id
@@ -29,8 +27,6 @@ class Ability
       can %i[show], Bid, ad: { user_id: user.id }
 
     elsif user.buyer?
-
-      can %i[index show], Product, archived: false
 
       can %i[index show], Ad, archived: false
 
