@@ -1,22 +1,22 @@
 <% if @bids.empty? %>
-  <%= render partial: 'shared/data_not_found', locals: { message: 'No Bid Found!' } %>
+  <%= render partial: "shared/data_not_found", locals: { message: "No Bid Found!" } %>
 <% else %>
   <div class="grid lg:grid-cols-2 gap-4 items-center p-4 border rounded-md shadow-md mt-2">
     <% @bids.each do |bid| %>
       <div class="flex justify-between p-4 border rounded-md shadow-md mt-2">
         <div>
           <p class="text-gray-600 font-bold">Product Name: <%= bid.ad.product.name %></p>
-          <p class="text-lg"> Product Price: <%= number_to_currency(bid.ad.price, unit: "Rs", format: "%u. %n") %> </p>
-          <p class="text-lg"> Your Bid Amount: </span><%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %> </p>
+          <p class="text-lg">Product Price: <%= number_to_currency(bid.ad.price, unit: "Rs", format: "%u. %n") %></p>
+          <p class="text-lg">Your Bid Amount: <%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %></p>
+        </div>
+        <div class="flex justify-between flex-row text-left">
+          <h3 class="font-bold pr-10 py-6 mx-16 <%= bids_status_css(bid.status) %>"><%= bid.status.capitalize %></h3>
+        </div>
       </div>
-      <div class="flex justify-between flex-row text-left">
-        <h3 class="font-bold pr-10 py-6 mx-16 <%= bids_status_css(bid.status) %>"> <%= bid.status.capitalize %></h3>
-      </div>
-    </div>
-  <% end %>
-</div>
-<br>
-<div class="pb-10 flex flex-row items-center justify-center">
-  <%= will_paginate @bids, class: "bg-gray-300 rounded py-3 px-5" %>
-</div>
+    <% end %>
+  </div>
+  <br>
+  <div class="pb-10 flex flex-row items-center justify-center">
+    <%= will_paginate @bids, class: "bg-gray-300 rounded py-3 px-5" %>
+  </div>
 <% end %>

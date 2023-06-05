@@ -1,5 +1,5 @@
 <% if @products.empty? %>
-  <%= render partial: 'shared/data_not_found', locals: { message: 'No Product Available!' } %>
+  <%= render partial: "shared/data_not_found", locals: { message: "No Product Available!" } %>
 <% else %>
   <% if can? :new, Product %>
     <div class="flex justify-start pl-2 md:justify-end mb-1 mt-2 mr-2">
@@ -12,7 +12,7 @@
         <div class="w-1/2">
           <div>
             <h4 class="font-bold mb-2"><%= "Product - #{counter}" %></h4>
-            <span class="font-semibold">Product Name:</span> <%= product.name %> <br>
+            <span class="font-semibold">Product Name:</span> <%= product.name %><br>
           </div>
           <br>
           <div class="sm:flex sm:flex-row flex-col sm:space-x-2">

@@ -1,12 +1,12 @@
 <% if @bids.empty? %>
-  <%= render partial: 'shared/data_not_found', locals: { message: 'No Bid Found!' } %>
+  <%= render partial: "shared/data_not_found", locals: { message: "No Bid Found!" } %>
 <% else %>
   <br>
-  <div id = <%= "bids-container-" + @ad.id.to_s %> class="grid gap-4 lg:grid-cols-2 mx-10">
+  <div id=<%= "bids-container-" + @ad.id.to_s %> class="grid gap-4 lg:grid-cols-2 mx-10">
     <% @bids.each do |bid| %>
       <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 justify-between items-center p-4 border rounded-md shadow-md">
         <div>
-          <p class="text-gray-600 font-bold"> Bid Amount: <%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %></p>
+          <p class="text-gray-600 font-bold">Bid Amount: <%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %></p>
           <p class="text-lg">Buyer Name: <%= bid.user.full_name %></p>
         </div>
         <div>

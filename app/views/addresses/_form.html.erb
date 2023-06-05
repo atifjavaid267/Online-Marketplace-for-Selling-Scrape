@@ -1,10 +1,10 @@
-<%= javascript_pack_tag 'map' %>
+<%= javascript_pack_tag "map" %>
 <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap", defer: true %>
 <div class="bg-cover h-full bg-background_img">
   <div class="pt-5 mx-12 flex justify-center items-center">
     <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
       <div class="flex flex-col items-center justify-between space-y-5">
-        <h3 class="font-bold"> <%= @address.new_record? ? "New Address" : "Edit Address" %> </h3>
+        <h3 class="font-bold"><%= @address.new_record? ? "New Address" : "Edit Address" %></h3>
         <%= form_with(model: [@user, @address], local: true) do |form| %>
           <div class="card bg-white p-4 rounded-lg shadow-md">
             <div class="form-group mb-4">

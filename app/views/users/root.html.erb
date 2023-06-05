@@ -1,7 +1,7 @@
 <body onload="typeWriter()">
   <% unless user_signed_in? %>
     <div>
-      <%= render 'devise/shared/navbar' %>
+      <%= render "devise/shared/navbar" %>
     </div>
   <% end %>
   <div class="hidden lg:block bg-gray-800 h-screen">
@@ -34,7 +34,7 @@
             <div class="p-4 rounded-lg bg-gray-800 text-white opacity-95 flex items-center mx-16 mt-10">
               <div class="flex-grow">
                 <span class="font-bold">Product Name:</span> <br>
-                <span> <%= product.name %> </span><br>
+                <span><%= product.name %></span><br>
               </div>
               <div class="flex-none mx-2">
                 <%= image_tag product.product_image, class: "w-25 h-20 object-cover rounded-lg shadow-md h-36 w-36" %>
