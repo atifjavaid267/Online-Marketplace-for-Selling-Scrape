@@ -7,9 +7,7 @@ class UsersController < ApplicationController
 
   def home; end
 
-  def root
-    @products = Product.includes([product_image_attachment: :blob]).unarchived.page(params[:page])
-  end
+  def root; end
 
   def otp_setting; end
 
