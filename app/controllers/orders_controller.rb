@@ -26,7 +26,14 @@ class OrdersController < ApplicationController
   def show; end
 
   def index
-    @orders = @orders.status(params[:status]) if params[:status]
+    case params[:status]
+    when 'pending'
+      @orders = @orders.pending
+    when 'successful'
+      @orders = @orders.successful
+    when 'cancelled'
+      @orders = @orders.cancelled
+    end
     @orders = @orders.includes(%i[buyer seller]).recently_updated.page(params[:page])
   end
 

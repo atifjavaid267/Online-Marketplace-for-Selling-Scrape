@@ -1,10 +1,11 @@
-<div class="bg-cover bg-no-repeat h-full bg-background_img">
-  <div class="pt-5 mx-12 flex justify-center items-center">
-    <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
-      <div class="flex flex-col items-center justify-between space-y-2">
-        <h3 class="font-bold text-lg"> <%= @ad.new_record? ? "New Ad" : "Edit Ad" %> </h3>
-        <%= form_with(model: [@product, @ad], local: true) do |form| %>
-          <div class="field">
+<div class="bg-background_img bg-no-repeat bg-cover bg-opacity-75">
+  <%= render "devise/shared/back" %>
+  <div class="flex flex-col my-auto justify-center items-center h-screen">
+    <div class="flex flex-col rounded-lg py-5 px-10 justify-center items-center mx-10">
+      <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
+        <div class="flex flex-col items-center justify-between space-y-5">
+          <h3 class="font-bold text-lg mt-5"> <%= @ad.new_record? ? "New Ad" : "Edit Ad" %> </h3>
+          <%= form_with(model: [@product, @ad], local: true) do |form| %>
             <div class="card bg-white p-4 rounded-lg shadow-md">
               <div class="form-group mb-4">
                 <%= form.label :price, class: "font-bold mb-2 block" %>
@@ -32,15 +33,13 @@
                 <div class="my-2">
                   <%= link_to "New Address", new_address_path, class: "pl-1 text-blue-600 hover:text-blue-800" %>
                 </div>
-                <div class="flex flex-row justify-center">
-                  <div>
-                    <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
-                  </div>
+                <div class="actions flex justify-center">
+                  <%= form.submit "Submit", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
                 </div>
               <% end %>
             </div>
-          </div>
-        <% end %>
+          <% end %>
+        </div>
       </div>
     </div>
   </div>

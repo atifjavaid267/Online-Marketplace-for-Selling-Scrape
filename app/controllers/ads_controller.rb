@@ -10,7 +10,8 @@ class AdsController < ApplicationController
   before_action :store_location, only: %i[new edit index show]
 
   def index
-    @ads = @ads.includes([:product], [:ad_images_attachments]).archived.page(params[:page])
+    @ads = params[:status] == 'archived' ? @ads.archived : @ads.unarchived
+    @ads = @ads.includes([:product], [:ad_images_attachments]).page(params[:page])
   end
 
   def show; end
