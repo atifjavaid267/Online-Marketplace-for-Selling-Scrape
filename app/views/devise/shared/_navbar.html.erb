@@ -6,10 +6,10 @@
         <button type="button" class="inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
           <span class="sr-only">Open main Dashboard</span>
           <svg class="block h-12 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
           </svg>
           <svg class="hidden h-12 w-12" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
           </svg>
         </button>
       </div>
@@ -78,13 +78,13 @@
             </div>
           </div>
         <% elsif %>
-          <div class="relative ml-3">
+          <div class="hidden sm:inline-block relative ml-3">
             <%= link_to "Sign in", new_user_session_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
           </div>
-          <div class="relative ml-3">
+          <div class="hidden sm:inline-block relative ml-3">
             <span class="text-white">|</span>
           </div>
-          <div class="relative ml-3">
+          <div class="hidden sm:inline-block relative ml-3">
             <%= link_to "Sign up", new_user_registration_path, class: "py-2 px-4 bg- hover:bg-gray-600 text-white rounded-lg" %>
           </div>
         <% end %>
