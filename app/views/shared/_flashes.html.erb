@@ -1,6 +1,6 @@
 <% if notice %>
   <div id="noticeContainer" class="flex flex-row justify-center bg-green-600">
-    <div class="text-black alert alert-info alert-dismissible fade show py-2" role="alert">
+    <div class="text-black alert alert-info alert-dismissible fade show pt-4 pb-2" role="notice">
       <%= notice %>
       <button id="noticeCloseButton" type="button" class="close bg-black px-1 text-sm text-white rounded-lg"
       data-dismiss="alert" aria-label="Close">
@@ -11,7 +11,7 @@
 <% end %>
 <% if alert %>
   <div id="alertContainer" class="flex flex-row justify-center bg-red-500">
-    <div class="text-black alert alert-warning alert-dismissible fade show py-2" role="alert">
+    <div class="text-black alert alert-warning alert-dismissible fade show pt-4 pb-2" role="alert">
       <%= alert %>
       <button id="alertCloseButton" type="button" class="close bg-black px-1 text-sm text-white rounded-lg"
       data-dismiss="alert" aria-label="Close">
