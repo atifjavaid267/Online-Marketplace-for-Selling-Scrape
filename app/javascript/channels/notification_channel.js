@@ -1,5 +1,7 @@
 import consumer from "./consumer";
 
+let notificationCount = 0;
+
 document.addEventListener("turbolinks:load", () => {
   const userDiv = document.getElementById("user");
   const current_user_id = userDiv.getAttribute("data-user-id");
@@ -45,11 +47,12 @@ document.addEventListener("turbolinks:load", () => {
       orderID,
     };
 
-    const newCount = Object.values(messageCounts).reduce(
+    notificationCount = Object.values(messageCounts).reduce(
       (total, count) => total + count,
       0
     );
-    countElement.innerHTML = newCount.toString();
+
+    countElement.innerHTML = notificationCount.toString();
   };
 
   consumer.subscriptions.create(
@@ -64,4 +67,6 @@ document.addEventListener("turbolinks:load", () => {
       },
     }
   );
+
+  countElement.innerHTML = notificationCount.toString();
 });

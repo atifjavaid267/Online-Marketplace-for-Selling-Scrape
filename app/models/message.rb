@@ -11,5 +11,8 @@ class Message < ApplicationRecord
   def self.unread_message_count(sender_id, receiver_id)
     where(receiver_id:, sender_id:, read_at: nil).count
   end
-  
+
+  def self.messages(current_user, sender_id)
+    where(sender_id: [current_user, sender_id], receiver_id: [current_user, sender_id])
+  end
 end
