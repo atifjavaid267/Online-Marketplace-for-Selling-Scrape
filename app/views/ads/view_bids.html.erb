@@ -9,11 +9,11 @@
           <p class="text-gray-600 font-bold">Bid Amount: <%= number_to_currency(bid.price, unit: "Rs", format: "%u. %n") %></p>
           <p class="text-lg">Buyer Name: <%= bid.user.full_name %></p>
         </div>
-        <div>
-          <% if can? :new, Order %>
+        <% if can? :new, Order %>
+          <div>
             <%= link_to "Create Order", new_bid_order_path(bid), class: "px-4 py-3 mr-2 bg-green-500 text-white rounded hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-opacity-50" %>
-          <% end %>
-        </div>
+          </div>
+        <% end %>
       </div>
     <% end %>
   </div>

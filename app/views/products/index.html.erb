@@ -39,13 +39,13 @@
             <% end %>
           </div>
         </div>
-        <div class="flex justify-end sm:justify-center w-1/2">
-          <div class="flex flex-col justify-center">
-            <% if product.product_image.attached? %>
+        <% if product.product_image.attached? %>
+          <div class="flex justify-end sm:justify-center w-1/2">
+            <div class="flex flex-col justify-center">
               <%= image_tag product.product_image, class: "w-32 h-28 object-cover rounded-lg shadow-md" %>
-            <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
     <% end %>
   </div>

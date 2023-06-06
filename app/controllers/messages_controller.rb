@@ -12,12 +12,8 @@ class MessagesController < ApplicationController
 
   def new
     @sender_id = current_user.buyer? ? @order.seller_id : @order.buyer_id
-    @notification = Notification.update_notifications(current_user,
-                                                      @sender_id)
-
-    @messages = Message.messages(
-      @current_user, @sender_id
-    )
+    @notification = Notification.update_notifications(current_user, @sender_id)
+    @messages = Message.messages(@current_user, @sender_id)
   end
 
   def create

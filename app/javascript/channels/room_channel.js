@@ -53,7 +53,7 @@ document.addEventListener("turbolinks:load", () => {
             notificationDropdown.innerHTML = "";
           }
         }
-      },
+      }
     }
   );
 });

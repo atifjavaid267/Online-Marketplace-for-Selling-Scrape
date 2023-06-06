@@ -19,7 +19,7 @@
                 <%= form.label :ad_images, class: "font-bold mb-2 block" %>
                 <%= form.file_field :ad_images, accept: "image/*", multiple: true, direct_upload: true, class: "form-control w-full py-2 px-3 text-gray-700 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent" %>
               </div>
-              <% if @addresses.empty? %>
+              <% if current_user.addresses.empty? %>
                 <div class="text-center mt-4">
                   <h2 class="text-lg font-medium mb-2 text-red-600">No address available</h2>
                   <p class="text-sm text-gray-600">First add your address then create ad</p>
@@ -28,7 +28,7 @@
               <% else %>
                 <div class="form-group mb-4">
                   <%= form.label "Select Address", class: "block font-medium text-gray-700" %><br>
-                  <%= form.select :address_id, options_from_collection_for_select(@addresses, :id, :full_address), {}, class: "block w-full mt-1 rounded-md shadow-sm form-select sm:text-sm sm:leading-5" %>
+                  <%= form.select :address_id, options_from_collection_for_select(current_user.addresses, :id, :full_address), {}, class: "block w-full mt-1 rounded-md shadow-sm form-select sm:text-sm sm:leading-5" %>
                 </div>
                 <div class="my-2">
                   <%= link_to "New Address", new_address_path, class: "pl-1 text-blue-600 hover:text-blue-800" %>

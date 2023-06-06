@@ -30,15 +30,15 @@
             <% end %>
           </div>
         </div>
-        <div class="flex justify-center w-1/2">
-          <div class="flex flex-col justify-center">
-            <% if ad.ad_images.attached? %>
+        <% if ad.ad_images.attached? %>
+          <div class="flex justify-center w-1/2">
+            <div class="flex flex-col justify-center">
               <% ad.ad_images.each do |image| %>
                 <%= image_tag image, class: "w-32 h-28 object-cover rounded-lg shadow-md" %>
               <% end %>
-            <% end %>
+            </div>
           </div>
-        </div>
+        <% end %>
       </div>
     <% end %>
   </div>

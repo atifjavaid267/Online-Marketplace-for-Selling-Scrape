@@ -8,16 +8,14 @@ class MessageBroadcaster
   def broadcast_notifications
     sender_id = @message.sender_id
     receiver_id = @message.receiver_id
-    message_content = @message.content
-    sender_name = @message.first_name
 
     count = Notification.notification_count(sender_id, receiver_id)
 
     ActionCable.server.broadcast("notifications_#{receiver_id}", {
                                    count:,
                                    read: false,
-                                   message: message_content,
-                                   sender_name:,
+                                   message: @message.content,
+                                   sender_name: @message.first_name,
                                    sender_id:,
                                    receiver_id:,
                                    order_id: @order.id,
@@ -26,16 +24,11 @@ class MessageBroadcaster
   end
 
   def broadcast_room_channel
-    sender_id = @message.sender_id
-    receiver_id = @message.receiver_id
-    message_content = @message.content
-    sender_name = @message.first_name
-
     ActionCable.server.broadcast('room_channel_1', {
-                                   sender_id:,
-                                   receiver_id:,
-                                   sender_name:,
-                                   message: message_content,
+                                   sender_id: @message.sender_id,
+                                   receiver_id: @message.receiver_id,
+                                   sender_name: @message.first_name,
+                                   message: @message.content,
                                    order_id: @order.id,
                                    timestamp: Time.zone.now.strftime('%I:%M %p')
                                  })

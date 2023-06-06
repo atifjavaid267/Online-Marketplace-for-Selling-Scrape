@@ -2,7 +2,6 @@
 
 # Bids Controller
 class BidsController < ApplicationController
-  include ActionView::Helpers::NumberHelper
   load_and_authorize_resource :ad, only: %i[new create]
   load_and_authorize_resource through: :ad, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
@@ -14,12 +13,9 @@ class BidsController < ApplicationController
     @bid.user_id = current_user.id
 
     if @bid.save
-      respond_to do |format|
-        flash[:notice] = 'Bid was created successfully.'
-        BidBroadcast.broadcast_bid(@bid)
-        format.json { render :show, status: :created, location: @bid }
-        format.html { redirect_to stored_location }
-      end
+      flash[:notice] = 'Bid was created successfully.'
+      BidBroadcast.broadcast_bid(@bid)
+      redirect_to stored_location
     else
       flash[:alert] = @bid.errors.full_messages.join(', ')
       render :new

@@ -18,8 +18,16 @@
       <% end %>
       <button class="mt-4 w-full rounded-sm bg-indigo-600 py-2 font-bold duration-300 hover:bg-indigo-800">Sign in</button>
     <% end %>
-    <%= render "devise/shared/links" %>
-    <% if devise_mapping.registerable? && controller_name != 'registrations' %>
+    <% if devise_mapping.recoverable? && controller_name != "passwords" && controller_name != "registrations" %>
+      <div class="flex flex-col text-sm">
+        <div class="flex row justify-center">
+          <div class="mt-2">
+            <span class="hover:text-blue-600"><%= link_to "Forgot your password?", new_password_path(resource_name) %></span>
+          </div>
+        </div>
+      </div>
+    <% end %>
+    <% if devise_mapping.registerable? && controller_name != "registrations" %>
       <div class="mt-2 text-sm">
         <p>Don't have an account? <span class="text-blue-500 hover:text-blue-700"><%= link_to "Sign up", new_registration_path(resource_name) %></span></p>
       </div>

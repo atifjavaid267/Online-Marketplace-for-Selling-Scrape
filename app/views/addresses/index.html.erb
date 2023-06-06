@@ -5,13 +5,11 @@
       <div class="bg-gray-800 mt-28 mx-24 mb-5 p-10 rounded-md text-white bg-opacity-95">
         <h1 class="text-center font-bold">You added no Address Yet!</h1>
       </div>
-      <div class="flex flex-row justify-center">
-        <% if can? :new, Address %>
-          <div>
-            <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline" %>
-          </div>
-        <% end %>
-      </div>
+      <% if can? :new, Address %>
+        <div class="flex flex-row justify-center">
+          <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline" %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% else %>

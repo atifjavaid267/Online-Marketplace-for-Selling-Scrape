@@ -16,9 +16,7 @@ class AdsController < ApplicationController
 
   def show; end
 
-  def new
-    @addresses = current_user.addresses
-  end
+  def new; end
 
   def create
     @ad.user_id = current_user.id
@@ -35,9 +33,7 @@ class AdsController < ApplicationController
     @bids = @ad.bids.includes([:user]).pending.sort_by_price('desc').page(params[:page])
   end
 
-  def edit
-    @addresses = current_user.addresses
-  end
+  def edit; end
 
   def update
     if @ad.update(ad_params)

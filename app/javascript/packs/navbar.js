@@ -20,7 +20,7 @@ notificationDropdown.addEventListener("mouseleave", () => {
 var menuButton = document.querySelector("#menu-button");
 var menu = document.querySelector("#menu");
 
-document.addEventListener("click", (event) => {
+document.addEventListener("click", event => {
   if (!menu.contains(event.target) && event.target !== menuButton) {
     menu.classList.add("hidden");
     menuButton.setAttribute("aria-expanded", "false");
@@ -34,14 +34,14 @@ menuButton.addEventListener("click", () => {
 });
 
 // Burger menus navbar
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", function() {
   // open
   const burger = document.querySelectorAll(".navbar-burger");
   const menu = document.querySelectorAll(".navbar-menu");
 
   if (burger.length && menu.length) {
     for (var i = 0; i < burger.length; i++) {
-      burger[i].addEventListener("click", function () {
+      burger[i].addEventListener("click", function() {
         for (var j = 0; j < menu.length; j++) {
           menu[j].classList.toggle("hidden");
         }
@@ -55,7 +55,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (close.length) {
     for (var i = 0; i < close.length; i++) {
-      close[i].addEventListener("click", function () {
+      close[i].addEventListener("click", function() {
         for (var j = 0; j < menu.length; j++) {
           menu[j].classList.toggle("hidden");
         }
@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   if (backdrop.length) {
     for (var i = 0; i < backdrop.length; i++) {
-      backdrop[i].addEventListener("click", function () {
+      backdrop[i].addEventListener("click", function() {
         for (var j = 0; j < menu.length; j++) {
           menu[j].classList.toggle("hidden");
         }

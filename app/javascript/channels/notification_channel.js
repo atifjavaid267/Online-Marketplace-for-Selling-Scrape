@@ -7,12 +7,11 @@ document.addEventListener("turbolinks:load", () => {
   const current_user_id = userDiv.getAttribute("data-user-id");
   const countElement = document.getElementById("notification-count");
   const notificationDropdown = document.getElementById("notification-dropdown");
-
   const storedNotifications = userDiv.getAttribute("data-notifications");
   const { messageCounts = {}, notificationMessages = {} } =
     JSON.parse(storedNotifications) || {};
 
-  const handleNotification = (data) => {
+  const handleNotification = data => {
     console.log(data);
     const senderId = data.sender_id;
     const receiverId = data.receiver_id;
@@ -24,9 +23,8 @@ document.addEventListener("turbolinks:load", () => {
 
     if (existingMessage) {
       const messageCount = messageCounts[pairId];
-      existingMessage.textContent = `${senderName} sent you ${
-        messageCount + 1
-      } messages`;
+      existingMessage.textContent = `${senderName} sent you ${messageCount +
+        1} messages`;
       messageCounts[pairId] += 1;
     } else {
       const notificationMessage = document.createElement("div");
@@ -44,7 +42,7 @@ document.addEventListener("turbolinks:load", () => {
     notificationMessages[pairId] = {
       senderName,
       messageCount: messageCounts[pairId],
-      orderID,
+      orderID
     };
 
     notificationCount = Object.values(messageCounts).reduce(
@@ -64,7 +62,7 @@ document.addEventListener("turbolinks:load", () => {
       disconnected() {},
       received(data) {
         handleNotification(data);
-      },
+      }
     }
   );
 

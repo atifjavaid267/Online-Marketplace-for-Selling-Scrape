@@ -1,8 +1,5 @@
 Rails.application.routes.draw do
   root 'users#root'
-
-  resources :notifiactions
-
   get 'users/home'
   get 'users/otp_setting'
   patch 'users/toggle_otp_status'
