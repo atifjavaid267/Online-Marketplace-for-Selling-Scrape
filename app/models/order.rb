@@ -28,8 +28,7 @@ class Order < ApplicationRecord
   end
 
   def change_bids_status_for_confirm_order
-    ad = bid.ad
-    ad.bids.where.not(id: bid.id).update(status: 'failed')
+    bid.ad.bids.all_except(bid).fail!
   end
 
   def change_bids_status_for_cancel_order
