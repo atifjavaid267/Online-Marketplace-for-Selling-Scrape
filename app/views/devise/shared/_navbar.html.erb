@@ -1,8 +1,11 @@
 <%= javascript_pack_tag "navbar", defer: true %>
+<% menu = menu_items %>
 <nav class="relative px-4 py-4 flex justify-between items-center bg-gray-800 w-full z-10">
-  <%= link_to root_path do %>
-    <%= image_tag('logo.png', class: "bg-no-repeat rounded-lg h-8 w-8 lg:ml-6") %>
-  <% end %>
+  <div>
+    <%= link_to root_path do %>
+      <%= image_tag('logo.png', class: "bg-no-repeat rounded-lg h-8 w-8 lg:ml-6") %>
+    <% end %>
+  </div>
   <div class="lg:hidden">
     <button class="navbar-burger flex items-center text-blue-600 p-3">
       <svg class="block h-4 w-4 fill-current" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -12,7 +15,6 @@
     </button>
   </div>
   <ul class="hidden absolute top-1/2 transform -translate-y-1/2 translate-x-1/2 lg:mx-auto lg:flex lg:items-center lg:w-auto lg:space-x-6">
-    <% menu = menu_items %>
     <% menu.each do |name, path| %>
       <li><%= link_to name, path, class: "text-md text-gray-200 hover:text-gray-400 px-2" %></li>
     <% end %>
