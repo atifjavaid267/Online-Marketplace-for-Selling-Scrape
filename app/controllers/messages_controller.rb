@@ -20,10 +20,6 @@ class MessagesController < ApplicationController
     @message.sender_id = current_user.id
     @message.receiver_id = current_user.seller? ? @order.buyer_id : @order.seller_id
     return unless @message.save
-
-    broadcaster = MessageBroadcaster.new(@message, @order)
-    broadcaster.broadcast_notifications
-    broadcaster.broadcast_room_channel
   end
 
   private
