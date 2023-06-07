@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Ad < ApplicationRecord
   has_many_attached :ad_images
   has_many :bids, dependent: :restrict_with_error
