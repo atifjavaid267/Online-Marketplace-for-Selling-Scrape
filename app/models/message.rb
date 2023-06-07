@@ -1,22 +1,14 @@
-<<<<<<< Updated upstream
 # frozen_string_literal: true
 
-=======
-# Message Model
-# Class Message
->>>>>>> Stashed changes
 class Message < ApplicationRecord
   belongs_to :sender, class_name: 'User'
   belongs_to :receiver, class_name: 'User'
   belongs_to :order
   delegate :first_name, to: :sender
   after_save :broadcast
-<<<<<<< Updated upstream
 
   validates :sender_id, presence: true
   validates :receiver_id, presence: true
-=======
->>>>>>> Stashed changes
 
   def self.unread_message_count(sender_id, receiver_id)
     where(receiver_id:, sender_id:, read_at: nil).count
