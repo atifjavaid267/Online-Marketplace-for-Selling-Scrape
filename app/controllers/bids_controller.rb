@@ -13,7 +13,7 @@ class BidsController < ApplicationController
     @bid.user_id = current_user.id
 
     if @bid.save
-      flash[:notice] = 'Bid was created successfully.'
+      flash[:notice] = 'Bid created successfully.'
       BidBroadcast.broadcast_bid(@bid)
       redirect_to stored_location
     else

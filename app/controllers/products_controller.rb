@@ -49,7 +49,7 @@ class ProductsController < ApplicationController
 
   def toggle_archived
     if @product.update(archived: !@product.archived?)
-      flash[:notice] = @product.archived ? 'Product Unpublished' : 'Product Published'
+      flash[:notice] = "Product #{@product.archived ? 'unpublished' : 'published'} successfully."
     else
       flash[:alert] = @product.errors.full_messages.join(', ')
     end

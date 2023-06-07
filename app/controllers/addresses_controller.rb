@@ -27,7 +27,7 @@ class AddressesController < ApplicationController
 
   def update
     if @address.update(address_params)
-      flash[:notice] = 'Address was successfully updated'
+      flash[:notice] = 'Address was successfully updated.'
       redirect_to addresses_path
     else
       flash[:alert] = @address.errors.full_messages.join(', ')

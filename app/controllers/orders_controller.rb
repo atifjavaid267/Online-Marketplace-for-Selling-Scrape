@@ -15,7 +15,7 @@ class OrdersController < ApplicationController
     @order.buyer_id = @bid.user_id
     @order.seller_id = @bid.ad.user_id
     if @order.save
-      flash[:notice] = 'New Order Opened.'
+      flash[:notice] = 'New order opened.'
       redirect_to @order
     else
       flash[:alert] = @order.errors.full_messages.join(', ')
@@ -39,7 +39,7 @@ class OrdersController < ApplicationController
 
   def confirm
     if @order.update(status: 'successful')
-      flash[:notice] = 'Order Completed.'
+      flash[:notice] = 'Order completed successfully.'
     else
       flash[:alert] = @order.errors.full_messages.join(', ')
     end
@@ -48,7 +48,7 @@ class OrdersController < ApplicationController
 
   def cancel
     if @order.update(status: 'cancelled')
-      flash[:notice] = 'Order Cancelled.'
+      flash[:notice] = 'Order cancelled successfully.'
     else
       flash[:alert] = @order.errors.full_messages.join(', ')
     end

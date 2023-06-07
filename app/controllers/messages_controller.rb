@@ -6,7 +6,6 @@ class MessagesController < ApplicationController
   load_and_authorize_resource through: :order, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
   before_action :authenticate_user!
-  skip_before_action :verify_authenticity_token
 
   def show; end
 

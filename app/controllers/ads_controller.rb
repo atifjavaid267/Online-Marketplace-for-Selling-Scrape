@@ -21,7 +21,7 @@ class AdsController < ApplicationController
   def create
     @ad.user_id = current_user.id
     if @ad.save
-      flash[:notice] = 'Ad was successfully created'
+      flash[:notice] = 'Ad created successfully.'
       redirect_to @ad
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
@@ -37,7 +37,7 @@ class AdsController < ApplicationController
 
   def update
     if @ad.update(ad_params)
-      flash[:notice] = 'Ad was updated successfully'
+      flash[:notice] = 'Ad updated successfully.'
       redirect_to @ad
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
@@ -56,7 +56,7 @@ class AdsController < ApplicationController
 
   def toggle_archived
     if @ad.update(archived: !@ad.archived)
-      flash[:notice] = @ad.archived ? 'Ad Unpublished' : 'Ad Published'
+      flash[:notice] = "Ad #{@ad.archived ? 'unpublished' : 'published'} successfully."
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end

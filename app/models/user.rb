@@ -22,6 +22,10 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def toggle_otp_required_for_login!
+    update(otp_required_for_login: !otp_required_for_login)
+  end
+
   def self.generate_otp_secret
     ROTP::Base32.random_base32
   end

@@ -8,18 +8,11 @@ module Users
 
       if resource.errors.empty?
         set_flash_message!(:notice, :confirmed)
-        respond_with_navigational(resource) { redirect_to after_confirmation_path_for(resource_name, resource) }
+        sign_in(resource)
+        redirect_to users_home_path
       else
-        set_flash_message!(:alert, :confirmation_error, reason: resource.errors.messages[:email].first)
-        respond_with_navigational(resource.errors, status: :unprocessable_entity) { render :new }
+        set_flash_message!(:alert, :confirmation_error)
       end
-    end
-
-    protected
-
-    def after_confirmation_path_for(_resource_name, resource)
-      sign_in(resource)
-      users_home_path
     end
   end
 end
