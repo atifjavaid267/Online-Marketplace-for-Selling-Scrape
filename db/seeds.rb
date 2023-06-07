@@ -7,4 +7,4 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 User.create!(email: 'admin@gmail.com', password: '123456789',
-             password_confirmation: '123456789', role: 0, first_name: 'Admin', last_name: 'Admin', phone_no: '03451234567')
+             password_confirmation: '123456789', role: 0, first_name: 'Admin', last_name: 'Admin', phone_no: '03451234567', confirmation_sent_at: Time.zone.now, confirmed_at: Time.zone.now)

@@ -7,7 +7,7 @@ class User < ApplicationRecord
   has_many :sent_messages, class_name: 'Message', foreign_key: 'sender_id'
 
   devise :two_factor_authenticatable, otp_secret_encryption_key: ENV['encryption_key_env']
-  devise :registerable, :recoverable, :rememberable, :validatable, :two_factor_authenticatable
+  devise :registerable, :recoverable, :rememberable, :confirmable, :validatable, :two_factor_authenticatable
 
   validates :phone_no, format: { with: /\A\+923|03\d{9}\z/ }
   validates :first_name, format: { with: /\A[a-zA-Z ]+\z/, message: 'only allows letters and spaces' }

@@ -25,7 +25,7 @@
       <div class="field w-full transform border-b-2 bg-transparent text-lg duration-300 focus-within:border-indigo-500 my-2">
         <%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br>
         <% if @minimum_password_length %>
-          <em><%= @minimum_password_length %> characters minimum</em>
+          <em><%= @minimum_password_length %>characters minimum</em>
           <%= f.password_field :password, autocomplete: "new-password", class: "w-full border-none bg-transparent outline-none placeholder:italic focus:outline-none" %>
         <% end %>
       </div>
