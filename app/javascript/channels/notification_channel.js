@@ -5,12 +5,9 @@ document.addEventListener("turbolinks:load", () => {
   const current_user_id = userDiv.getAttribute("data-user-id");
   const countElement = document.getElementById("notification-count");
   const notificationDropdown = document.getElementById("notification-dropdown");
-
   const storedCount = localStorage.getItem("count") || 0;
   countElement.innerHTML = storedCount;
-
-  const storedNotifications =
-    JSON.parse(localStorage.getItem("notifications")) || {};
+  const storedNotifications = JSON.parse(localStorage.getItem("notifications")) || {};
   const messageCounts = storedNotifications.messageCounts || {};
   const notificationMessages = storedNotifications.notificationMessages || {};
 
@@ -39,7 +36,6 @@ document.addEventListener("turbolinks:load", () => {
     const receiverId = data.receiver_id;
     const senderName = data.sender_name;
     const orderID = data.order_id;
-
     const pairId = `${senderId}-${receiverId}`;
     const existingMessage = document.getElementById(`notification-${pairId}`);
 
@@ -76,10 +72,7 @@ document.addEventListener("turbolinks:load", () => {
     };
     localStorage.setItem("notifications", JSON.stringify(notifications));
 
-    const newCount = Object.values(messageCounts).reduce(
-      (total, count) => total + count,
-      0
-    );
+    const newCount = Object.values(messageCounts).reduce((total, count) => total + count, 0);
     localStorage.setItem("count", newCount);
     countElement.innerHTML = newCount;
   };
