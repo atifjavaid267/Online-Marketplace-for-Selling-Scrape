@@ -8,10 +8,10 @@ class MessageBroadcaster
   end
 
   def broadcast_notifications
-    count = Notification.notification_count(@sender_id, @receiver_id)
+    total = Notification.notification_count(@sender_id, @receiver_id)
 
     ActionCable.server.broadcast("notifications_#{@receiver_id}", {
-                                   total: count,
+                                   total:,
                                    sender_name: @message.first_name,
                                    message: @message.content,
                                    sender_id: @sender_id,
