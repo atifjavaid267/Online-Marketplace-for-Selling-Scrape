@@ -7,7 +7,7 @@ class Ad < ApplicationRecord
   belongs_to :user
   belongs_to :address
 
-  validates :ad_images, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg']
+  validate :images_type
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true
@@ -24,5 +24,17 @@ class Ad < ApplicationRecord
 
   def unpublished!
     update(archived: true)
+  end
+
+  private
+
+  def images_type
+    return unless ad_images.attached?
+
+    ad_images.each do |image|
+      unless image.content_type.in?(%w[image/png image/jpeg image/jpg])
+        errors.add(:ad_images, 'must be jpg, jpeg or png files.')
+      end
+    end
   end
 end
