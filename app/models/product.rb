@@ -6,7 +6,6 @@ class Product < ApplicationRecord
   has_many :ads, dependent: :restrict_with_error
   has_one_attached :product_image
 
-  validates :product_image, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg']
   validate :image_type
   validates :name, presence: true
   validates :description, presence: true
