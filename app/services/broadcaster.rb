@@ -1,5 +1,5 @@
-# app/services/message_broadcaster.rb
-class MessageBroadcaster
+# app/services/broadcaster.rb
+class Broadcaster
   def initialize(message, order)
     @order = order
     @message = message
