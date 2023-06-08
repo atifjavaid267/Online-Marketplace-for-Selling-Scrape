@@ -10,7 +10,7 @@ class Message < ApplicationRecord
   validates :sender_id, presence: true
   validates :receiver_id, presence: true
 
-  scope :your_messages, ->(user_ids) { where(sender_id: user_ids, receiver_id: user_ids) }
+  scope :conversation_between, ->(user_ids) { where(sender_id: user_ids, receiver_id: user_ids) }
 
   private
 

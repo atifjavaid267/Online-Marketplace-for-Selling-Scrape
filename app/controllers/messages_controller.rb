@@ -10,9 +10,8 @@ class MessagesController < ApplicationController
   def show; end
 
   def new
-    @receiver_id = current_user.seller? ? @order.buyer_id : @order.seller_id
-    @notification = Notification.update_notifications(current_user, @receiver_id)
-    @messages = Message.your_messages([@current_user.id, @receiver_id])
+    @notification = Notification.update_notifications(current_user.id, @order.buyer_id, @order.seller_id)
+    @messages = Message.conversation_between([@order.buyer_id, @order.seller_id])
   end
 
   def create
