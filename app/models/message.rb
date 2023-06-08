@@ -10,9 +10,7 @@ class Message < ApplicationRecord
   validates :sender_id, presence: true
   validates :receiver_id, presence: true
 
-  def self.messages(current_user, sender_id)
-    where(sender_id: [current_user, sender_id], receiver_id: [current_user, sender_id])
-  end
+  scope :your_messages, ->(user_ids) { where(sender_id: user_ids, receiver_id: user_ids) }
 
   private
 

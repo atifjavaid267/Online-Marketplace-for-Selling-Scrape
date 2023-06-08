@@ -10,15 +10,18 @@ class MessagesController < ApplicationController
   def show; end
 
   def new
-    @sender_id = current_user.buyer? ? @order.seller_id : @order.buyer_id
-    @notification = Notification.update_notifications(current_user, @sender_id)
-    @messages = Message.messages(@current_user, @sender_id)
+    @receiver_id = current_user.seller? ? @order.buyer_id : @order.seller_id
+    @notification = Notification.update_notifications(current_user, @receiver_id)
+    @messages = Message.your_messages([@current_user.id, @receiver_id])
   end
 
   def create
     @message.sender_id = current_user.id
     @message.receiver_id = current_user.seller? ? @order.buyer_id : @order.seller_id
-    return unless @message.save
+    return if @message.save
+
+    flash[:alert] = @message.errors.full_messages.join(', ')
+    render :new
   end
 
   private
