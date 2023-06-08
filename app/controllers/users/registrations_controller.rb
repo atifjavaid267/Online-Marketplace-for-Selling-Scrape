@@ -16,7 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
       super do |resource|
         if resource.valid? && resource.persisted?
           resource.update(
-            otp_required_for_login: true,
+            otp_required_for_login: false,
             otp_secret: User.generate_otp_secret
           )
         end

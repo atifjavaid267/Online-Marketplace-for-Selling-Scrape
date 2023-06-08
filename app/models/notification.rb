@@ -1,13 +1,18 @@
+# frozen_string_literal: true
 
 class Notification < ApplicationRecord
-  def self.new_notification(sender_id, receiver_id)
+  def self.notification_count(sender_id, receiver_id)
     notification = Notification.find_or_initialize_by(sender_id:, receiver_id:)
     if notification.new_record?
       notification.save
     else
-      notification.increment!(:count)
-      notification.update(read: false)
+      notification.update(read: false, count: notification.count + 1)
     end
     notification.count
+  end
+
+  def self.update_notifications(current_user, sender_id)
+    notification = find_by(receiver_id: current_user.id, sender_id:)
+    notification.update(count: 0, read: true) if notification && notification.count > 0
   end
 end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Ad < ApplicationRecord
   has_many_attached :ad_images
   has_many :bids, dependent: :restrict_with_error
@@ -5,6 +7,7 @@ class Ad < ApplicationRecord
   belongs_to :user
   belongs_to :address
 
+  validates :ad_images, attached: true, content_type: ['image/png', 'image/jpg', 'image/jpeg']
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true
@@ -12,13 +15,14 @@ class Ad < ApplicationRecord
   validates :description, presence: true
   validates :ad_images, presence: true
 
-  scope :by_archived, ->(status) { where(archived: status) }
+  scope :archived, -> { where(archived: true) }
+  scope :unarchived, -> { where(archived: false) }
 
   def published!
-    update_attribute(:archived, false)
+    update(archived: false)
   end
 
   def unpublished!
-    update_attribute(:archived, true)
+    update(archived: true)
   end
 end

@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Address < ApplicationRecord
-  include Sort
+  include Sortable
 
   has_many :ads, dependent: :restrict_with_error
   belongs_to :user
@@ -9,14 +11,14 @@ class Address < ApplicationRecord
   before_save :check_coordinates
 
   after_validation :geocode, if: lambda { |obj|
-   obj.city.present? || obj.state.present? || obj.zip_code.present? || obj.full_address.present?
+    obj.city.present? || obj.state.present? || obj.zip_code.present? || obj.full_address.present?
   }
+
+  private
 
   def complete_address
     [city, state, zip_code].compact.join(',')
   end
-
-  private
 
   def check_coordinates
     return if latitude.present? && longitude.present?

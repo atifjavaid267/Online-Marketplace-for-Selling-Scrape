@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class Bid < ApplicationRecord
-  include Sort
+  include Sortable
   belongs_to :ad
   belongs_to :user
   has_one :order
@@ -7,6 +9,10 @@ class Bid < ApplicationRecord
 
   enum status: { pending: 0, successful: 1, failed: 2 }
 
-  scope :pending, -> { where(status: 'pending') }
-  scope :desc_price, -> { order(price: :desc) }
+  scope :sort_by_price, ->(order) { order(price: order) }
+  scope :all_except, ->(bid) { where.not(id: bid.id) }
+
+  def self.fail!
+    update(status: 'failed')
+  end
 end

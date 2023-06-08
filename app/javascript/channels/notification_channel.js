@@ -11,30 +11,23 @@ document.addEventListener("turbolinks:load", () => {
   const messageCounts = storedNotifications.messageCounts || {};
   const notificationMessages = storedNotifications.notificationMessages || {};
 
-  if (window.location.pathname.includes("/messages/new")) {
-    localStorage.setItem("count", "0");
-    countElement.innerHTML = "0";
-    notificationDropdown.innerHTML = "";
-    localStorage.setItem("notifications", JSON.stringify({ messageCounts: {}, notificationMessages: {} })
-    );
-  }
-  else {
-    for (const pairId in messageCounts) {
-      const senderId = pairId.split("-")[0];
-      const senderName = notificationMessages[pairId].senderName;
-      const messageCount = messageCounts[pairId];
-      const orderID = notificationMessages[pairId].orderID;
+  for (const pairId in messageCounts) {
+    const senderId = pairId.split("-")[0];
+    const senderName = notificationMessages[pairId].senderName;
+    const messageCount = messageCounts[pairId];
+    const orderID = notificationMessages[pairId].orderID;
 
-      const notificationMessage = document.createElement("div");
-      notificationMessage.textContent = `${senderName} sent you ${messageCount} messages`;
-      notificationMessage.classList.add("p-2", "text-black");
-      notificationMessage.id = `notification-${pairId}`;
-      notificationMessage.addEventListener("click", () => {
-        const messageURL = `/orders/${orderID}/messages/new`;
-        window.location.href = messageURL;
-      });
-      notificationDropdown.appendChild(notificationMessage);
-    }
+    const notificationMessage = document.createElement("div");
+    notificationMessage.textContent = `${senderName} sent you ${messageCount} messages`;
+    notificationMessage.classList.add("p-2", "text-black");
+    notificationMessage.id = `notification-${pairId}`;
+    notificationMessage.addEventListener("click", () => {
+      const messageURL = `/orders/${orderID}/messages/new`;
+      localStorage.setItem("count", 0);
+      localStorage.setItem("notifications", JSON.stringify({}));
+      window.location.href = messageURL;
+    });
+    notificationDropdown.appendChild(notificationMessage);
   }
 
   const handleNotification = (data) => {
@@ -43,7 +36,6 @@ document.addEventListener("turbolinks:load", () => {
     const receiverId = data.receiver_id;
     const senderName = data.sender_name;
     const orderID = data.order_id;
-
     const pairId = `${senderId}-${receiverId}`;
     const existingMessage = document.getElementById(`notification-${pairId}`);
 
@@ -60,7 +52,8 @@ document.addEventListener("turbolinks:load", () => {
       notificationMessage.id = `notification-${pairId}`;
       notificationMessage.addEventListener("click", () => {
         const messageURL = `/orders/${orderID}/messages/new`;
-
+        localStorage.setItem("count", 0);
+        localStorage.setItem("notifications", JSON.stringify({}));
         window.location.href = messageURL;
       });
       notificationDropdown.appendChild(notificationMessage);

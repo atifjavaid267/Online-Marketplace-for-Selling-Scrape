@@ -7,17 +7,16 @@ class UsersController < ApplicationController
 
   def home; end
 
-  def root
-    @products = Product.includes([product_image_attachment: :blob]).by_archived(false).page(params[:page])
-  end
+  def root; end
 
   def otp_setting; end
 
   def toggle_otp_status
     begin
       current_user.otp_secret = User.generate_otp_secret
-      current_user.otp_required_for_login = !current_user.otp_required_for_login
+      current_user.toggle_otp_required_for_login!
       current_user.save!
+      flash[:notice] = "OTP #{current_user.otp_required_for_login ? 'enabled' : 'disabled'} successfully."
     rescue StandardError => e
       flash[:alert] = "Error: #{e.message}"
     end

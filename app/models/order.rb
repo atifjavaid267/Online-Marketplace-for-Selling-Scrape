@@ -1,8 +1,9 @@
+# frozen_string_literal: true
+
 class Order < ApplicationRecord
-  include Sort
+  include Sortable
   belongs_to :bid
   has_many :messages
-
   belongs_to :buyer, class_name: 'User', foreign_key: 'buyer_id'
   belongs_to :seller, class_name: 'User', foreign_key: 'seller_id'
 
@@ -13,8 +14,6 @@ class Order < ApplicationRecord
   validate :pickup_time_cannot_be_in_the_past
 
   enum status: { pending: 0, successful: 1, cancelled: 2 }
-
-  scope :status, ->(status_param) { where(status: status_param) }
 
   private
 
@@ -30,8 +29,7 @@ class Order < ApplicationRecord
   end
 
   def change_bids_status_for_confirm_order
-    ad = bid.ad
-    ad.bids.where.not(id: bid.id).update(status: 'failed')
+    bid.ad.bids.all_except(bid).fail!
   end
 
   def change_bids_status_for_cancel_order
