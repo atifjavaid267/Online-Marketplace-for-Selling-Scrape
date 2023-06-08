@@ -6,7 +6,7 @@ class Notification < ApplicationRecord
     if notification.new_record?
       notification.save
     else
-      notification.update(read: false, count: count + 1)
+      notification.update(read: false, count: notification.count + 1)
     end
     notification.count
   end

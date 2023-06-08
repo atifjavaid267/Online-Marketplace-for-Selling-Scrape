@@ -34,7 +34,7 @@ menuButton.addEventListener("click", () => {
 });
 
 // Burger menus navbar
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("turbolinks:load", function() {
   // open
   var burger = document.querySelectorAll(".navbar-burger");
   var menu = document.querySelectorAll(".navbar-menu");
