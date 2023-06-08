@@ -11,7 +11,7 @@ class Broadcaster
     case name
     when 'notification'
       channel_name = "notifications_#{@receiver_id}"
-      total = Notification.notification_count(@sender_id, @receiver_id)
+      total = Notification.find_notification_and_get_count(@sender_id, @receiver_id)
       time = Time.zone.now.strftime('%B %d, %Y %I:%M %p')
     when 'message'
       channel_name = 'message_channel_1'
