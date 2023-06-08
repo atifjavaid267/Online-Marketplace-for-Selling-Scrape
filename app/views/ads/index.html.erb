@@ -7,9 +7,9 @@
         <div class="w-1/2">
           <div>
             <h4 class="font-bold mb-2"><%= "Ad - #{counter}" %></h4>
-            <span class="font-semibold"><%= ad.product.name %> </span>
+            <span class="font-semibold"><%= ad.product.name %></span>
             <br>
-            <span class="font-semibold">Price: </span> <%= number_to_currency(ad.price, unit: "Rs", format: "%u. %n") %>
+            <span class="font-semibold">Price: </span><%= number_to_currency(ad.price, unit: "Rs", format: "%u. %n") %>
           </div>
           <br>
           <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-2">
@@ -25,7 +25,7 @@
             <% end %>
             <% if can? :destroy, Ad %>
               <div>
-                <%= link_to "Delete", ad, data: { confirm: "Are you sure to delete ad?"}, method: :delete, class: "mt-2 bg-red-500 text-white px-7 sm:px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
+                <%= link_to "Delete", ad, data: { confirm: "Are you sure to delete ad?" }, method: :delete, class: "mt-2 bg-red-500 text-white px-7 sm:px-4 py-2 rounded-md hover:bg-red-600 transition duration-300 ease-in-out" %>
               </div>
             <% end %>
           </div>

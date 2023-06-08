@@ -6,11 +6,11 @@
       <div class="col-span-1 flex justify-between items-center p-4 border rounded-md shadow-md">
         <div>
           <p class="text-lg font-bold"><%= "Order - #{@orders.count + 1 - counter}" %></p>
-          <p class="text-lg font-semibold">Seller Name: <span class="text-gray-600"><%= order.seller.full_name %> </span></p>
-          <p class="text-lg font-semibold">Buyer Name: <span class="text-gray-600"><%= order.buyer.full_name %> </span></p>
+          <p class="text-lg font-semibold">Seller Name: <span class="text-gray-600"><%= order.seller.full_name %></span></p>
+          <p class="text-lg font-semibold">Buyer Name: <span class="text-gray-600"><%= order.buyer.full_name %></span></p>
         </div>
         <div class="flex justify-between flex-row items-center">
-          <h3 class="font-bold px-10 py-6 mx-2 <%= status_color(order.status) %>"> <%= "Order #{order.status.capitalize}" %> </h3>
+          <h3 class="font-bold px-10 py-6 mx-2 <%= status_color(order.status) %>"><%= "Order #{order.status.capitalize}" %></h3>
           <% if can? :show, Order %>
             <%= link_to "View", order_path(order), class: "px-4 py-2 font-bold bg-blue-500 text-white rounded-lg hover:bg-blue-600" %>
           <% end %>

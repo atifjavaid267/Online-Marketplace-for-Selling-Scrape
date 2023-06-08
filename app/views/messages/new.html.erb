@@ -10,7 +10,7 @@
           <% if last_date != message.created_at.strftime("%B %d, %Y") %>
             <% last_date = message.created_at.strftime("%B %d, %Y") %>
             <div class="flex justify-center text-center">
-              <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
+              <p class="border rounded-md m-3 p-1"><%= last_date %></p>
             </div>
           <% end %>
           <div id="user" data-user-id=<%= @current_user_id %>></div>

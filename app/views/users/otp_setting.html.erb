@@ -1,7 +1,7 @@
 <div class="bg-cover bg-no-repeat h-screen bg-background_img">
   <div class="pt-32 mx-12 flex justify-center items-center">
     <div class="mt-16 p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
-      <h1 class="font-bold my-5"> Two Factor Authentication is <%= current_user.otp_required_for_login ? "enabled" : "disabled" %> </h1>
+      <h1 class="font-bold my-5"> Two Factor Authentication is <%= current_user.otp_required_for_login ? "enabled" : "disabled" %></h1>
       <div class="my-5">
         <%= link_to current_user.otp_required_for_login ? "Disable 2FA" : "Enable 2FA", users_toggle_otp_status_path, data: { confirm: current_user.otp_required_for_login ? "Are you sure to disable 2FA?" : "Are you sure to enable 2FA?" }, method: :patch, class: "bg-green-500 hover:bg-green-700 text-white font-bold py-3 px-4 rounded" %>
       </div>
