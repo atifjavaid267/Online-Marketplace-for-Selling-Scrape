@@ -1,6 +1,6 @@
 <%= javascript_pack_tag "map" %>
 <%= javascript_include_tag "https://maps.googleapis.com/maps/api/js?key=AIzaSyCUYcTprnzLrOyLAjh57Hjdgk9m8BblZxI&libraries=places&callback=initMap", defer: true %>
-<%= render "devise/shared/back" %>
+<%= render "shared/back" %>
 <div class="m-10">
   <div class="flex flex-row items-center justify-center mt-10">
     <h3 class="font-bold <%= status_color(@order.status) %> ml-1"><%= "Order #{@order.status.capitalize}!" %></h3>
