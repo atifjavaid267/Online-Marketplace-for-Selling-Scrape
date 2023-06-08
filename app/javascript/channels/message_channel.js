@@ -4,14 +4,14 @@ document.addEventListener("turbolinks:load", () => {
   const messagesContainer = document.getElementById("messages");
 
   consumer.subscriptions.create(
-    { channel: "RoomChannel", room_id: 1 },
+    { channel: "MessageChannel", room_id: 1 },
     {
       connected() {
-        console.log("Connected to the RoomChannel");
+        console.log("Connected to the MessageChannel");
       },
 
       disconnected() {
-        console.log("Disconnected from the RoomChannel");
+        console.log("Disconnected from the MessageChannel");
       },
 
       received(data) {

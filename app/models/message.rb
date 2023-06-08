@@ -16,6 +16,6 @@ class Message < ApplicationRecord
 
   def broadcast
     MessageBroadcaster.new(self, order).broadcast_notifications
-    MessageBroadcaster.new(self, order).broadcast_room_channel
+    MessageBroadcaster.new(self, order).broadcast_message_channel
   end
 end

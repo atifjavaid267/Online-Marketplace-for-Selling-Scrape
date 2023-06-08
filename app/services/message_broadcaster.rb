@@ -21,8 +21,8 @@ class MessageBroadcaster
                                  })
   end
 
-  def broadcast_room_channel
-    ActionCable.server.broadcast('room_channel_1', {
+  def broadcast_message_channel
+    ActionCable.server.broadcast('message_channel_1', {
                                    sender_name: @message.first_name,
                                    message: @message.content,
                                    sender_id: @sender_id,

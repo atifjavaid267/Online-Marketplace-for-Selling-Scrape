@@ -16,7 +16,8 @@ class Product < ApplicationRecord
   private
 
   def image_type
-    return unless product_image.attached? && !product_image.content_type.in?(%w[image/png image/jpeg image/jpg])
+    return unless product_image.attached? && !product_image.content_type.in?(%w[image/png
+                                                                                image/jpeg image/jpg])
 
     errors.add(:product_image, 'must be a jpg, jpeg or png file.')
   end
