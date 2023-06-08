@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   def stored_location
-    session[:stored_location]
+    session[:stored_location] || root_path
   end
 
   def configure_permitted_parameters
