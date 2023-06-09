@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
   def show; end
 
   def new
-    @notification = Notification.update_notifications(current_user.id, @order.buyer_id, @order.seller_id)
+    @notification = Notification.clear_notifications(current_user.id, @order.buyer_id, @order.seller_id)
     @messages = Message.conversation_between([@order.buyer_id, @order.seller_id])
   end
 
