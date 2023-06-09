@@ -65,18 +65,9 @@ gem 'rotp'
 gem 'rqrcode', '~> 2.1'
 gem 'stimulus-rails', '~> 1.0'
 gem 'tailwindcss-rails', '~> 2.0'
-
-# for authorization purposes
 gem 'cancancan', '~> 3.1'
-
-# for google maps use
 gem 'geocoder', '~> 1.8', '>= 1.8.1'
-
-# for pagination use
 gem 'will_paginate', '~> 3.3.0'
-
 gem 'devise-two-factor'
-
 gem 'attr_encrypted'
-
 gem 'twilio-ruby', '~> 5.76'

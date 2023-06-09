@@ -1,34 +1,21 @@
-document.addEventListener("turbolinks:load", function () {
-  var noticeContainer = document.getElementById("noticeContainer");
-  if (noticeContainer) {
-    setTimeout(function () {
-      noticeContainer.style.display = "none";
-    }, 5000);
-  }
+function hideFlashMessages() {
+  const flashMessages = document.querySelectorAll(".alert-dismissible");
 
-  var alertContainer = document.getElementById("alertContainer");
-  if (alertContainer) {
-    setTimeout(function () {
-      alertContainer.style.display = "none";
-    }, 5000);
-  }
+  flashMessages.forEach(message => {
+    const closeButton = message.querySelector(".close");
 
-  var noticeCloseButton = document.getElementById("noticeCloseButton");
-  if (noticeCloseButton) {
-    noticeCloseButton.addEventListener("click", function () {
-      if (noticeContainer) {
-        noticeContainer.style.display = "none";
-      }
+    closeButton.addEventListener("click", () => {
+      message.remove();
     });
-  }
 
-  var alertCloseButton = document.getElementById("alertCloseButton");
-  if (alertCloseButton) {
-    alertCloseButton.addEventListener("click", function () {
-      var alertContainer = document.getElementById("alertContainer");
-      if (alertContainer) {
-        alertContainer.style.display = "none";
-      }
-    });
-  }
+    message.classList.add("hide-flash");
+
+    setTimeout(() => {
+      message.remove();
+    }, 5000);
+  });
+}
+
+document.addEventListener("turbolinks:load", () => {
+  hideFlashMessages();
 });

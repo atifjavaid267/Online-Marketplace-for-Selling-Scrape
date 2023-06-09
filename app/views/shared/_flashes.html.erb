@@ -1,20 +1,9 @@
-<% if notice %>
-  <div id="noticeContainer" class="flex flex-row justify-center bg-green-600">
-    <div class="text-black alert alert-info alert-dismissible fade show pt-4 pb-2" role="notice">
-      <%= notice %>
-      <button id="noticeCloseButton" type="button" class="close bg-black px-1 text-sm text-white rounded-lg"
-      data-dismiss="alert" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-  </div>
-<% end %>
-<% if alert %>
-  <div id="alertContainer" class="flex flex-row justify-center bg-red-500">
-    <div class="text-black alert alert-warning alert-dismissible fade show pt-4 pb-2" role="alert">
-      <%= alert %>
-      <button id="alertCloseButton" type="button" class="close bg-black px-1 text-sm text-white rounded-lg"
-      data-dismiss="alert" aria-label="Close">
+<%= javascript_pack_tag "flashes" %>
+<% if notice || alert %>
+  <div class="flex flex-row justify-center <%= notice ? "bg-green-600" : "bg-red-500" %> pt-2">
+    <div class="text-black alert alert-info alert-dismissible fade show py-2" role="alert">
+      <%= notice ? notice : alert %>
+      <button type="button" class="close bg-black px-1 text-sm text-white rounded-lg" data-dismiss="alert" aria-label="Close">
         <span aria-hidden="true">&times;</span>
       </button>
     </div>

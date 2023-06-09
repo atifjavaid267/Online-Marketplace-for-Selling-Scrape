@@ -3,7 +3,7 @@
 # Product Controller
 class ProductsController < ApplicationController
   load_and_authorize_resource
-  before_action :authenticate_user!, except: %i[index show]
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :store_location, only: %i[index]
 
   def index

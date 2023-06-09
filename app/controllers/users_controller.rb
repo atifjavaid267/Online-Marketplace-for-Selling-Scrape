@@ -2,8 +2,8 @@
 
 # Users Controller
 class UsersController < ApplicationController
-  before_action :authenticate_user!, except: [:root]
-  before_action :store_location, only: %i[otp_setting home]
+  skip_before_action :authenticate_user!, only: [:root]
+  before_action :store_location, only: %i[home]
 
   def home; end
 
@@ -20,6 +20,6 @@ class UsersController < ApplicationController
     rescue StandardError => e
       flash[:alert] = "Error: #{e.message}"
     end
-    redirect_to stored_location
+    redirect_to users_otp_setting_path
   end
 end

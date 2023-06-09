@@ -1,11 +1,10 @@
 // notifications
 var notificationBell = document.getElementById("notification-bell");
-var notificationDropdown = document.getElementById("notification-dropdown");
+var notificationDropdown = document.getElementById("dropdown");
 var userMessage = { senderName: "", message: "" };
 
 var notificationMessage = document.createElement("div");
 notificationMessage.textContent = `${userMessage.senderName} ${userMessage.message}`;
-notificationMessage.classList.add("p-2", "text-black");
 notificationDropdown.appendChild(notificationMessage);
 
 notificationBell.addEventListener("mouseenter", () => {
@@ -17,20 +16,27 @@ notificationDropdown.addEventListener("mouseleave", () => {
 });
 
 // profile dropdown
-var menuButton = document.querySelector("#menu-button");
-var menu = document.querySelector("#menu");
+var menuButton = document.getElementById("profile-dropdown");
+var menu = document.getElementById("menu");
 
-document.addEventListener("click", event => {
-  if (!menu.contains(event.target) && event.target !== menuButton) {
-    menu.classList.add("hidden");
-    menuButton.setAttribute("aria-expanded", "false");
-  }
+menuButton.addEventListener("mouseenter", () => {
+  menu.classList.remove("hidden");
 });
 
-menuButton.addEventListener("click", () => {
-  var expanded = menuButton.getAttribute("aria-expanded") === "true" || false;
-  menuButton.setAttribute("aria-expanded", !expanded);
-  menu.classList.toggle("hidden");
+menu.addEventListener("mouseleave", () => {
+  menu.classList.add("hidden");
+});
+
+function hideMenu() {
+  menu.classList.add("hidden");
+}
+
+document.addEventListener("click", (event) => {
+  const target = event.target;
+
+  if (!menu.contains(target) && !menuButton.contains(target)) {
+    hideMenu();
+  }
 });
 
 // Burger menus navbar

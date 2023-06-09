@@ -5,7 +5,6 @@ class MessagesController < ApplicationController
   load_and_authorize_resource :order, only: %i[new create]
   load_and_authorize_resource through: :order, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
-  before_action :authenticate_user!
 
   def show; end
 

@@ -4,7 +4,7 @@ document.addEventListener("turbolinks:load", () => {
   const userDiv = document.getElementById("user");
   const current_user_id = userDiv.getAttribute("data-user-id");
   const countElement = document.getElementById("notification-count");
-  const notificationDropdown = document.getElementById("notification-dropdown");
+  const notificationDropdown = document.getElementById("dropdown");
 
   const storedCount = localStorage.getItem("count") || 0;
   countElement.innerHTML = storedCount;
@@ -22,7 +22,7 @@ document.addEventListener("turbolinks:load", () => {
 
     const notificationMessage = document.createElement("div");
     notificationMessage.textContent = `${senderName} sent you ${messageCount} messages`;
-    notificationMessage.classList.add("p-2", "text-black");
+    notificationMessage.classList.add("p-2", "text-white");
     notificationMessage.id = `notification-${pairId}`;
     notificationMessage.addEventListener("click", () => {
       const messageURL = `/orders/${orderID}/messages/new`;
@@ -33,7 +33,7 @@ document.addEventListener("turbolinks:load", () => {
     notificationDropdown.appendChild(notificationMessage);
   }
 
-  const handleNotification = (data) => {
+  const handleNotification = data => {
     console.log(data);
     const senderId = data.sender_id;
     const receiverId = data.receiver_id;
@@ -45,14 +45,13 @@ document.addEventListener("turbolinks:load", () => {
 
     if (existingMessage) {
       const messageCount = messageCounts[pairId];
-      existingMessage.textContent = `${senderName} sent you ${
-        messageCount + 1
-      } messages`;
+      existingMessage.textContent = `${senderName} sent you ${messageCount +
+        1} messages`;
       messageCounts[pairId] += 1;
     } else {
       const notificationMessage = document.createElement("div");
       notificationMessage.textContent = `${senderName} sent you a message`;
-      notificationMessage.classList.add("p-2", "text-black");
+      notificationMessage.classList.add("p-2", "text-white");
       notificationMessage.id = `notification-${pairId}`;
       notificationMessage.addEventListener("click", () => {
         const messageURL = `/orders/${orderID}/messages/new`;
@@ -67,12 +66,12 @@ document.addEventListener("turbolinks:load", () => {
     notificationMessages[pairId] = {
       senderName,
       messageCount: messageCounts[pairId],
-      orderID,
+      orderID
     };
 
     const notifications = {
       messageCounts,
-      notificationMessages,
+      notificationMessages
     };
     localStorage.setItem("notifications", JSON.stringify(notifications));
 
@@ -93,7 +92,7 @@ document.addEventListener("turbolinks:load", () => {
       disconnected() {},
       received(data) {
         handleNotification(data);
-      },
+      }
     }
   );
 });

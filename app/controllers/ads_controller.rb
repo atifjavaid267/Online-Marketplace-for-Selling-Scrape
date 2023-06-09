@@ -6,7 +6,6 @@ class AdsController < ApplicationController
   load_and_authorize_resource through: :product, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
 
-  before_action :authenticate_user!
   before_action :store_location, only: %i[new edit index show]
 
   def index
@@ -51,11 +50,11 @@ class AdsController < ApplicationController
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end
-    redirect_to stored_location
+    redirect_to ads_path
   end
 
   def toggle_archived
-    if @ad.update(archived: !@ad.archived)
+    if @ad.toggle_archived_status
       flash[:notice] = "Ad #{@ad.archived ? 'unpublished' : 'published'} successfully."
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')

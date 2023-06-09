@@ -7,6 +7,8 @@ class Bid < ApplicationRecord
   has_one :order
   validates :price, numericality: { greater_than_or_equal_to: 1 }
 
+  after_save :broadcast
+
   enum status: { pending: 0, successful: 1, failed: 2 }
 
   scope :sort_by_price, ->(order) { order(price: order) }
@@ -14,5 +16,11 @@ class Bid < ApplicationRecord
 
   def self.fail!
     update(status: 'failed')
+  end
+
+  private
+
+  def broadcast
+    BidBroadcast.broadcast_bid(self)
   end
 end

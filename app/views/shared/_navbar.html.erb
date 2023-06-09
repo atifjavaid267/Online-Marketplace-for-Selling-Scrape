@@ -22,28 +22,27 @@
   <% if user_signed_in? %>
     <div class="pl-5 ml-5">
       <% unless current_user.admin? %>
-        <button type="button" class="rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
-          <span class="sr-only text-white">View notifications</span>
+        <button type="button" class="rounded-full bg-gray-800 p-1 text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
           <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-bell cursor-pointer" viewBox="0 0 16 16" id="notification-bell">
             <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2zM8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
             <text x="11.5" y="6.5" font-size="8" text-anchor="middle" fill="yellow" id="notification-count">0</text>
           </svg>
-          <div class="hidden bg-white rounded-lg hover:font-semibold shadow-lg text-gray-700 mt-3 absolute right-0" id="notification-dropdown"></div>
+          <div class="hidden bg-gray-800 rounded-lg hover:font-semibold shadow-lg text-white mt-3 absolute right-32" id="dropdown"></div>
         </button>
       <% end %>
       <div class="hidden relative lg:inline-block text-left">
-        <button type="button" class="inline-flex w-full justify-center gap-x-1.5 bg-gray-800 px-3 py-2 rounded-lg text-md text-gray-200 hover:text-gray-400 shadow-sm" id="menu-button" aria-expanded="false" aria-haspopup="true">
+        <button type="button" class="inline-flex w-full justify-center gap-x-1.5 bg-gray-800 px-3 py-2 rounded-lg text-md text-gray-200 hover:text-gray-400 shadow-sm" id="profile-dropdown" aria-expanded="false" aria-haspopup="true">
           Profile
           <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
             <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
           </svg>
         </button>
       </div>
-      <div class="absolute right-0 z-10 mt-2 w-36 origin-top-right border-gray-300 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none hidden" role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1" id="menu">
-        <div class="py-1" role="none">
-          <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "Edit profile", edit_user_registration_path %></span>
-          <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "OTP setting", users_otp_setting_path %></span>
-          <span class="text-gray-700 block px-4 py-2 text-sm hover:font-bold"><%= link_to "Sign out", destroy_user_session_path %></span>
+      <div class="absolute right-0 z-10 mt-2 w-36 origin-top-right rounded-md bg-gray-800 text-gray-200 shadow-lg focus:outline-none hidden" id="menu" aria-orientation="vertical" tabindex="-1" id="menu">
+        <div class="py-1">
+          <span class="block px-4 py-2 text-sm hover:font-bold"><%= link_to "Edit profile", edit_user_registration_path %></span>
+          <span class="block px-4 py-2 text-sm hover:font-bold"><%= link_to "OTP setting", users_otp_setting_path %></span>
+          <span class="block px-4 py-2 text-sm hover:font-bold"><%= link_to "Sign out", destroy_user_session_path %></span>
         </div>
       </div>
     </div>

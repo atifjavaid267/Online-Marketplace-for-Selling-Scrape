@@ -45,14 +45,6 @@ document.addEventListener("turbolinks:load", () => {
           inputField.value = "";
         }
 
-        if (countElement && parseInt(countElement.innerHTML) === 0) {
-          const notificationDropdown = document.getElementById(
-            "notification-dropdown"
-          );
-          if (notificationDropdown) {
-            notificationDropdown.innerHTML = "";
-          }
-        }
       },
     }
   );

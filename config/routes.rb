@@ -45,7 +45,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :bids do
+  resources :bids, except: %i[new create] do
     resources :orders, only: %i[new create]
   end
 

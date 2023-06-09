@@ -6,7 +6,6 @@ class OrdersController < ApplicationController
   load_and_authorize_resource :order, through: :bid, singleton: true, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
 
-  before_action :authenticate_user!
   before_action :store_location, only: %i[new]
 
   def new; end

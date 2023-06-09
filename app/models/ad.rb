@@ -26,6 +26,10 @@ class Ad < ApplicationRecord
     update(archived: true)
   end
 
+  def toggle_archived_status
+    update(archived: !archived)
+  end
+
   private
 
   def images_type

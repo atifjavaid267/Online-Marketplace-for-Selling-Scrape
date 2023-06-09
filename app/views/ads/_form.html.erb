@@ -1,8 +1,8 @@
-<div class="bg-background_img bg-no-repeat bg-cover bg-opacity-75">
+<div class="bg-background_img h-full bg-no-repeat bg-cover bg-opacity-75">
   <%= render "shared/back" %>
-  <div class="flex flex-col my-auto justify-center items-center h-screen">
+  <div class="flex flex-col my-auto justify-center items-center">
     <div class="flex flex-col rounded-lg py-5 px-10 justify-center items-center mx-10">
-      <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 dark:bg-gray-800 border-transparent">
+      <div class="p-5 flex flex-col items-center justify-center mx-12 px-5 my-10 w-full h-4/5 max-w-sm bg-white border border-black-200 rounded-lg shadow sm:p-30 md:p-30 border-transparent">
         <div class="flex flex-col items-center justify-between space-y-5">
           <h3 class="font-bold text-lg mt-5"><%= @ad.new_record? ? "New Ad" : "Edit Ad" %></h3>
           <%= form_with(model: [@product, @ad], local: true) do |form| %>
