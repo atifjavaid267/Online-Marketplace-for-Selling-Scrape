@@ -1,7 +1,7 @@
 # app/services/broadcaster.rb
 class Broadcaster
-  def initialize(message, order)
-    @order = order
+  def initialize(message)
+    @order = message.order
     @message = message
     @sender_id = message.sender_id
     @receiver_id = message.receiver_id
