@@ -1,12 +1,13 @@
 <div id="chat-room" class="pb-16">
   <div id="messages">
-    <% unless @messages.length.zero? %>
+    <% unless @messages.length == 1 %>
       <% last_date = @messages.first.created_at.strftime("%B %d, %Y") %>
       <div class="mb-5 pb-5">
         <div class="flex justify-center text-center mt-15">
           <p class="border rounded-md m-3 p-1"><%= last_date %></p>
         </div>
         <% @messages.each do |message| %>
+          <% next if message.new_record? %>
           <% if last_date != message.created_at.strftime("%B %d, %Y") %>
             <% last_date = message.created_at.strftime("%B %d, %Y") %>
             <div class="flex justify-center text-center">
