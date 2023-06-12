@@ -1,5 +1,5 @@
 <div class="pb-16">
-  <div id="messages">
+  <div id="display-message">
     <% unless @messages.length == 1 %>
       <% last_date = @messages.first.created_at.strftime("%B %d, %Y") %>
       <div class="mb-5 pb-5">

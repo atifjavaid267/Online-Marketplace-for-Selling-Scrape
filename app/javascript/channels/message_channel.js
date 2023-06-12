@@ -1,6 +1,6 @@
 import consumer from "./consumer";
 document.addEventListener("turbolinks:load", () => {
-  const messagesContainer = document.getElementById("messages");
+  const messagesContainer = document.getElementById("display-message");
 
   consumer.subscriptions.create(
     { channel: "MessageChannel"},
