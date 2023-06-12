@@ -3,7 +3,7 @@ document.addEventListener("turbolinks:load", () => {
   const messagesContainer = document.getElementById("display-message");
 
   consumer.subscriptions.create(
-    { channel: "MessageChannel"},
+    { channel: "MessageChannel" },
     {
       connected() {
         console.log("Connected to the MessageChannel");
@@ -43,8 +43,7 @@ document.addEventListener("turbolinks:load", () => {
           const inputField = document.getElementById("message_content");
           inputField.value = "";
         }
-
-      },
+      }
     }
   );
 });
