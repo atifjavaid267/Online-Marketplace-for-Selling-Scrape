@@ -2,9 +2,9 @@ import consumer from "./consumer";
 
 document.addEventListener("turbolinks:load", () => {
   const userDiv = document.getElementById("user");
-  const current_user_id = userDiv.getAttribute("data-user-id");
-  const countElement = document.getElementById("notification-count");
-  const notificationDropdown = document.getElementById("dropdown");
+  const currentUserId = userDiv.getAttribute("data-user-id");
+  const countElement = document.getElementById("total-notifications");
+  const notificationDropdown = document.getElementById("notification-dropdown");
 
   const storedCount = localStorage.getItem("count") || 0;
   countElement.innerHTML = storedCount;
@@ -39,6 +39,7 @@ document.addEventListener("turbolinks:load", () => {
     const receiverId = data.receiver_id;
     const senderName = data.sender_name;
     const orderID = data.order_id;
+    const total = data.total
 
     const pairId = `${senderId}-${receiverId}`;
     const existingMessage = document.getElementById(`notification-${pairId}`);
@@ -84,10 +85,10 @@ document.addEventListener("turbolinks:load", () => {
   };
 
   consumer.subscriptions.create(
-    { channel: "NotificationChannel", user_id: current_user_id },
+    { channel: "NotificationChannel", user_id: currentUserId},
     {
       connected() {
-        console.log(`Connected to the NotificationsChannel ${current_user_id}`);
+        console.log(`Connected to the NotificationsChannel ${currentUserId}`);
       },
       disconnected() {},
       received(data) {

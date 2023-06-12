@@ -14,7 +14,7 @@ class Message < ApplicationRecord
 
   def broadcast
     broadcaster = Broadcaster.new(self)
-    broadcaster.call('notification')
     broadcaster.call('message')
+    broadcaster.call('notification')
   end
 end

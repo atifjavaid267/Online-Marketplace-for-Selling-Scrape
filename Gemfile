@@ -38,13 +38,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  gem 'letter_opener'
-
-  gem 'erb-formatter'
-
-  gem 'htmlbeautifier'
-
   gem 'bullet', '~> 7.0'
+  gem 'erb-formatter'
+  gem 'htmlbeautifier'
+  gem 'letter_opener'
 end
 
 group :test do
@@ -58,16 +55,16 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'attr_encrypted'
+gem 'cancancan', '~> 3.1'
 gem 'devise'
+gem 'devise-two-factor'
 gem 'dotenv-rails'
+gem 'geocoder', '~> 1.8', '>= 1.8.1'
 gem 'importmap-rails', '~> 1.0'
 gem 'rotp'
 gem 'rqrcode', '~> 2.1'
 gem 'stimulus-rails', '~> 1.0'
 gem 'tailwindcss-rails', '~> 2.0'
-gem 'cancancan', '~> 3.1'
-gem 'geocoder', '~> 1.8', '>= 1.8.1'
-gem 'will_paginate', '~> 3.3.0'
-gem 'devise-two-factor'
-gem 'attr_encrypted'
 gem 'twilio-ruby', '~> 5.76'
+gem 'will_paginate', '~> 3.3.0'
