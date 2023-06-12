@@ -16,7 +16,7 @@ class Broadcaster
       total = notification.total_notifications
       time = Time.zone.now.strftime('%B %d, %Y %I:%M %p')
     when 'message'
-      channel_name = 'message_channel_1'
+      channel_name = 'message_channel'
       time = Time.zone.now.strftime('%I:%M %p')
     end
 
