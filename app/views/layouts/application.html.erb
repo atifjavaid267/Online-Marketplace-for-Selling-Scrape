@@ -10,8 +10,7 @@
     <%= javascript_pack_tag "application", "data-turbolinks-track": "reload" %>
   </head>
   <% if current_user %>
-    <% current_user_id = current_user.id %>
-    <div id="user" data-user-id=<%= current_user_id %>></div>
+    <div id="user" data-user-id=<%= current_user.id %>></div>
   <% end %>
   <body>
     <% if user_signed_in? %>
