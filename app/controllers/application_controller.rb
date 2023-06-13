@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   add_flash_types :notice, :alert
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
-  before_action :load_notifications
+  before_action :load_notifications,  if: :user_signed_in?
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, alert: exception.message
