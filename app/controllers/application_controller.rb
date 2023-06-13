@@ -5,12 +5,17 @@ class ApplicationController < ActionController::Base
   add_flash_types :notice, :alert
   before_action :authenticate_user!
   before_action :configure_permitted_parameters, if: :devise_controller?
+  before_action :load_notifications
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to main_app.root_url, alert: exception.message
   end
 
   private
+
+  def load_notifications
+    @notifications = current_user.received_notifications.unread
+  end
 
   def store_location
     session[:stored_location] = request.path

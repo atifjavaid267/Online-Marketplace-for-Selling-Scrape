@@ -6,6 +6,8 @@ class MessagesController < ApplicationController
   load_and_authorize_resource through: :order, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
 
+  before_action :clear_order_notifications, only: %i[new]
+
   def show; end
 
   def new
@@ -25,5 +27,11 @@ class MessagesController < ApplicationController
 
   def message_params
     params.require(:message).permit(:sender_id, :receiver_id, :content)
+  end
+
+  def clear_order_notifications
+    current_user.received_notifications.by_order(@order.id).each do |notification|
+      notification.clear_total
+    end
   end
 end
