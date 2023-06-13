@@ -14,7 +14,13 @@ class Broadcaster
       notification = Notification.find_or_create_by(order_id: @order_id, sender_id: @sender_id,
                                                     receiver_id: @receiver_id)
       notification.increment_total
-      total = notification.total
+
+      current_user_notifications = @message.receiver.notifications.unread
+      notifications = {}
+      current_user_notifications.each do |n|
+        notifications[n.sender.first_name] = n.total
+      end
+
       time = Time.zone.now.strftime('%B %d, %Y %I:%M %p')
     when 'message'
       channel_name = 'message_channel'
@@ -22,10 +28,9 @@ class Broadcaster
     end
 
     ActionCable.server.broadcast(channel_name, {
-                                   total:,
+                                   notifications:,
                                    sender_name: @message.first_name,
                                    message: @message.content,
-                                   sender_id: @sender_id,
                                    receiver_id: @receiver_id,
                                    order_id: @order_id,
                                    timestamp: time
