@@ -5,7 +5,7 @@ class User < ApplicationRecord
   has_many :ads
   has_many :addresses
   has_many :bids
-  has_many :notifications
+  has_many :received_notifications, class_name: 'Notification', foreign_key: 'receiver_id'
   has_many :received_messages, class_name: 'Message', foreign_key: 'receiver_id'
   has_many :sent_messages, class_name: 'Message', foreign_key: 'sender_id'
 

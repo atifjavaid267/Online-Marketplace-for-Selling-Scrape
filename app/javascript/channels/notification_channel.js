@@ -7,7 +7,9 @@ document.addEventListener("turbolinks:load", () => {
   const notificationDropdown = document.getElementById("dropdown");
 
   const handleNotification = (data) => {
+
     console.log(data);
+
     const receiverId = data.receiver_id;
     const senderName = data.sender_name;
     const orderID = data.order_id;

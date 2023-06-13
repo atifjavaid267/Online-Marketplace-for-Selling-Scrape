@@ -15,7 +15,7 @@ class Broadcaster
                                                     receiver_id: @receiver_id)
       notification.increment_total
 
-      current_user_notifications = @message.receiver.notifications.unread
+      current_user_notifications = @message.receiver.received_notifications.unread
       notifications = {}
       current_user_notifications.each do |n|
         notifications[n.sender.first_name] = n.total
