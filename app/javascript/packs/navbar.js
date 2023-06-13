@@ -1,6 +1,6 @@
 // notifications
 var notificationBell = document.getElementById("notification-bell");
-var notificationDropdown = document.getElementById("notifications-dropdown");
+var notificationDropdown = document.getElementById("notification-dropdown");
 var userMessage = { senderName: "", message: "" };
 
 var notificationMessage = document.createElement("div");

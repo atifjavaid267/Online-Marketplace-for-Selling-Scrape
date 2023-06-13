@@ -7,7 +7,7 @@ class Bid < ApplicationRecord
   has_one :order
   validates :price, numericality: { greater_than_or_equal_to: 1 }
 
-  after_save :broadcast
+  after_save :trigger_bid_broadcast
 
   enum status: { pending: 0, successful: 1, failed: 2 }
 
@@ -20,7 +20,8 @@ class Bid < ApplicationRecord
 
   private
 
-  def broadcast
+  # def broadcast
+  def trigger_bid_broadcast
     BidBroadcast.broadcast_bid(self)
   end
 end

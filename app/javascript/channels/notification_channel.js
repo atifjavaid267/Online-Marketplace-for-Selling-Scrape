@@ -4,9 +4,7 @@ document.addEventListener("turbolinks:load", () => {
   const userDiv = document.getElementById("user");
   const current_user_id = userDiv.getAttribute("data-user-id");
 
-  const notificationDropdown = document.getElementById(
-    "notifications-dropdown"
-  );
+  const notificationDropdown = document.getElementById("notification-dropdown");
 
   consumer.subscriptions.create(
     { channel: "NotificationChannel", user_id: current_user_id },
