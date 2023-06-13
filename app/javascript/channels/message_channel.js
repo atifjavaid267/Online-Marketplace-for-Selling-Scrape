@@ -19,7 +19,9 @@ document.addEventListener("turbolinks:load", () => {
 
         if (userDiv && messagesContainer) {
           let messageHtml;
-          const currentUserId = parseInt(userDiv.getAttribute("data-user-id"));
+          const currentUserId = parseInt(
+            userDiv.getAttribute("data-user-id")
+          );
 
           if (data.receiver_id === currentUserId) {
             messageHtml = `
@@ -41,7 +43,7 @@ document.addEventListener("turbolinks:load", () => {
           const inputField = document.getElementById("message_content");
           inputField.value = "";
         }
-      },
+      }
     }
   );
 });
