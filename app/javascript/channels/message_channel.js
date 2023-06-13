@@ -14,7 +14,6 @@ document.addEventListener("turbolinks:load", () => {
       },
 
       received(data) {
-        // console.log(data);
         const userDiv = document.getElementById("user");
 
         if (userDiv && messagesContainer) {

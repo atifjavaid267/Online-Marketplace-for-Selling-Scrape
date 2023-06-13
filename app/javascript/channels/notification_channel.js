@@ -3,8 +3,7 @@ import consumer from "./consumer";
 document.addEventListener("turbolinks:load", () => {
   const userDiv = document.getElementById("user");
   const current_user_id = userDiv.getAttribute("data-user-id");
-
-  const notificationDropdown = document.getElementById("notification-dropdown");
+  const notificationDropdown = document.getElementById("notifications-dropdown");
 
   consumer.subscriptions.create(
     { channel: "NotificationChannel", user_id: current_user_id },
@@ -15,23 +14,14 @@ document.addEventListener("turbolinks:load", () => {
       disconnected() {},
       received(data) {
         const countElement = document.getElementById("total-notifications");
-
-        console.log(data);
-
-        // const receiverId = data.receiver_id;
-        // const senderName = data.sender_name;
-        const orderID = data.order_id;
-
         countElement.innerHTML = Object.keys(data.notifications).length;
 
-        notificationDropdown.innerHTML = "";
-
         for (const orderID in data.notifications) {
-          const notificationData = Object.keys(data.notifications[orderID]);
+          const notificationData = data.notifications[orderID];
           const senderName = notificationData[0];
           const totalMessages = notificationData[1];
-
           const messageElement = document.createElement("div");
+
           let str;
           if (totalMessages > 1) {
             str = "messages";
@@ -41,7 +31,7 @@ document.addEventListener("turbolinks:load", () => {
           }
           messageElement.textContent = `${senderName} sent you ${totalMessages} ${str}`;
           messageElement.classList.add("dropdown-item");
-          notificationMessage.addEventListener("click", () => {
+          messageElement.addEventListener("click", () => {
             window.location.href = `/orders/${orderID}/messages/new`;
           });
           notificationDropdown.appendChild(messageElement);

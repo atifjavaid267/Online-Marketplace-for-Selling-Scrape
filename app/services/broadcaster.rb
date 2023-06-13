@@ -17,8 +17,8 @@ class Broadcaster
 
       current_user_notifications = @message.receiver.received_notifications.unread
       notifications = {}
-      current_user_notifications.each do |n|
-        notifications[n.sender.first_name] = n.total
+      receiver_notifications.each do |n|
+        notifications[n.order_id] = [n.sender.first_name, n.total]
       end
 
       time = Time.zone.now.strftime('%B %d, %Y %I:%M %p')
@@ -29,10 +29,9 @@ class Broadcaster
 
     ActionCable.server.broadcast(channel_name, {
                                    notifications:,
-                                   sender_name: @message.first_name,
                                    message: @message.content,
                                    receiver_id: @receiver_id,
-                                   order_id: @order_id,
+                                   #  order_id: @order_id,
                                    timestamp: time
                                  })
   end
