@@ -18,12 +18,10 @@ document.addEventListener("turbolinks:load", () => {
       received(data) {
         const countElement = document.getElementById("total-notifications");
 
-        console.log("============================");
         console.log(data);
-        console.log("============================");
 
-        const receiverId = data.receiver_id;
-        const senderName = data.sender_name;
+        // const receiverId = data.receiver_id;
+        // const senderName = data.sender_name;
         const orderID = data.order_id;
 
         countElement.innerHTML = Object.keys(data.notifications).length;
@@ -31,13 +29,23 @@ document.addEventListener("turbolinks:load", () => {
         notificationDropdown.innerHTML = "";
 
         for (const orderID in data.notifications) {
-          const senderNames = Object.keys(data.notifications[orderID]);
-          const messageCount = data.notifications[orderID][senderNames[0]];
+          const notificationData = Object.keys(data.notifications[orderID]);
+          const senderName = notificationData[0];
+          const totalMessages = notificationData[1];
 
           const messageElement = document.createElement("div");
-          messageElement.textContent = `${senderNames[0]} sent you ${messageCount} message(s)`;
+          let str;
+          if (totalMessages > 1) {
+            str = "messages";
+          }
+          else {
+            str = "message";
+          }
+          messageElement.textContent = `${senderName} sent you ${totalMessages} ${str}`;
           messageElement.classList.add("dropdown-item");
-
+          notificationMessage.addEventListener("click", () => {
+            window.location.href = `/orders/${orderID}/messages/new`;
+          });
           notificationDropdown.appendChild(messageElement);
         }
       },
