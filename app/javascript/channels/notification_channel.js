@@ -6,6 +6,7 @@ document.addEventListener("turbolinks:load", () => {
   const countElement = document.getElementById("notification-count");
   const notificationDropdown = document.getElementById("dropdown");
 
+<<<<<<< Updated upstream
   const storedCount = parseInt(countElement.innerHTML) || 0;
   let messageCounts = {};
   let notificationMessages = {};
@@ -45,13 +46,15 @@ document.addEventListener("turbolinks:load", () => {
     );
     notificationDropdown.appendChild(notificationMessage);
   }
+=======
+>>>>>>> Stashed changes
 
   const handleNotification = (data) => {
     console.log(data);
-    const senderId = data.sender_id;
     const receiverId = data.receiver_id;
     const senderName = data.sender_name;
     const orderID = data.order_id;
+<<<<<<< Updated upstream
 
     const pairId = `${senderId}-${receiverId}`;
     const existingMessage = document.getElementById(`notification-${pairId}`);
@@ -84,6 +87,10 @@ document.addEventListener("turbolinks:load", () => {
       0
     );
     updateCount(newCount);
+=======
+    const notifications = data.notifications
+
+>>>>>>> Stashed changes
   };
 
   consumer.subscriptions.create(
