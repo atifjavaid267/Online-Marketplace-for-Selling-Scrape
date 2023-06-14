@@ -20,7 +20,7 @@ class MessagesController < ApplicationController
     return if @message.save
 
     flash[:alert] = @message.errors.full_messages.join(', ')
-    render :new
+    redirect_to new_order_message_path(@order)
   end
 
   private
