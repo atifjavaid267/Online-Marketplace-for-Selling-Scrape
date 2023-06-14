@@ -14,7 +14,10 @@ class ApplicationController < ActionController::Base
   private
 
   def load_notifications
-    @notifications = current_user.received_notifications.unread
+    @notifications = {}
+    current_user.received_notifications.unread.each do |n|
+      @notifications[n.order_id] = [n.sender.first_name, n.total]
+    end
   end
 
   def store_location

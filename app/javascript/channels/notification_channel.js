@@ -28,7 +28,6 @@ document.addEventListener("turbolinks:load", () => {
           const messageElement = document.createElement("div");
 
           messageElement.textContent = `${senderName} sent you ${totalMessages} ${ totalMessages > 1 ? "messages" : "message"}`;
-          messageElement.classList.add("dropdown-item");
           messageElement.addEventListener("click", () => {
             window.location.href = `/orders/${orderID}/messages/new`;
           });

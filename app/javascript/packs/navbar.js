@@ -1,11 +1,5 @@
-// notifications
 var notificationBell = document.getElementById("notification-bell");
 var notificationDropdown = document.getElementById("notifications-dropdown");
-var userMessage = { senderName: "", message: "" };
-
-var notificationMessage = document.createElement("div");
-notificationMessage.textContent = `${userMessage.senderName} ${userMessage.message}`;
-notificationDropdown.appendChild(notificationMessage);
 
 notificationBell.addEventListener("mouseenter", () => {
   notificationDropdown.classList.remove("hidden");
@@ -14,6 +8,26 @@ notificationBell.addEventListener("mouseenter", () => {
 notificationDropdown.addEventListener("mouseleave", () => {
   notificationDropdown.classList.add("hidden");
 });
+
+
+
+const notifications = JSON.parse(document.getElementById("notification-data").getAttribute("notification-data-id"));
+
+if (notificationDropdown) {
+  notificationDropdown.innerHTML = "";
+}
+for (const orderID in notifications) {
+  const notificationData = notifications[orderID];
+  const senderName = notificationData[0];
+  const totalMessages = notificationData[1];
+  const messageElement = document.createElement("div");
+
+  messageElement.textContent = `${senderName} sent you ${totalMessages} ${ totalMessages > 1 ? "messages" : "message"}`;
+  messageElement.addEventListener("click", () => {
+    window.location.href = `/orders/${orderID}/messages/new`;
+  });
+  notificationDropdown.appendChild(messageElement);
+}
 
 // profile dropdown
 var menuButton = document.getElementById("profile-dropdown");
