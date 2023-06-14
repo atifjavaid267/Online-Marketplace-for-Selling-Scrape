@@ -14,7 +14,7 @@ class Bid < ApplicationRecord
   scope :sort_by_price, ->(order) { order(price: order) }
   scope :all_except, ->(bid) { where.not(id: bid.id) }
 
-  def self.fail!
+  def self.failed
     update(status: 'failed')
   end
 

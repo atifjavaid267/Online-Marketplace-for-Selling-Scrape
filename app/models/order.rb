@@ -31,7 +31,9 @@ class Order < ApplicationRecord
       bid.failed!
       bid.ad.published!
     elsif successful?
-      bid.ad.bids.all_except(bid).fail!
+      bid.ad.bids.all_except(bid).failed
     end
+  rescue StandardError => e
+    logger.error(e.to_s)
   end
 end

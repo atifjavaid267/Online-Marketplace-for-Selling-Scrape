@@ -19,14 +19,14 @@ class Ad < ApplicationRecord
   scope :unarchived, -> { where(archived: false) }
 
   def published!
-    update(archived: false)
+    update!(archived: false)
   end
 
   def unpublished!
     update(archived: true)
   end
 
-  def toggle_archived_status
+  def toggle_archived
     update(archived: !archived)
   end
 

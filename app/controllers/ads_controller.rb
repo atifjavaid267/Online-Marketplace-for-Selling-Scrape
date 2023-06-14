@@ -54,7 +54,7 @@ class AdsController < ApplicationController
   end
 
   def toggle_archived
-    if @ad.toggle_archived_status
+    if @ad.toggle_archived
       flash[:notice] = "Ad #{@ad.archived ? 'unpublished' : 'published'} successfully."
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')

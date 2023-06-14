@@ -9,8 +9,6 @@ notificationDropdown.addEventListener("mouseleave", () => {
   notificationDropdown.classList.add("hidden");
 });
 
-
-
 const notifications = JSON.parse(document.getElementById("notification-data").getAttribute("notification-data-id"));
 
 if (notificationDropdown) {
@@ -30,8 +28,8 @@ for (const orderID in notifications) {
 }
 
 // profile dropdown
-var menuButton = document.getElementById("profile-dropdown");
 var menu = document.getElementById("menu");
+var menuButton = document.getElementById("profile-dropdown");
 
 menuButton.addEventListener("mouseenter", () => {
   menu.classList.remove("hidden");
@@ -41,27 +39,16 @@ menu.addEventListener("mouseleave", () => {
   menu.classList.add("hidden");
 });
 
-function hideMenu() {
-  menu.classList.add("hidden");
-}
 
-document.addEventListener("click", (event) => {
-  const target = event.target;
-
-  if (!menu.contains(target) && !menuButton.contains(target)) {
-    hideMenu();
-  }
-});
-
-// Burger menus navbar
+// navbar
 document.addEventListener("turbolinks:load", function () {
   // open
-  var burger = document.querySelectorAll(".navbar-burger");
+  var mobile = document.querySelectorAll(".mobile-navbar");
   var menu = document.querySelectorAll(".navbar-menu");
 
-  if (burger.length && menu.length) {
-    for (var i = 0; i < burger.length; i++) {
-      burger[i].addEventListener("click", function () {
+  if (mobile.length && menu.length) {
+    for (var i = 0; i < mobile.length; i++) {
+      mobile[i].addEventListener("click", function () {
         for (var j = 0; j < menu.length; j++) {
           menu[j].classList.toggle("hidden");
         }
