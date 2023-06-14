@@ -2,18 +2,18 @@ import consumer from "./consumer";
 
 document.addEventListener("turbolinks:load", () => {
   const userDiv = document.getElementById("user");
-  const current_user_id = userDiv.getAttribute("data-user-id");
+  const currentUserId = userDiv.getAttribute("user-id");
 
   consumer.subscriptions.create(
-    { channel: "NotificationChannel", user_id: current_user_id },
+    { channel: "NotificationChannel", user_id: currentUserId },
     {
-      connected() {
-        console.log(`Connected to the NotificationsChannel ${current_user_id}`);
-      },
+      connected() {},
       disconnected() {},
       received(data) {
         const countElement = document.getElementById("total-notifications");
-        const notificationDropdown = document.getElementById("notifications-dropdown");
+        const notificationDropdown = document.getElementById(
+          "notifications-dropdown"
+        );
 
         countElement.innerHTML = Object.keys(data.notifications).length;
 
@@ -27,13 +27,16 @@ document.addEventListener("turbolinks:load", () => {
           const totalMessages = notificationData[1];
           const messageElement = document.createElement("div");
 
-          messageElement.textContent = `${senderName} sent you ${totalMessages} ${ totalMessages > 1 ? "messages" : "message"}`;
+          messageElement.textContent = `${senderName} sent you ${totalMessages} ${totalMessages >
+          1
+            ? "messages"
+            : "message"}`;
           messageElement.addEventListener("click", () => {
             window.location.href = `/orders/${orderID}/messages/new`;
           });
           notificationDropdown.appendChild(messageElement);
         }
-      },
+      }
     }
   );
 });

@@ -19,7 +19,7 @@ document.addEventListener("turbolinks:load", () => {
         if (userDiv && messagesContainer) {
           let messageHtml;
           const currentUserId = parseInt(
-            userDiv.getAttribute("data-user-id")
+            userDiv.getAttribute("user-id")
           );
 
           if (data.receiver_id === currentUserId) {
