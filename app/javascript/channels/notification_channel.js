@@ -3,7 +3,6 @@ import consumer from "./consumer";
 document.addEventListener("turbolinks:load", () => {
   const userDiv = document.getElementById("user");
   const current_user_id = userDiv.getAttribute("data-user-id");
-  const notificationDropdown = document.getElementById("notifications-dropdown");
 
   consumer.subscriptions.create(
     { channel: "NotificationChannel", user_id: current_user_id },
@@ -14,7 +13,13 @@ document.addEventListener("turbolinks:load", () => {
       disconnected() {},
       received(data) {
         const countElement = document.getElementById("total-notifications");
+        const notificationDropdown = document.getElementById("notifications-dropdown");
+
         countElement.innerHTML = Object.keys(data.notifications).length;
+
+        if (notificationDropdown) {
+          notificationDropdown.innerHTML = "";
+        }
 
         for (const orderID in data.notifications) {
           const notificationData = data.notifications[orderID];
@@ -22,14 +27,7 @@ document.addEventListener("turbolinks:load", () => {
           const totalMessages = notificationData[1];
           const messageElement = document.createElement("div");
 
-          let str;
-          if (totalMessages > 1) {
-            str = "messages";
-          }
-          else {
-            str = "message";
-          }
-          messageElement.textContent = `${senderName} sent you ${totalMessages} ${str}`;
+          messageElement.textContent = `${senderName} sent you ${totalMessages} ${ totalMessages > 1 ? "messages" : "message"}`;
           messageElement.classList.add("dropdown-item");
           messageElement.addEventListener("click", () => {
             window.location.href = `/orders/${orderID}/messages/new`;
