@@ -21,6 +21,6 @@ class Bid < ApplicationRecord
   private
 
   def broadcast
-    BidBroadcast.broadcast_bid(self)
+    BidBroadcaster.call(self)
   end
 end
