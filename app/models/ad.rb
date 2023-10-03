@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Ad < ApplicationRecord
   has_many_attached :ad_images
   has_many :bids, dependent: :restrict_with_error
@@ -5,6 +7,7 @@ class Ad < ApplicationRecord
   belongs_to :user
   belongs_to :address
 
+  validate :images_type
   validates :user_id, presence: true
   validates :product_id, presence: true
   validates :address_id, presence: true
@@ -12,13 +15,30 @@ class Ad < ApplicationRecord
   validates :description, presence: true
   validates :ad_images, presence: true
 
-  scope :by_archived, ->(status) { where(archived: status) }
+  scope :archived, -> { where(archived: true) }
+  scope :unarchived, -> { where(archived: false) }
 
   def published!
-    update_attribute(:archived, false)
+    update!(archived: false)
   end
 
   def unpublished!
-    update_attribute(:archived, true)
+    update(archived: true)
+  end
+
+  def toggle_archived
+    update(archived: !archived)
+  end
+
+  private
+
+  def images_type
+    return unless ad_images.attached?
+
+    ad_images.each do |image|
+      unless image.content_type.in?(%w[image/png image/jpeg image/jpg])
+        errors.add(:ad_images, 'must be jpg, jpeg or png files.')
+      end
+    end
   end
 end

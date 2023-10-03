@@ -3,11 +3,12 @@
 # Product Controller
 class ProductsController < ApplicationController
   load_and_authorize_resource
-  before_action :authenticate_user!
+  skip_before_action :authenticate_user!, only: %i[index show]
   before_action :store_location, only: %i[index]
 
   def index
-    @products = @products.includes([product_image_attachment: :blob]).by_archived(params[:archived] || false).recently_updated.page(params[:page])
+    @products = params[:status] == 'archived' ? @products.archived : @products.unarchived
+    @products = @products.includes([product_image_attachment: :blob]).recently_updated.page(params[:page])
   end
 
   def new; end
@@ -47,8 +48,8 @@ class ProductsController < ApplicationController
   end
 
   def toggle_archived
-    if @product.update_attribute(:archived, !@product.archived?)
-      flash[:notice] = @product.archived ? 'Product Unpublished' : 'Product Published'
+    if @product.update(archived: !@product.archived?)
+      flash[:notice] = "Product #{@product.archived ? 'unpublished' : 'published'} successfully."
     else
       flash[:alert] = @product.errors.full_messages.join(', ')
     end

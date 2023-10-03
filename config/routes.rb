@@ -1,12 +1,5 @@
 Rails.application.routes.draw do
   root 'users#root'
-
-  get 'notification/index'
-  get 'notification/show'
-  get 'notification/create'
-  get 'notification/update'
-  get 'notification/destroy'
-
   get 'users/home'
   get 'users/otp_setting'
   patch 'users/toggle_otp_status'
@@ -26,10 +19,11 @@ Rails.application.routes.draw do
   devise_for :users, controllers:
   {
     sessions: 'users/sessions',
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    confirmations: 'users/confirmations'
   }
 
-  resources :bids
+  resources :bids, only: %i[new create index]
 
   resources :products do
     resources :ads, only: %i[new create]
@@ -40,7 +34,8 @@ Rails.application.routes.draw do
       get 'root' => 'products#root'
     end
   end
-  resources :addresses
+
+  resources :addresses, except: [:show]
 
   resources :ads, except: %i[new create] do
     resources :bids, only: %i[new create]
@@ -50,7 +45,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :bids do
+  resources :bids, except: %i[new create] do
     resources :orders, only: %i[new create]
   end
 

@@ -19,11 +19,6 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
 gem 'redis', '~> 4.0'
-# Use Active Model has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Active Storage variant
-# gem 'image_processing', '~> 1.2'
 
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
@@ -43,13 +38,10 @@ group :development do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  gem 'letter_opener'
-
-  gem 'erb-formatter'
-
-  gem 'htmlbeautifier'
-
   gem 'bullet', '~> 7.0'
+  gem 'erb-formatter'
+  gem 'htmlbeautifier'
+  gem 'letter_opener'
 end
 
 group :test do
@@ -63,25 +55,16 @@ end
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 
+gem 'attr_encrypted'
+gem 'cancancan', '~> 3.1'
 gem 'devise'
+gem 'devise-two-factor'
 gem 'dotenv-rails'
+gem 'geocoder', '~> 1.8', '>= 1.8.1'
 gem 'importmap-rails', '~> 1.0'
 gem 'rotp'
 gem 'rqrcode', '~> 2.1'
 gem 'stimulus-rails', '~> 1.0'
 gem 'tailwindcss-rails', '~> 2.0'
-
-# for authorization purposes
-gem 'cancancan', '~> 3.1'
-
-# for google maps use
-gem 'geocoder', '~> 1.8', '>= 1.8.1'
-
-# for pagination use
-gem 'will_paginate', '~> 3.3.0'
-
-gem 'devise-two-factor'
-
-gem 'attr_encrypted'
-
 gem 'twilio-ruby', '~> 5.76'
+gem 'will_paginate', '~> 3.3.0'

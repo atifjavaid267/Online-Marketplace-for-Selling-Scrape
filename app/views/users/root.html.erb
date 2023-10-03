@@ -1,51 +1,16 @@
-<body onload="typeWriter()">
-  <% unless user_signed_in? %>
-    <div>
-      <%= render 'devise/shared/navbar' %>
-    </div>
-  <% end %>
-  <div class="hidden lg:block bg-gray-800 h-screen">
-    <div class="bg-gray-800">
-      <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-        <div class="sm:text-center">
-        </div>
-      </div>
-    </div>
-    <div class="hidden lg:block max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 bg-background_img">
-      <div class="px-4 py-6 sm:px-0">
-        <div class="mx-32 rounded-lg h-96 flex items-center bg-black bg-opacity-20 backdrop-blur-lg drop-shadow-lg flex-col justify-center">
-          <div class="justify-center items-center">
-            <h1 class="text-3xl font-bold text-black sm:text-4xl">Online Marketplace for Selling Scrape</h1>
-          </div>
-          <div class="mx-auto rounded-sm justify-center items-center pt-10 px-32">
-            <p id="home_description" class="mx-10">
-            </p>
-          </div>
-        </div>
-      </div>
+<% unless user_signed_in? %>
+  <div class="fixed w-full top-0 z-10">
+    <%= render "shared/navbar" %>
+  </div>
+<% end %>
+<div class="h-screen">
+  <div class="bg-background_img bg-cover h-3/4">
+    <div class="h-3/4 z-1"></div>
+    <div class="flex flex-col bg-white bg-opacity-90 rounded-lg shadow-lg py-5 px-10 justify-center items-center mx-20 z-2">
+      <h1 class="font-bold text-2xl sm:text-2xl md:text-3xl lg:text-4xl pb-10">Online Marketplace for Selling Scrape</h1>
+      <p class="sm:px-10 md:px-14 lg:px-24 xl:px-28">
+        "We offer a streamlined solution for users to sell their meticulously curated products obtained through web scraping. With our user-friendly interface, interested buyers can easily peruse and purchase these unique offerings."
+      </p>
     </div>
   </div>
-  <% unless @products.empty? %>
-    <hr>
-    <div class="bg-cover bg-no-repeat h-full bg-background_img">
-      <div class="pt-5">
-        <div class="grid md:grid-cols-2 gap-4">
-          <% @products.each do |product| %>
-            <div class="p-4 rounded-lg bg-gray-800 text-white opacity-95 flex items-center mx-16 mt-10">
-              <div class="flex-grow">
-                <span class="font-bold">Product Name:</span> <br>
-                <span> <%= product.name %> </span><br>
-              </div>
-              <div class="flex-none mx-2">
-                <%= image_tag product.product_image, class: "w-25 h-20 object-cover rounded-lg shadow-md h-36 w-36" %>
-              </div>
-            </div>
-          <% end %>
-        </div>
-      </div>
-      <div class="pb-20 flex flex-row items-center justify-center mt-14">
-        <%= will_paginate @products, class: "bg-gray-500 rounded py-3 px-4" %>
-      </div>
-    </div>
-  <% end %>
-</body>
+</div>

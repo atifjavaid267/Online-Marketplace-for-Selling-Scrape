@@ -1,17 +1,15 @@
 <% if @addresses.empty? %>
-  <%= render 'devise/shared/back' %>
+  <%= render "shared/back" %>
   <div class="bg-cover bg-no-repeat h-screen bg-background_img">
     <div class="pt-28">
       <div class="bg-gray-800 mt-28 mx-24 mb-5 p-10 rounded-md text-white bg-opacity-95">
         <h1 class="text-center font-bold">You added no Address Yet!</h1>
       </div>
-      <div class="flex flex-row justify-center">
-        <% if can? :new, Address %>
-          <div>
-            <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline" %>
-          </div>
-        <% end %>
-      </div>
+      <% if can? :new, Address %>
+        <div class="flex flex-row justify-center">
+          <%= link_to "Add Address", new_address_path, class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-md focus:outline-none focus:shadow-outline" %>
+        </div>
+      <% end %>
     </div>
   </div>
 <% else %>
@@ -23,7 +21,7 @@
   <div class="py-5">
     <table class="w-full table-auto">
       <thead>
-        <tr class="bg-gray-200 text-gray-800 text-left font-bold">
+        <tr class="bg-gray-300 text-gray-800 text-left font-bold">
           <th class="px-4 py-3">No.</th>
           <th class="px-4 py-3">Full Address</th>
           <th class="px-4 py-3">City</th>
@@ -33,7 +31,7 @@
       </thead>
       <tbody>
         <% @addresses.each.with_index(@addresses.offset + 1) do |address, counter| %>
-          <tr class="<%= cycle('bg-white', 'bg-gray-100') %>">
+          <tr class="shadow-md">
             <td class="px-4 py-3"><%= counter %></td>
             <td class="px-4 py-2"><%= address.full_address %></td>
             <td class="px-4 py-2"><%= address.city %></td>

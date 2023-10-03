@@ -6,7 +6,6 @@ class OrdersController < ApplicationController
   load_and_authorize_resource :order, through: :bid, singleton: true, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
 
-  before_action :authenticate_user!
   before_action :store_location, only: %i[new]
 
   def new; end
@@ -15,7 +14,7 @@ class OrdersController < ApplicationController
     @order.buyer_id = @bid.user_id
     @order.seller_id = @bid.ad.user_id
     if @order.save
-      flash[:notice] = 'New Order Opened.'
+      flash[:notice] = 'New order opened.'
       redirect_to @order
     else
       flash[:alert] = @order.errors.full_messages.join(', ')
@@ -26,13 +25,20 @@ class OrdersController < ApplicationController
   def show; end
 
   def index
-    @orders = @orders.status(params[:status]) if params[:status]
+    case params[:status]
+    when 'pending'
+      @orders = @orders.pending
+    when 'successful'
+      @orders = @orders.successful
+    when 'cancelled'
+      @orders = @orders.cancelled
+    end
     @orders = @orders.includes(%i[buyer seller]).recently_updated.page(params[:page])
   end
 
   def confirm
-    if @order.update_attribute(:status, 'successful')
-      flash[:notice] = 'Order Completed.'
+    if @order.update(status: 'successful')
+      flash[:notice] = 'Order completed successfully.'
     else
       flash[:alert] = @order.errors.full_messages.join(', ')
     end
@@ -40,8 +46,8 @@ class OrdersController < ApplicationController
   end
 
   def cancel
-    if @order.update_attribute(:status, 'cancelled')
-      flash[:notice] = 'Order Cancelled.'
+    if @order.update(status: 'cancelled')
+      flash[:notice] = 'Order cancelled successfully.'
     else
       flash[:alert] = @order.errors.full_messages.join(', ')
     end

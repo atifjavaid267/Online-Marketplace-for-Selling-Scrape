@@ -3,7 +3,6 @@
 # Address Controller
 class AddressesController < ApplicationController
   load_and_authorize_resource
-  before_action :authenticate_user!
   before_action :store_location, only: %i[index]
 
   def index
@@ -15,7 +14,7 @@ class AddressesController < ApplicationController
   def create
     @address.user_id = current_user.id
     if @address.save
-      flash[:notice] = 'Address was successfully created.'
+      flash[:notice] = 'Address created successfully.'
       redirect_to stored_location
     else
       flash[:alert] = @address.errors.full_messages.join(', ')
@@ -27,7 +26,7 @@ class AddressesController < ApplicationController
 
   def update
     if @address.update(address_params)
-      flash[:notice] = 'Address was successfully updated'
+      flash[:notice] = 'Address updated successfully.'
       redirect_to addresses_path
     else
       flash[:alert] = @address.errors.full_messages.join(', ')
@@ -47,7 +46,6 @@ class AddressesController < ApplicationController
   private
 
   def address_params
-    params.require(:address).permit(:user_id, :city, :state, :zip_code,
-                                    :full_address)
+    params.require(:address).permit(:user_id, :city, :state, :zip_code, :full_address)
   end
 end

@@ -6,24 +6,21 @@ class AdsController < ApplicationController
   load_and_authorize_resource through: :product, only: %i[new create]
   load_and_authorize_resource except: %i[new create]
 
-  before_action :authenticate_user!
-  before_action :store_location, only: %i[new edit index]
+  before_action :store_location, only: %i[new edit index show]
 
   def index
-    @ads = @ads.includes([:product],
-                         [:ad_images_attachments]).by_archived(params[:archived] || false).page(params[:page])
+    @ads = params[:status] == 'archived' ? @ads.archived : @ads.unarchived
+    @ads = @ads.includes([:product], [:ad_images_attachments]).page(params[:page])
   end
 
   def show; end
 
-  def new
-    @addresses = current_user.addresses.pluck(:full_address, :id)
-  end
+  def new; end
 
   def create
     @ad.user_id = current_user.id
     if @ad.save
-      flash[:notice] = 'Ad was successfully created'
+      flash[:notice] = 'Ad created successfully.'
       redirect_to @ad
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
@@ -32,16 +29,14 @@ class AdsController < ApplicationController
   end
 
   def view_bids
-    @bids = @ad.bids.includes([:user]).pending.desc_price.page(params[:page])
+    @bids = @ad.bids.includes([:user]).pending.sort_by_price('desc').page(params[:page])
   end
 
-  def edit
-    @addresses = current_user.addresses.pluck(:full_address, :id)
-  end
+  def edit; end
 
   def update
     if @ad.update(ad_params)
-      flash[:notice] = 'Ad was updated successfully'
+      flash[:notice] = 'Ad updated successfully.'
       redirect_to @ad
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
@@ -55,12 +50,12 @@ class AdsController < ApplicationController
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end
-    redirect_to stored_location
+    redirect_to ads_path
   end
 
   def toggle_archived
-    if @ad.update_attribute(:archived, !@ad.archived)
-      flash[:notice] = @ad.archived ? 'Ad Unpublished' : 'Ad Published'
+    if @ad.toggle_archived
+      flash[:notice] = "Ad #{@ad.archived ? 'unpublished' : 'published'} successfully."
     else
       flash[:alert] = @ad.errors.full_messages.join(', ')
     end

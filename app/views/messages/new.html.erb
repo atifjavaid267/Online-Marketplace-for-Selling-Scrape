@@ -1,19 +1,19 @@
-<div id="chat-room" class="pb-16">
-  <div id="messages">
-    <% unless @messages.length.zero? %>
+<div class="pb-16">
+  <div id="display-message">
+    <% unless @messages.length == 1 %>
       <% last_date = @messages.first.created_at.strftime("%B %d, %Y") %>
       <div class="mb-5 pb-5">
         <div class="flex justify-center text-center mt-15">
-          <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
+          <p class="border rounded-md m-3 p-1"><%= last_date %></p>
         </div>
         <% @messages.each do |message| %>
+          <% next if message.new_record? %>
           <% if last_date != message.created_at.strftime("%B %d, %Y") %>
             <% last_date = message.created_at.strftime("%B %d, %Y") %>
             <div class="flex justify-center text-center">
-              <p class="border rounded-md m-3 p-1"> <%= last_date %> </p>
+              <p class="border rounded-md m-3 p-1"><%= last_date %></p>
             </div>
           <% end %>
-          <div id="user" data-user-id = <%= @current_user_id %>></div>
           <% if current_user.id == message.sender_id %>
             <div class="message text-right mr-5 mt-5">
               <span class="time text-xs text-gray-500"><%= message.created_at.strftime("%I:%M %p") %></span>
@@ -28,10 +28,10 @@
         <% end %>
       </div>
     <% end %>
-    <div class=" pt-2 flex fixed bottom-0 w-full p-4 bg-white rounded-lg w-100">
+    <div class="pt-2 flex fixed bottom-0 w-full p-4 bg-white rounded-lg w-100">
       <%= form_for [@order, Message.new], remote: true do |f| %>
         <div class="flex flex-row w-full">
-          <%= f.text_field :content, required: true, placeholder: "Enter your message", :maxlength=>"110", class: "flex-1 mr-2 border-2 border-gray-300 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" %>
+          <%= f.text_field :content, required: true, placeholder: "Enter your message", maxlength: "110", class: "flex-1 mr-2 border-2 border-gray-300 py-2 px-4 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent" %>
           <%= f.submit "Send", class: "ml-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-3 rounded-lg" %>
         </div>
       <% end %>
