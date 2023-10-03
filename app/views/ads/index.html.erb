@@ -20,7 +20,7 @@
             <% end %>
             <% if can? :toggle_archived, Ad %>
               <div>
-                <%= link_to ad.archived ? "Publish" : "Unpublish", toggle_archived_ad_path(ad), data: { confirm: ad.archived ? "Are you sure to publish ad?" : "Are you sure to unpublish ad?" }, method: :post, class: "mt-2 bg-gray-500 text-white px-3 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out" %>
+                <%= link_to ad.archived ? "Publish" : "Unpublish", toggle_archived_ad_path(ad), data: { confirm: "Are you sure to #{ad.archived ? "publish" : "unpublish"} ad?" }, method: :post, class: "mt-2 bg-gray-500 text-white px-3 py-2 rounded-md hover:bg-gray-600 transition duration-300 ease-in-out" %>
               </div>
             <% end %>
             <% if can? :destroy, Ad %>
